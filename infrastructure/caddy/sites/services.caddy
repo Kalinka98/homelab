@@ -1,0 +1,24 @@
+budget.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy actual-budget:5006
+}
+
+status.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy uptime-kuma:3001
+}
+
+logs.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy dozzle:8080
+}
+
+notify.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy ntfy:80
+}
+
+home.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy homepage:3000
+}

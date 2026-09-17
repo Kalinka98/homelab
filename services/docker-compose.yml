@@ -1,0 +1,26 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "3"
+
+networks:
+  edge:
+    external: true
+    name: homelab-edge
+
+services:
+  actual:
+    image: actualbudget/actual-server:latest
+    container_name: actual-budget
+    restart: unless-stopped
+    logging: *default-logging
+
+    volumes:
+      - ./actual/data:/data
+
+    expose:
+      - "5006"
+
+    networks:
+      - edge

@@ -1,0 +1,44 @@
+# Env Variables
+.env
+
+# Caddy
+infrastructure/caddy/data
+infrastructure/caddy/config
+
+#AdGuard
+infrastructure/adguard/work
+infrastructure/adguard/conf
+
+# Uptime Kuma
+infrastructure/uptime-kuma/data
+
+# Dozzle
+infrastructure/dozzle/data
+
+# ntfy
+infrastructure/ntfy/data/
+
+# qBittorrent
+media/qbittorrent/config/
+
+# Prowlarr
+media/prowlarr/config/
+
+# Radarr
+media/radarr/config/
+
+# Sonarr
+media/sonarr/config/
+
+# Bazarr
+media/bazarr/config/
+
+# SimpleSubGen
+media/simplesubgen/data/
+media/simplesubgen/models/
+
+# ActualBudget
+services/actual/data
+
+# vscode
+.vscode

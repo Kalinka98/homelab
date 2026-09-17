@@ -1,0 +1,149 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "3"
+
+networks:
+  edge:
+    external: true
+    name: homelab-edge
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      BASE_DOMAIN: ${BASE_DOMAIN}
+
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/sites:/etc/caddy/sites:ro
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+
+    networks:
+      - edge
+
+  adguard:
+    image: adguard/adguardhome:latest
+    container_name: adguard
+    restart: unless-stopped
+    logging: *default-logging
+
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+
+      - "3000:3000/tcp"
+
+    volumes:
+      - ./adguard/work:/opt/adguardhome/work
+      - ./adguard/conf:/opt/adguardhome/conf
+
+    networks:
+      - edge
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    logging: *default-logging
+
+    volumes:
+      - ./uptime-kuma/data:/app/data
+
+    expose:
+      - "3001"
+
+    networks:
+      - edge
+
+  dozzle:
+    image: amir20/dozzle:v10.7.5
+    container_name: dozzle
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
+      DOZZLE_AUTH_TTL: 48h
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./dozzle/data:/data
+
+    expose:
+      - "8080"
+
+    networks:
+      - edge
+
+  ntfy:
+    image: binwiederhier/ntfy:v2.28.0
+    container_name: ntfy
+    restart: unless-stopped
+    init: true
+    logging: *default-logging
+
+    command:
+      - serve
+
+    environment:
+      TZ: ${TZ}
+
+      NTFY_BASE_URL: https://notify.${BASE_DOMAIN}
+      NTFY_BEHIND_PROXY: "true"
+
+      NTFY_CACHE_FILE: /var/lib/ntfy/cache.db
+      NTFY_AUTH_FILE: /var/lib/ntfy/auth.db
+
+      NTFY_AUTH_DEFAULT_ACCESS: deny-all
+      NTFY_ENABLE_LOGIN: "true"
+
+      NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
+
+    volumes:
+      - ./ntfy/data:/var/lib/ntfy
+
+    expose:
+      - "80"
+
+    networks:
+      - edge
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v2.3.0
+    container_name: homepage
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: home.${BASE_DOMAIN}
+
+      HOMEPAGE_AUTH_ENABLED: "true"
+      HOMEPAGE_AUTH_SECRET: ${HOMEPAGE_AUTH_SECRET}
+      HOMEPAGE_AUTH_PASSWORD: ${HOMEPAGE_AUTH_PASSWORD}
+      HOMEPAGE_EXTERNAL_URL: https://home.${BASE_DOMAIN}
+
+      HOMEPAGE_VAR_ADGUARD_USERNAME: ${ADGUARD_USERNAME}
+      HOMEPAGE_VAR_ADGUARD_PASSWORD: ${ADGUARD_PASSWORD}
+
+    volumes:
+      - ./homepage/config:/app/config
+
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    expose:
+      - "3000"
+
+    networks:
+      - edge

@@ -1,0 +1,185 @@
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "3"
+
+networks:
+  edge:
+    external: true
+    name: homelab-edge
+
+  media:
+    driver: bridge
+
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+
+    volumes:
+      - ./radarr/config:/config
+      - ${MOVIES_PATH}:/movies
+      - ${TVSHOWS_PATH}:/tvshows
+      - ${DOWNLOADS_PATH}:/downloads
+
+    expose:
+      - "7878"
+
+    networks:
+      - edge
+      - media
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+
+    volumes:
+      - ./sonarr/config:/config
+      - ${MOVIES_PATH}:/movies
+      - ${TVSHOWS_PATH}:/tvshows
+      - ${DOWNLOADS_PATH}:/downloads
+
+    expose:
+      - "8989"
+
+    networks:
+      - edge
+      - media
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=8080
+
+    volumes:
+      - ./qbittorrent/config:/config
+      - ${DOWNLOADS_PATH}:/downloads
+
+    expose:
+      - "8080"
+
+    networks:
+      - edge
+      - media
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+
+    volumes:
+      - ./prowlarr/config:/config
+
+    expose:
+      - "9696"
+
+    networks:
+      - edge
+      - media
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ}
+
+    expose:
+      - "8191"
+
+    networks:
+      - media
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+
+    volumes:
+      - ./bazarr/config:/config
+      - ${MOVIES_PATH}:/movies
+      - ${TVSHOWS_PATH}:/tvshows
+
+    expose:
+      - "6767"
+
+    networks:
+      - edge
+      - media
+
+  simplesubgen:
+    image: kalinkadev/simplesubgen:latest
+    container_name: simplesubgen
+    restart: unless-stopped
+    logging: *default-logging
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+
+    environment:
+      HF_HOME: /models
+      NVIDIA_VISIBLE_DEVICES: all
+      HF_TOKEN: ${HF_TOKEN}
+      MEDIA_PATHS: /movies,/tvshows
+      SCANNER_INTERVAL: ${SCANNER_INTERVAL}
+      WHISPER_MODEL: ${WHISPER_MODEL}
+      WHISPER_DEVICE: ${WHISPER_DEVICE}
+      NLLB_MODEL: ${NLLB_MODEL}
+      TARGET_LANGUAGES: ${TARGET_LANGUAGES}
+      PREFERRED_AUDIO_LANGUAGE: ${PREFERRED_AUDIO_LANGUAGE}
+      WORKERS: ${WORKERS}
+      DATABASE_PATH: ${DATABASE_PATH}
+      SUBTITLE_FORMAT: ${SUBTITLE_FORMAT}
+      SUBTITLE_SUFFIX: ${SUBTITLE_SUFFIX}
+
+    volumes:
+      - ./simplesubgen/data:/data
+      - ./simplesubgen/models:/models
+      - ${MOVIES_PATH}:/movies
+      - ${TVSHOWS_PATH}:/tvshows
+
+    networks:
+      - media

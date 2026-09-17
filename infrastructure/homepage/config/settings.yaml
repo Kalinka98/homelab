@@ -1,0 +1,15 @@
+title: Kalinka Homelab
+description: Homelab services and infrastructure
+
+theme: dark
+color: slate
+
+headerStyle: clean
+
+target: _blank
+
+statusStyle: dot
+
+showStats: true
+
+disableIndexing: true
