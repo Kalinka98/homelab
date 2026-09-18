@@ -1,26 +1,22 @@
-title: Kalinka Homelab
-description: Services, monitoring and media
+title: Kalinka · Home
+description: A little order in your digital world.
 
 theme: dark
-color: slate
+color: stone
 
-headerStyle: boxedWidgets
+headerStyle: clean
 iconStyle: theme
 
 fullWidth: true
 useEqualHeights: true
+disableCollapse: true
 
 target: _blank
 statusStyle: dot
 
 disableIndexing: true
 hideVersion: true
-
-background:
-  image: /images/kalinka_emblem.png
-  opacity: 25
-
-cardBlur: md
+language: en
 
 quicklaunch:
   searchDescriptions: true
@@ -30,23 +26,18 @@ quicklaunch:
   mobileButtonPosition: bottom-right
 
 layout:
-  Infrastructure:
-    icon: mdi-server
+  Everyday:
+    style: row
+    iconsOnly: true
+
+  At a glance:
     style: row
     columns: 3
 
   Media:
-    icon: mdi-movie-open
     style: row
     columns: 3
 
-  Personal:
-    icon: mdi-account
-    style: row
-    columns: 3
-
-  Media Backend:
-    icon: mdi-cog
+  Behind the scenes:
     style: row
     columns: 4
-    initiallyCollapsed: true

@@ -1,5 +1,23 @@
 # Env Variables
 .env
+.env.*
+!.env.example
+!.env.*.example
+
+# Runtime logs can contain API request headers and credentials.
+*.log
+*.log.*
+infrastructure/homepage/config/logs/
+
+# Local credentials, certificates, and database exports.
+*.key
+*.pem
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db
+*.db-*
 
 # Caddy
 infrastructure/caddy/data

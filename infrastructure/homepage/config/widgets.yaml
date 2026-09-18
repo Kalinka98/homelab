@@ -1,18 +1,22 @@
 - openmeteo:
-    label: Weather
+    # Omit coordinates to use the browser's location (allow access over HTTPS).
     units: metric
-    cache: 5
+    cache: 10
+    format:
+      maximumFractionDigits: 0
 
 - search:
-    provider:
-      - google
+    provider: google
     showSearchSuggestions: true
     target: _blank
 
 - datetime:
-    text_size: xl
+    text_size: 2xl
     locale: en-GB
     format:
-      dateStyle: medium
-      timeStyle: short
+      weekday: short
+      month: short
+      day: numeric
+      hour: 2-digit
+      minute: 2-digit
       hourCycle: h23

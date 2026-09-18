@@ -1,0 +1,29 @@
+- Everyday:
+    - YouTube:
+        - id: shortcut-youtube
+          icon: youtube.svg
+          href: https://www.youtube.com/
+    - GitHub:
+        - id: shortcut-github
+          icon: github-light.svg
+          href: https://github.com/
+    - Facebook:
+        - id: shortcut-facebook
+          icon: facebook.svg
+          href: https://www.facebook.com/
+    - ChatGPT:
+        - id: shortcut-chatgpt
+          icon: chatgpt.svg
+          href: https://chatgpt.com/
+    - Cloudflare:
+        - id: shortcut-cloudflare
+          icon: cloudflare.svg
+          href: https://dash.cloudflare.com/
+    - Gmail:
+        - id: shortcut-gmail
+          icon: gmail.svg
+          href: https://mail.google.com/
+    - Actual Budget:
+        - id: shortcut-actual-budget
+          icon: actual-budget.svg
+          href: https://budget.kalinka.dev

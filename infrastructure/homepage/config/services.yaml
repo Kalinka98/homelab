@@ -1,97 +1,57 @@
-# ============================================================
-# INFRASTRUCTURE
-# ============================================================
-
-- Infrastructure:
+# Useful summaries first; every service group stays visible.
+# Credentials are supplied by Compose, never stored in this file.
+- At a glance:
+    - Jellyfin:
+        id: jellyfin
+        icon: mdi-play-circle-outline
+        href: https://jellyfin.kalinka.dev
+        description: Your own private cinema
+        siteMonitor: http://host.docker.internal:8096/health
+        widget:
+          type: jellyfin
+          url: http://host.docker.internal:8096
+          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          enableBlocks: true
+          enableNowPlaying: true
+          enableUser: true
+          enableMediaControl: false
+          expandOneStreamToTwoRows: false
+          showEpisodeNumber: true
+          fields: [movies, series, episodes]
 
     - AdGuard Home:
-        icon: adguard-home.png
-        href: https://adblock.kalinka.dev
-        description: DNS filtering & network ad blocking
+        id: adguard
+        icon: mdi-shield-check-outline
+        href: https://adguard.kalinka.dev
+        description: A quieter, cleaner internet
         server: local
-        container: adguardhome
+        container: adguard
         widget:
           type: adguard
-          url: http://adguardhome:3000
+          url: http://adguard:3000
           username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
           password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
-          fields:
-            - queries
-            - blocked
-            - filtered
-            - latency
+          fields: [queries, blocked, latency]
 
     - Uptime Kuma:
-        icon: uptime-kuma.png
+        id: uptime-kuma
+        icon: mdi-heart-pulse
         href: https://status.kalinka.dev
-        description: Service monitoring
+        description: A pulse on your services
         server: local
         container: uptime-kuma
         widget:
           type: uptimekuma
           url: http://uptime-kuma:3001
           slug: homelab
-          fields:
-            - up
-            - down
-            - uptime
-            - incident
-
-    - Homepage:
-        icon: homepage.png
-        href: https://home.kalinka.dev
-        description: Homelab dashboard
-        server: local
-        container: homepage
-
-    - Dozzle:
-        icon: dozzle.png
-        href: https://logs.kalinka.dev
-        description: Docker logs
-        server: local
-        container: dozzle
-
-    - ntfy:
-        icon: ntfy.png
-        href: https://notify.kalinka.dev
-        description: Push notifications
-        server: local
-        container: ntfy
-
-    - Caddy:
-        icon: caddy.png
-        description: Reverse proxy & TLS
-        server: local
-        container: caddy
-
-
-# ============================================================
-# MEDIA
-# ============================================================
+          fields: [up, down, uptime]
 
 - Media:
-
-    - Jellyfin:
-        icon: jellyfin.png
-        href: https://jellyfin.kalinka.dev
-        description: Movies & TV
-        siteMonitor: https://jellyfin.kalinka.dev
-        widget:
-          type: jellyfin
-          url: http://host.docker.internal:8096
-          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
-          enableNowPlaying: true
-          enableUser: true
-          showEpisodeNumber: true
-          fields:
-            - movies
-            - series
-            - episodes
-
     - Sonarr:
-        icon: sonarr.png
+        id: sonarr
+        icon: mdi-television-classic
         href: https://sonarr.kalinka.dev
-        description: TV automation
+        description: The next episode awaits
         server: local
         container: sonarr
         widget:
@@ -99,15 +59,13 @@
           url: http://sonarr:8989
           key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
           enableQueue: true
-          fields:
-            - wanted
-            - queued
-            - series
+          fields: [series, wanted, queued]
 
     - Radarr:
-        icon: radarr.png
+        id: radarr
+        icon: mdi-filmstrip
         href: https://radarr.kalinka.dev
-        description: Movie automation
+        description: Something for movie night
         server: local
         container: radarr
         widget:
@@ -115,15 +73,13 @@
           url: http://radarr:7878
           key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
           enableQueue: true
-          fields:
-            - missing
-            - queued
-            - movies
+          fields: [movies, missing, queued]
 
     - qBittorrent:
-        icon: qbittorrent.png
+        id: qbittorrent
+        icon: mdi-download-network-outline
         href: https://qbittorrent.kalinka.dev
-        description: Download client
+        description: Incoming, at a glance
         server: local
         container: qbittorrent
         widget:
@@ -133,71 +89,76 @@
           password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
           enableLeechProgress: true
           enableLeechSize: true
-          fields:
-            - leech
-            - download
-            - seed
-            - upload
+          fields: [leech, download, seed, upload]
 
+- Behind the scenes:
     - Prowlarr:
-        icon: prowlarr.png
+        id: prowlarr
+        icon: mdi-magnify
         href: https://prowlarr.kalinka.dev
-        description: Indexer management
+        description: Indexers & search health
         server: local
         container: prowlarr
         widget:
           type: prowlarr
           url: http://prowlarr:9696
           key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
-          fields:
-            - numberOfQueries
-            - numberOfGrabs
-            - numberOfFailQueries
-            - numberOfFailGrabs
+          fields: [numberOfQueries, numberOfGrabs, numberOfFailQueries]
 
     - Bazarr:
-        icon: bazarr.png
+        id: bazarr
+        icon: mdi-subtitles-outline
         href: https://bazarr.kalinka.dev
-        description: Subtitle management
+        description: Subtitles still to find
         server: local
         container: bazarr
         widget:
           type: bazarr
           url: http://bazarr:6767
           key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
-          fields:
-            - missingEpisodes
-            - missingMovies
+          fields: [missingEpisodes, missingMovies]
 
-
-# ============================================================
-# PERSONAL
-# ============================================================
-
-- Personal:
-
-    - Actual Budget:
-        icon: actual-budget.png
-        href: https://budget.kalinka.dev
-        description: Personal finances
+    - Dozzle:
+        id: dozzle
+        icon: mdi-console-line
+        href: https://logs.kalinka.dev
+        description: Follow the logs
         server: local
-        container: actual-budget
+        container: dozzle
 
-
-# ============================================================
-# BACKEND / INTERNAL
-# ============================================================
-
-- Media Backend:
+    - ntfy:
+        id: ntfy
+        icon: mdi-bell-outline
+        href: https://notify.kalinka.dev
+        description: The updates that matter
+        server: local
+        container: ntfy
 
     - SimpleSubGen:
-        icon: mdi-subtitles
+        id: simplesubgen
+        icon: mdi-auto-fix
         description: AI subtitle generation
         server: local
         container: simplesubgen
 
     - FlareSolverr:
-        icon: flaresolverr.png
-        description: Challenge resolver
+        id: flaresolverr
+        icon: mdi-puzzle-outline
+        description: Indexer challenge resolver
         server: local
         container: flaresolverr
+
+    - Caddy:
+        id: caddy
+        icon: mdi-lock-outline
+        description: Your front door · proxy & TLS
+        server: local
+        container: caddy
+
+    - Homepage:
+        id: homepage
+        icon: mdi-home-outline
+        href: https://home.kalinka.dev
+        description: Everything in its place
+        server: local
+        container: homepage
