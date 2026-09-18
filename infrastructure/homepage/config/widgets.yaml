@@ -1,0 +1,18 @@
+- openmeteo:
+    label: Weather
+    units: metric
+    cache: 5
+
+- search:
+    provider:
+      - google
+    showSearchSuggestions: true
+    target: _blank
+
+- datetime:
+    text_size: xl
+    locale: en-GB
+    format:
+      dateStyle: medium
+      timeStyle: short
+      hourCycle: h23

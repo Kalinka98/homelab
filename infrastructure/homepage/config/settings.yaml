@@ -1,15 +1,52 @@
 title: Kalinka Homelab
-description: Homelab services and infrastructure
+description: Services, monitoring and media
 
 theme: dark
 color: slate
 
-headerStyle: clean
+headerStyle: boxedWidgets
+iconStyle: theme
+
+fullWidth: true
+useEqualHeights: true
 
 target: _blank
-
 statusStyle: dot
 
-showStats: true
-
 disableIndexing: true
+hideVersion: true
+
+background:
+  image: /images/kalinka_emblem.png
+  opacity: 25
+
+cardBlur: md
+
+quicklaunch:
+  searchDescriptions: true
+  provider: google
+  showSearchSuggestions: true
+  hideVisitURL: false
+  mobileButtonPosition: bottom-right
+
+layout:
+  Infrastructure:
+    icon: mdi-server
+    style: row
+    columns: 3
+
+  Media:
+    icon: mdi-movie-open
+    style: row
+    columns: 3
+
+  Personal:
+    icon: mdi-account
+    style: row
+    columns: 3
+
+  Media Backend:
+    icon: mdi-cog
+    style: row
+    columns: 4
+    initiallyCollapsed: true

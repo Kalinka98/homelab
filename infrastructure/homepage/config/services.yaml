@@ -1,17 +1,48 @@
+# ============================================================
+# INFRASTRUCTURE
+# ============================================================
+
 - Infrastructure:
+
+    - AdGuard Home:
+        icon: adguard-home.png
+        href: https://adblock.kalinka.dev
+        description: DNS filtering & network ad blocking
+        server: local
+        container: adguardhome
+        widget:
+          type: adguard
+          url: http://adguardhome:3000
+          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+          fields:
+            - queries
+            - blocked
+            - filtered
+            - latency
+
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: https://status.kalinka.dev
+        description: Service monitoring
+        server: local
+        container: uptime-kuma
+        widget:
+          type: uptimekuma
+          url: http://uptime-kuma:3001
+          slug: homelab
+          fields:
+            - up
+            - down
+            - uptime
+            - incident
+
     - Homepage:
         icon: homepage.png
         href: https://home.kalinka.dev
         description: Homelab dashboard
         server: local
         container: homepage
-
-    - Uptime Kuma:
-        icon: uptime-kuma.png
-        href: https://status.kalinka.dev
-        description: Availability monitoring
-        server: local
-        container: uptime-kuma
 
     - Dozzle:
         icon: dozzle.png
@@ -29,62 +60,65 @@
 
     - Caddy:
         icon: caddy.png
-        description: Reverse proxy
+        description: Reverse proxy & TLS
         server: local
         container: caddy
 
-    - AdGuard Home:
-        icon: adguard-home.png
-        href: http://192.168.0.61:3000/
-        description: Network-wide DNS and ad blocking
-        server: local
-        container: adguard
-        widget:
-          type: adguard
-          url: http://192.168.0.61:3000/
-          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
-          fields:
-            - queries
-            - blocked
-            - filtered
-            - latency
 
+# ============================================================
+# MEDIA
+# ============================================================
 
 - Media:
+
     - Jellyfin:
         icon: jellyfin.png
         href: https://jellyfin.kalinka.dev
-        description: Media server
+        description: Movies & TV
         siteMonitor: https://jellyfin.kalinka.dev
+        widget:
+          type: jellyfin
+          url: http://host.docker.internal:8096
+          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          enableNowPlaying: true
+          enableUser: true
+          showEpisodeNumber: true
+          fields:
+            - movies
+            - series
+            - episodes
 
     - Sonarr:
         icon: sonarr.png
         href: https://sonarr.kalinka.dev
-        description: TV management
+        description: TV automation
         server: local
         container: sonarr
+        widget:
+          type: sonarr
+          url: http://sonarr:8989
+          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
+          enableQueue: true
+          fields:
+            - wanted
+            - queued
+            - series
 
     - Radarr:
         icon: radarr.png
         href: https://radarr.kalinka.dev
-        description: Movie management
+        description: Movie automation
         server: local
         container: radarr
-
-    - Prowlarr:
-        icon: prowlarr.png
-        href: https://prowlarr.kalinka.dev
-        description: Indexer management
-        server: local
-        container: prowlarr
-
-    - Bazarr:
-        icon: bazarr.png
-        href: https://bazarr.kalinka.dev
-        description: Subtitle management
-        server: local
-        container: bazarr
+        widget:
+          type: radarr
+          url: http://radarr:7878
+          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
+          enableQueue: true
+          fields:
+            - missing
+            - queued
+            - movies
 
     - qBittorrent:
         icon: qbittorrent.png
@@ -92,9 +126,70 @@
         description: Download client
         server: local
         container: qbittorrent
+        widget:
+          type: qbittorrent
+          url: http://qbittorrent:8080
+          username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+          enableLeechProgress: true
+          enableLeechSize: true
+          fields:
+            - leech
+            - download
+            - seed
+            - upload
 
+    - Prowlarr:
+        icon: prowlarr.png
+        href: https://prowlarr.kalinka.dev
+        description: Indexer management
+        server: local
+        container: prowlarr
+        widget:
+          type: prowlarr
+          url: http://prowlarr:9696
+          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
+          fields:
+            - numberOfQueries
+            - numberOfGrabs
+            - numberOfFailQueries
+            - numberOfFailGrabs
+
+    - Bazarr:
+        icon: bazarr.png
+        href: https://bazarr.kalinka.dev
+        description: Subtitle management
+        server: local
+        container: bazarr
+        widget:
+          type: bazarr
+          url: http://bazarr:6767
+          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
+          fields:
+            - missingEpisodes
+            - missingMovies
+
+
+# ============================================================
+# PERSONAL
+# ============================================================
+
+- Personal:
+
+    - Actual Budget:
+        icon: actual-budget.png
+        href: https://budget.kalinka.dev
+        description: Personal finances
+        server: local
+        container: actual-budget
+
+
+# ============================================================
+# BACKEND / INTERNAL
+# ============================================================
 
 - Media Backend:
+
     - SimpleSubGen:
         icon: mdi-subtitles
         description: AI subtitle generation
@@ -103,14 +198,6 @@
 
     - FlareSolverr:
         icon: flaresolverr.png
-        description: Cloudflare challenge resolver
+        description: Challenge resolver
         server: local
         container: flaresolverr
-
-- Personal:
-    - Actual Budget:
-        icon: actual-budget.png
-        href: https://actual.kalinka.dev
-        description: Personal budgeting
-        server: local
-        container: actual-budget
