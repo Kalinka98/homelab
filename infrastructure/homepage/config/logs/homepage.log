@@ -1,5 +1,0 @@
-[2026-09-17T20:14:51.372Z] info: kubernetes.yaml was copied to the config folder
-[2026-09-17T20:14:58.010Z] error: <nextauth> JWT_SESSION_ERROR: decryption operation failed
-[2026-09-17T20:15:02.425Z] info: proxmox.yaml was copied to the config folder
-[2026-09-17T20:15:02.467Z] info: custom.css was copied to the config folder
-[2026-09-17T20:15:02.472Z] info: custom.js was copied to the config folder
