@@ -1,11 +1,9 @@
-# Useful summaries first; every service group stays visible.
-# Credentials are supplied by Compose, never stored in this file.
-- At a glance:
+- Media:
     - Jellyfin:
         id: jellyfin
         icon: mdi-play-circle-outline
         href: https://jellyfin.kalinka.dev
-        description: Your own private cinema
+        description: Who needs Netflix anyway?
         siteMonitor: http://host.docker.internal:8096/health
         widget:
           type: jellyfin
@@ -19,39 +17,11 @@
           showEpisodeNumber: true
           fields: [movies, series, episodes]
 
-    - AdGuard Home:
-        id: adguard
-        icon: mdi-shield-check-outline
-        href: https://adguard.kalinka.dev
-        description: A quieter, cleaner internet
-        server: local
-        container: adguard
-        widget:
-          type: adguard
-          url: http://adguard:3000
-          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
-          fields: [queries, blocked, latency]
-
-    - Uptime Kuma:
-        id: uptime-kuma
-        icon: mdi-heart-pulse
-        href: https://status.kalinka.dev
-        description: A pulse on your services
-        server: local
-        container: uptime-kuma
-        widget:
-          type: uptimekuma
-          url: http://uptime-kuma:3001
-          slug: homelab
-          fields: [up, down, uptime]
-
-- Media:
     - Sonarr:
         id: sonarr
         icon: mdi-television-classic
         href: https://sonarr.kalinka.dev
-        description: The next episode awaits
+        description: Сериалчетата
         server: local
         container: sonarr
         widget:
@@ -65,7 +35,7 @@
         id: radarr
         icon: mdi-filmstrip
         href: https://radarr.kalinka.dev
-        description: Something for movie night
+        description: Филмчита
         server: local
         container: radarr
         widget:
@@ -79,7 +49,7 @@
         id: qbittorrent
         icon: mdi-download-network-outline
         href: https://qbittorrent.kalinka.dev
-        description: Incoming, at a glance
+        description: Torrenting (not pirating)
         server: local
         container: qbittorrent
         widget:
@@ -91,12 +61,11 @@
           enableLeechSize: true
           fields: [leech, download, seed, upload]
 
-- Behind the scenes:
     - Prowlarr:
         id: prowlarr
         icon: mdi-magnify
         href: https://prowlarr.kalinka.dev
-        description: Indexers & search health
+        description: Indexers Manager
         server: local
         container: prowlarr
         widget:
@@ -109,7 +78,7 @@
         id: bazarr
         icon: mdi-subtitles-outline
         href: https://bazarr.kalinka.dev
-        description: Subtitles still to find
+        description: Subtitle manager
         server: local
         container: bazarr
         widget:
@@ -117,22 +86,6 @@
           url: http://bazarr:6767
           key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
           fields: [missingEpisodes, missingMovies]
-
-    - Dozzle:
-        id: dozzle
-        icon: mdi-console-line
-        href: https://logs.kalinka.dev
-        description: Follow the logs
-        server: local
-        container: dozzle
-
-    - ntfy:
-        id: ntfy
-        icon: mdi-bell-outline
-        href: https://notify.kalinka.dev
-        description: The updates that matter
-        server: local
-        container: ntfy
 
     - SimpleSubGen:
         id: simplesubgen
@@ -148,17 +101,54 @@
         server: local
         container: flaresolverr
 
+
+- Infrastructure:
+    - AdGuard Home:
+        id: adguard
+        icon: mdi-shield-check-outline
+        href: https://adguard.kalinka.dev
+        description: Say not to ads!
+        server: local
+        container: adguard
+        widget:
+          type: adguard
+          url: http://adguard:3000
+          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+          fields: [queries, blocked, latency]
+
+    - Uptime Kuma:
+        id: uptime-kuma
+        icon: mdi-heart-pulse
+        href: https://status.kalinka.dev
+        description: Service Status
+        server: local
+        container: uptime-kuma
+        widget:
+          type: uptimekuma
+          url: http://uptime-kuma:3001
+          slug: homelab
+          fields: [up, down, uptime]
+
     - Caddy:
         id: caddy
         icon: mdi-lock-outline
-        description: Your front door · proxy & TLS
+        description: Reverse Proxy
         server: local
         container: caddy
 
-    - Homepage:
-        id: homepage
-        icon: mdi-home-outline
-        href: https://home.kalinka.dev
-        description: Everything in its place
+    - Dozzle:
+        id: dozzle
+        icon: mdi-console-line
+        href: https://logs.kalinka.dev
+        description: Docker Logs
         server: local
-        container: homepage
+        container: dozzle
+
+    - ntfy:
+        id: ntfy
+        icon: mdi-bell-outline
+        href: https://notify.kalinka.dev
+        description: Notification Services
+        server: local
+        container: ntfy

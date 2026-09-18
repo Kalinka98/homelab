@@ -1,5 +1,5 @@
 title: Kalinka · Home
-description: A little order in your digital world.
+description: Don't be the best. Be the only
 
 theme: dark
 color: stone
@@ -17,6 +17,7 @@ statusStyle: dot
 disableIndexing: true
 hideVersion: true
 language: en
+favicon: /images/kalinka_emblem_icon.png
 
 quicklaunch:
   searchDescriptions: true
@@ -30,14 +31,10 @@ layout:
     style: row
     iconsOnly: true
 
-  At a glance:
-    style: row
-    columns: 3
-
   Media:
     style: row
-    columns: 3
-
-  Behind the scenes:
-    style: row
     columns: 4
+
+  Infrastructure:
+    style: row
+    columns: 5

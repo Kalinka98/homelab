@@ -1,5 +1,4 @@
 - openmeteo:
-    # Omit coordinates to use the browser's location (allow access over HTTPS).
     units: metric
     cache: 10
     format:

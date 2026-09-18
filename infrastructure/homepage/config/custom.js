@@ -1,5 +1,3 @@
-/* Kalinka's small presentation layer. Search, weather and service data remain
- * Homepage widgets; no credentials, external scripts or extra API calls here. */
 (() => {
   if (window.kalinkaTheme) return;
   window.kalinkaTheme = true;
@@ -19,28 +17,18 @@
       title.textContent = "Kalinka";
       const subtitle = document.createElement("p");
       subtitle.className = "kalinka-subtitle";
-      subtitle.textContent = "A little order in your digital world.";
+      subtitle.textContent = "Don't be the best. Be the only.";
       masthead.append(emblem, title, subtitle);
       widgets.before(masthead);
     }
 
-    const sectionNotes = {
-      Everyday: "Your daily destinations",
-      "At a glance": "The things worth keeping an eye on",
-      Media: "For your next quiet evening",
-      "Behind the scenes": "The little things that keep it all running",
-    };
     document.querySelectorAll(".services-group, .bookmark-group").forEach((group) => {
-      const heading = group.querySelector("h2");
-      const name = heading?.textContent.trim();
-      if (sectionNotes[name] && !group.dataset.kalinkaSection) {
+      const name = group.querySelector("h2")?.textContent.trim();
+      if (name && group.dataset.kalinkaSection !== name) {
         group.dataset.kalinkaSection = name;
-        // A tooltip adds context without crowding the smaller layouts.
-        heading.title = sectionNotes[name];
       }
     });
 
-    // Logo-only links retain names for assistive technology and hover tooltips.
     document.querySelectorAll(".bookmark > a").forEach((link) => {
       const name = link.closest(".bookmark")?.dataset.name;
       if (name && link.getAttribute("aria-label") !== name) {
@@ -63,8 +51,6 @@
     }
   }
 
-  // Homepage loads widgets asynchronously and can rebuild them on revalidation.
-  // Only add our own elements; never replace React-owned widget content.
   let pending = false;
   const observer = new MutationObserver(() => {
     if (pending) return;
