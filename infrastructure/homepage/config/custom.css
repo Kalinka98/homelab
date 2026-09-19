@@ -45,14 +45,14 @@ body {
   position: relative;
   isolation: isolate;
   background-color: var(--kalinka-ink);
-  display: flex;
+  display: grid;
+  grid-template-columns: 46px auto minmax(0, 1fr);
   align-items: center;
   gap: 12px;
   padding: 12px 28px 10px;
 }
 
 .kalinka-emblem {
-  flex: 0 0 46px;
   width: 46px;
   height: 46px;
   background: url("/images/kalinka_emblem.png") center / 270% no-repeat;
@@ -70,14 +70,166 @@ body {
 }
 
 .kalinka-subtitle {
-  margin-left: auto;
+  justify-self: end;
+  max-width: 620px;
+  min-width: 0;
+  margin: 0 0 0 28px;
+  text-align: right;
+}
+
+.kalinka-quote-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--kalinka-gold);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+}
+
+.kalinka-quote-text {
+  margin: 0;
+  color: var(--kalinka-cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(17px, 1.4vw, 21px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.kalinka-quote-author {
+  margin: 6px 0 0;
+  color: var(--kalinka-gold);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.kalinka-quote-status {
+  margin: 5px 0 0;
   color: var(--kalinka-muted);
-  font-size: 11px;
-  letter-spacing: .03em;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.kalinka-quote-author:empty,
+.kalinka-quote-status:empty {
+  display: none;
 }
 
 #information-widgets {
   margin: 0 28px 8px;
+}
+
+#kalinka-forecast {
+  margin: 0 28px 12px;
+  padding: 11px 14px 12px;
+  border: 1px solid var(--kalinka-line);
+  border-radius: var(--kalinka-radius);
+  background: var(--kalinka-panel);
+}
+
+.kalinka-forecast-heading {
+  margin: 0 0 10px;
+  color: var(--kalinka-gold);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.kalinka-forecast-days {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kalinka-forecast-day {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 3px 10px;
+  min-width: 0;
+  padding: 0 14px;
+  border-left: 1px solid var(--kalinka-line);
+}
+
+.kalinka-forecast-day:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.kalinka-forecast-date {
+  grid-column: 1 / -1;
+  margin-bottom: 3px;
+  color: var(--kalinka-cream);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kalinka-forecast-day svg {
+  grid-row: 2 / 4;
+  width: 30px;
+  height: 34px;
+  color: var(--kalinka-gold);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.kalinka-forecast-temperatures {
+  grid-column: 2 / -1;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.kalinka-forecast-high {
+  color: var(--kalinka-cream);
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+.kalinka-forecast-low {
+  color: var(--kalinka-muted);
+  font-size: 13px;
+}
+
+.kalinka-forecast-condition,
+.kalinka-forecast-rain {
+  grid-column: 2 / -1;
+  color: var(--kalinka-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.kalinka-forecast-status {
+  margin: 8px 0 0;
+  color: var(--kalinka-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.kalinka-forecast-retry {
+  margin-left: 10px;
+  padding: 3px 8px;
+  border: 1px solid var(--kalinka-line);
+  border-radius: 5px;
+  color: var(--kalinka-gold);
+  font: inherit;
+  cursor: pointer;
+}
+
+.kalinka-forecast-retry:disabled {
+  opacity: .5;
+  cursor: wait;
 }
 
 #widgets-wrap {
@@ -135,11 +287,11 @@ body {
 
 .information-widget-openmeteo::before,
 .information-widget-openmeteo-location-button::before {
-  content: "WEATHER · NEAR YOU";
+  content: "CURRENT WEATHER";
 }
 
 .information-widget-datetime::before {
-  content: "YOUR LOCAL TIME";
+  content: "LOCAL TIME";
 }
 
 .information-widget-search>div {
@@ -300,16 +452,13 @@ body {
 
 .service-icon {
   width: 34px;
+  --color-300: 215 181 119;
 }
 
 .service-icon svg {
   width: 23px;
   height: 23px;
   color: var(--kalinka-gold) !important;
-}
-
-.service-icon {
-  --color-300: 215 181 119;
 }
 
 .service-name {
@@ -412,13 +561,6 @@ body {
   padding: 10px 28px;
 }
 
-#kalinka-signature {
-  color: #a18b63;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 11px;
-  letter-spacing: .26em;
-}
-
 #footer #style {
   flex: 1;
   gap: 10px;
@@ -432,14 +574,6 @@ body {
 #footer #version {
   width: auto;
   margin: 0;
-}
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-[tabindex]:focus-visible {
-  outline: 2px solid var(--kalinka-gold) !important;
-  outline-offset: 4px;
 }
 
 @media (min-width: 1024px) {
@@ -459,6 +593,30 @@ input:focus-visible,
 }
 
 @media (max-width: 1023px) {
+  #kalinka-masthead {
+    grid-template-columns: 46px minmax(0, 1fr);
+  }
+
+  .kalinka-subtitle {
+    grid-column: 1 / -1;
+    justify-self: start;
+    max-width: none;
+    margin: 0 0 4px;
+    padding-left: 12px;
+    border-left: 2px solid var(--kalinka-gold);
+    text-align: left;
+  }
+
+  .kalinka-forecast-day {
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 3px 8px;
+    padding: 0 8px;
+  }
+
+  .kalinka-forecast-day svg {
+    width: 26px;
+  }
+
   #information-widgets-right {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -474,22 +632,48 @@ input:focus-visible,
 
 @media (max-width: 640px) {
   #kalinka-masthead {
+    grid-template-columns: 38px minmax(0, 1fr);
     padding: 10px 14px;
     gap: 10px;
   }
 
   .kalinka-emblem {
-    flex-basis: 38px;
     width: 38px;
     height: 38px;
   }
 
   #kalinka-masthead h1 {
-    font-size: 28px;
+    font-size: clamp(21px, 5.7vw, 28px);
+    letter-spacing: .06em;
   }
 
-  .kalinka-subtitle {
-    display: none;
+  .kalinka-quote-text {
+    font-size: 17px;
+  }
+
+  #kalinka-forecast {
+    margin: 0 14px 10px;
+    padding: 10px 11px;
+  }
+
+  .kalinka-forecast-heading {
+    font-size: 8px;
+    letter-spacing: .09em;
+  }
+
+  .kalinka-forecast-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 8px;
+  }
+
+  .kalinka-forecast-day:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .kalinka-forecast-day:nth-child(n + 3) {
+    padding-top: 10px;
+    border-top: 1px solid var(--kalinka-line);
   }
 
   #information-widgets {
@@ -575,15 +759,5 @@ input:focus-visible,
   .service-name {
     padding-top: 5px;
     padding-bottom: 5px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition-duration: 0s !important;
   }
 }
