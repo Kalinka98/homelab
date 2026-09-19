@@ -32,7 +32,7 @@ services:
 
     environment:
       DOMAIN: "https://vault.${BASE_DOMAIN}"
-      SIGNUPS_ALLOWED: "true"
+      SIGNUPS_ALLOWED: "false"
 
     volumes:
       - ./vaultwarden/data:/data
