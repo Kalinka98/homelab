@@ -23,8 +23,7 @@ body,
 }
 
 .service-card,
-.bookmark>a,
-#kalinka-forecast {
+.bookmark>a {
   background: var(--kalinka-panel);
   border: 1px solid var(--kalinka-line);
   border-radius: 10px;
@@ -47,13 +46,9 @@ body,
   color: var(--kalinka-gold);
 }
 
-/* Daily quote and four-day forecast. */
-#kalinka-daily {
-  margin: 20px 36px 0;
-}
-
+/* Daily quote. */
 #kalinka-quote {
-  margin-bottom: 20px;
+  margin: 20px 36px;
   text-align: center;
 }
 
@@ -67,8 +62,7 @@ body,
   font-size: 12px;
 }
 
-.kalinka-quote-status,
-.kalinka-forecast-status {
+.kalinka-quote-status {
   margin-top: 8px;
   color: var(--kalinka-muted);
   font-size: 12px;
@@ -77,49 +71,4 @@ body,
 .kalinka-quote-author:empty,
 .kalinka-quote-status:empty {
   display: none;
-}
-
-#kalinka-forecast {
-  padding: 14px;
-}
-
-.kalinka-forecast-heading {
-  margin-bottom: 10px;
-  color: var(--kalinka-gold);
-  font-size: 11px;
-}
-
-.kalinka-forecast-days {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.kalinka-forecast-day {
-  padding-left: 14px;
-}
-
-.kalinka-forecast-day+li {
-  border-left: 1px solid var(--kalinka-line);
-}
-
-.kalinka-forecast-date {
-  font-size: 12px;
-}
-
-.kalinka-forecast-temperatures {
-  margin: 4px 0;
-  font-size: 21px;
-}
-
-.kalinka-forecast-low,
-.kalinka-forecast-condition {
-  color: var(--kalinka-muted);
-  font-size: 12px;
-}
-
-.kalinka-forecast-retry {
-  margin-left: 10px;
-  color: var(--kalinka-gold);
-  text-decoration: underline;
 }

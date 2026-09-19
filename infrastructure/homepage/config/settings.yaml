@@ -3,7 +3,7 @@ title: Kalinka · Home
 theme: dark
 color: stone
 
-headerStyle: clean
+headerStyle: underlined
 iconStyle: theme
 
 fullWidth: true
@@ -28,6 +28,10 @@ layout:
     iconsOnly: true
 
   Media:
+    style: row
+    columns: 4
+
+  Media Automation:
     style: row
     columns: 4
 

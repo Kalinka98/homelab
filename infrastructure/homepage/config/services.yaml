@@ -16,7 +16,8 @@
           expandOneStreamToTwoRows: false
           showEpisodeNumber: false
           fields: [movies, series, episodes]
-
+          
+- Media Automation:
     - Sonarr:
         id: sonarr
         icon: mdi-television-classic
@@ -24,12 +25,6 @@
         description: Сериалчетата
         server: local
         container: sonarr
-        widget:
-          type: sonarr
-          url: http://sonarr:8989
-          key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
-          enableQueue: false
-          fields: [series, wanted, queued]
 
     - Radarr:
         id: radarr
@@ -38,12 +33,6 @@
         description: Филмчита
         server: local
         container: radarr
-        widget:
-          type: radarr
-          url: http://radarr:7878
-          key: "{{HOMEPAGE_VAR_RADARR_KEY}}"
-          enableQueue: true
-          fields: [movies, missing, queued]
 
     - qBittorrent:
         id: qbittorrent
@@ -52,14 +41,6 @@
         description: Torrenting (not pirating)
         server: local
         container: qbittorrent
-        widget:
-          type: qbittorrent
-          url: http://qbittorrent:8080
-          username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
-          enableLeechProgress: true
-          enableLeechSize: true
-          fields: [leech, download, seed, upload]
 
     - Prowlarr:
         id: prowlarr
@@ -68,12 +49,7 @@
         description: Indexers Manager
         server: local
         container: prowlarr
-        widget:
-          type: prowlarr
-          url: http://prowlarr:9696
-          key: "{{HOMEPAGE_VAR_PROWLARR_KEY}}"
-          fields: [numberOfQueries, numberOfGrabs, numberOfFailQueries]
-
+        
     - Bazarr:
         id: bazarr
         icon: mdi-subtitles-outline
@@ -81,11 +57,6 @@
         description: Subtitle manager
         server: local
         container: bazarr
-        widget:
-          type: bazarr
-          url: http://bazarr:6767
-          key: "{{HOMEPAGE_VAR_BAZARR_KEY}}"
-          fields: [missingEpisodes, missingMovies]
 
     - SimpleSubGen:
         id: simplesubgen
@@ -128,7 +99,7 @@
           type: uptimekuma
           url: http://uptime-kuma:3001
           slug: homelab
-          fields: [up, down, uptime]
+          fields: [up, down]
 
     - Caddy:
         id: caddy
