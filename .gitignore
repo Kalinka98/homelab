@@ -58,5 +58,8 @@ media/simplesubgen/models/
 # ActualBudget
 services/actual/data
 
+# VaultWarden
+services/vaultwarden/data
+
 # vscode
 .vscode

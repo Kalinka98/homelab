@@ -24,3 +24,18 @@ services:
 
     networks:
       - edge
+
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+
+    environment:
+      DOMAIN: "https://vault.${BASE_DOMAIN}"
+      SIGNUPS_ALLOWED: "true"
+
+    volumes:
+      - ./vaultwarden/data:/data
+
+    networks:
+      - edge

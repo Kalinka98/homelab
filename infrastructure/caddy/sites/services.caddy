@@ -3,6 +3,12 @@ budget.{$BASE_DOMAIN} {
     reverse_proxy actual-budget:5006
 }
 
+vault.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy vaultwarden:80
+}
+
 status.{$BASE_DOMAIN} {
     import common_headers
     reverse_proxy uptime-kuma:3001
