@@ -10,11 +10,11 @@
           url: http://host.docker.internal:8096
           key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
           enableBlocks: true
-          enableNowPlaying: true
-          enableUser: true
+          enableNowPlaying: false
+          enableUser: false
           enableMediaControl: false
           expandOneStreamToTwoRows: false
-          showEpisodeNumber: true
+          showEpisodeNumber: false
           fields: [movies, series, episodes]
 
     - Sonarr:
@@ -28,7 +28,7 @@
           type: sonarr
           url: http://sonarr:8989
           key: "{{HOMEPAGE_VAR_SONARR_KEY}}"
-          enableQueue: true
+          enableQueue: false
           fields: [series, wanted, queued]
 
     - Radarr:

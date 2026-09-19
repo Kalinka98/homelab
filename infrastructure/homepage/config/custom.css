@@ -1,4 +1,4 @@
-/* Theme */
+/* Charcoal and brass theme; Homepage handles the layout. */
 :root {
   --kalinka-ink: #0b0c0b;
   --kalinka-panel: #141513;
@@ -6,644 +6,120 @@
   --kalinka-cream: #f2eadb;
   --kalinka-muted: #aaa699;
   --kalinka-line: #343127;
-  --kalinka-radius: 10px;
-  --kalinka-gutter: 28px;
 }
 
-html,
 body,
-#__next,
-#page_wrapper,
 #inner_wrapper {
-  background-color: var(--kalinka-ink);
+  background: var(--kalinka-ink);
   color: var(--kalinka-cream);
-  color-scheme: dark;
 }
 
-body {
-  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: #d7b57740;
-  color: #fff5df;
-}
-
-* {
-  scrollbar-color: #514735 var(--kalinka-ink);
-  scrollbar-width: thin;
-}
-
-#inner_wrapper { background-image: radial-gradient(ellipse at 50% 0%, #d7b57708, transparent 55%); }
-
-#inner_wrapper>div { max-width: 1600px; }
-
-#kalinka-forecast,
-#information-widgets-right>*,
-.service-card,
-.bookmark>a {
-  border: 1px solid var(--kalinka-line);
-  border-radius: var(--kalinka-radius);
-}
-
-/* Masthead */
-#kalinka-masthead {
-  isolation: isolate;
-  background-color: var(--kalinka-ink);
-  display: grid;
-  grid-template-columns: 46px auto minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
-  padding: 12px var(--kalinka-gutter) 10px;
-}
-
-.kalinka-emblem {
-  width: 46px;
-  height: 46px;
-  background: url("/images/kalinka_emblem.png") center / 270% no-repeat;
-  mix-blend-mode: screen;
-}
-
-#kalinka-masthead h1 {
+.information-widget-greeting span,
+.service-group-name,
+.bookmark-group-name {
   color: var(--kalinka-gold);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 32px;
-  letter-spacing: .12em;
-  line-height: 1.2;
+  letter-spacing: .06em;
 }
 
-.kalinka-subtitle {
-  justify-self: end;
-  max-width: 620px;
-  min-width: 0;
-  margin-left: 28px;
-  text-align: right;
+.service-card,
+.bookmark>a,
+#kalinka-forecast {
+  background: var(--kalinka-panel);
+  border: 1px solid var(--kalinka-line);
+  border-radius: 10px;
 }
 
-.kalinka-quote-label {
-  display: block;
-  margin-bottom: 5px;
+.service-card:hover,
+.bookmark>a:hover {
+  background: #1c1c17;
+  border-color: #8c7148;
+}
+
+.service-icon,
+.information-widget-openmeteo {
+  --color-300: 215 181 119;
+}
+
+.service-icon svg,
+.information-widget-openmeteo svg,
+.service-block> :first-child {
   color: var(--kalinka-gold);
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: .19em;
-  text-transform: uppercase;
+}
+
+/* Daily quote and four-day forecast. */
+#kalinka-daily {
+  margin: 20px 36px 0;
+}
+
+#kalinka-quote {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .kalinka-quote-text {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(17px, 1.4vw, 21px);
-  font-style: italic;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
+  font: italic 20px/1.5 Georgia, "Times New Roman", serif;
 }
 
 .kalinka-quote-author {
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--kalinka-gold);
   font-size: 12px;
-  overflow-wrap: anywhere;
 }
 
-.kalinka-quote-status {
-  margin-top: 5px;
+.kalinka-quote-status,
+.kalinka-forecast-status {
+  margin-top: 8px;
   color: var(--kalinka-muted);
-  font-size: 10px;
-  line-height: 1.5;
+  font-size: 12px;
 }
 
 .kalinka-quote-author:empty,
-.kalinka-quote-status:empty { display: none; }
+.kalinka-quote-status:empty {
+  display: none;
+}
 
-/* Forecast */
 #kalinka-forecast {
-  margin: 0 var(--kalinka-gutter) 12px;
-  padding: 11px 14px 12px;
-  background: var(--kalinka-panel);
+  padding: 14px;
 }
 
 .kalinka-forecast-heading {
-  margin: 0 0 10px;
+  margin-bottom: 10px;
   color: var(--kalinka-gold);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: .15em;
-  text-transform: uppercase;
+  font-size: 11px;
 }
 
 .kalinka-forecast-days {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  gap: 16px;
 }
 
 .kalinka-forecast-day {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 3px 10px;
-  min-width: 0;
-  padding: 0 14px;
+  padding-left: 14px;
+}
+
+.kalinka-forecast-day+li {
   border-left: 1px solid var(--kalinka-line);
 }
 
-.kalinka-forecast-day:first-child {
-  border-left: 0;
-  padding-left: 0;
-}
-
 .kalinka-forecast-date {
-  grid-column: 1 / -1;
-  margin-bottom: 3px;
   font-size: 12px;
-  font-weight: 600;
-}
-
-.kalinka-forecast-day svg {
-  grid-row: 2 / 4;
-  width: 30px;
-  height: 34px;
-  color: var(--kalinka-gold);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .kalinka-forecast-temperatures {
-  grid-column: 2 / -1;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-variant-numeric: tabular-nums;
-}
-
-.kalinka-forecast-high {
+  margin: 4px 0;
   font-size: 21px;
-  line-height: 1.25;
 }
 
-.kalinka-forecast-low {
-  color: var(--kalinka-muted);
-  font-size: 13px;
-}
-
-.kalinka-forecast-condition,
-.kalinka-forecast-rain {
-  grid-column: 2 / -1;
-  color: var(--kalinka-muted);
-  font-size: 10px;
-  line-height: 1.4;
-}
-
-.kalinka-forecast-status {
-  margin-top: 8px;
+.kalinka-forecast-low,
+.kalinka-forecast-condition {
   color: var(--kalinka-muted);
   font-size: 12px;
-  line-height: 1.5;
 }
 
 .kalinka-forecast-retry {
   margin-left: 10px;
-  padding: 3px 8px;
-  border: 1px solid var(--kalinka-line);
-  border-radius: 5px;
   color: var(--kalinka-gold);
-  cursor: pointer;
-}
-
-.kalinka-forecast-retry:disabled {
-  opacity: .5;
-  cursor: wait;
-}
-
-/* Information widgets */
-#information-widgets { margin: 0 var(--kalinka-gutter) 8px; }
-
-#widgets-wrap { display: block; }
-
-#information-widgets-right {
-  display: grid;
-  grid-template-columns: minmax(0, 1.8fr) minmax(210px, 1fr) minmax(230px, 1fr);
-  gap: 10px;
-  width: 100%;
-  margin: 0;
-}
-
-#information-widgets-right>* {
-  position: relative;
-  min-width: 0;
-  margin: 0;
-  padding: 10px 14px;
-  background: var(--kalinka-panel);
-  box-shadow: 0 8px 26px #00000016;
-}
-
-.information-widget-openmeteo,
-.information-widget-openmeteo-location-button { order: 1; }
-
-.information-widget-datetime { order: 2; }
-
-.information-widget-search::before,
-:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button)::before,
-.information-widget-datetime::before {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--kalinka-gold);
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: .19em;
-  line-height: 1.2;
-}
-
-.information-widget-search::before { content: "SEARCH & DISCOVER"; }
-
-:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button)::before { content: "CURRENT WEATHER"; }
-
-.information-widget-datetime::before { content: "LOCAL TIME"; }
-
-.information-widget-search>div {
-  height: 34px;
-  margin: 0;
-  min-width: 0;
-}
-
-.information-widget-search input {
-  height: 34px;
-  padding: 0 50px 0 14px;
-  border: 1px solid #49412e;
-  border-radius: 7px;
-  background: #0d0e0c;
-  color: var(--kalinka-cream);
-  font-size: 13px;
-  box-shadow: none;
-}
-
-.information-widget-search input::placeholder { color: var(--kalinka-muted); }
-
-.information-widget-search button {
-  height: 28px;
-  background: #d7b57714;
-  color: var(--kalinka-gold);
-}
-
-.information-widget-search [role="listbox"] {
-  background: #202019;
-  border-color: #665335;
-}
-
-.information-widget-search [role="option"] {
-  padding: 6px;
-  font-size: 13px;
-}
-
-:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button) .widget-inner { justify-content: flex-start; }
-
-.information-widget-openmeteo .widget-inner-icon svg {
-  width: 34px;
-  height: 34px;
-  color: var(--kalinka-gold);
-}
-
-.information-widget-openmeteo .widget-inner-text> :first-child {
-  font-size: 23px;
-  line-height: 1.1;
-  color: var(--kalinka-cream);
-}
-
-:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button) .widget-inner-text> :last-child {
-  color: var(--kalinka-muted);
-  font-size: 12px;
-}
-
-.information-widget-openmeteo-location-button .widget-inner-text> :first-child {
-  color: var(--kalinka-cream);
-  font-size: 16px;
-}
-
-.information-widget-openmeteo-location-button svg {
-  color: var(--kalinka-gold);
-  animation: none;
-}
-
-.information-widget-datetime>div {
-  justify-content: flex-start;
-  min-height: 34px;
-}
-
-.information-widget-datetime span {
-  color: var(--kalinka-cream);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* Services and bookmarks */
-#layout-groups {
-  margin: 0 24px;
-  gap: 4px 0;
-}
-
-.services-group,
-.bookmark-group {
-  min-width: 0;
-  padding-top: 4px;
-}
-
-.services-group>button,
-.bookmark-group>button {
-  gap: 12px;
-  padding: 3px 0 4px;
-}
-
-.service-group-name,
-.bookmark-group-name {
-  flex-shrink: 0;
-  color: var(--kalinka-cream);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: .015em;
-}
-
-.services-group>button::after {
-  content: "";
-  height: 1px;
-  flex: 1;
-  background: var(--kalinka-line);
-}
-
-.services-group ul,
-.bookmark-group ul {
-  gap: 10px;
-  margin-top: 5px;
-  margin-bottom: 0;
-  padding: 2px 0 4px;
-}
-
-.service-card,
-.bookmark>a {
-  background: var(--kalinka-panel);
-  box-shadow: 0 5px 18px #00000012;
-  color: var(--kalinka-cream);
-  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
-}
-
-.service-card {
-  margin-bottom: 0;
-  padding: 7px 8px;
-  height: 100%;
-}
-
-.service-card:hover,
-.bookmark>a:hover {
-  border-color: #8c7148;
-  background: #1c1c17;
-  box-shadow: 0 6px 22px #00000030;
-}
-
-.service-icon {
-  width: 34px;
-  --color-300: 215 181 119;
-}
-
-.service-icon svg {
-  width: 23px;
-  height: 23px;
-  color: var(--kalinka-gold);
-}
-
-.service-name {
-  font-size: 13px;
-  padding: 3px 6px;
-}
-
-.service-description {
-  margin-top: 2px;
-  color: var(--kalinka-muted);
-  font-size: 11px;
-  line-height: 1.4;
-  font-weight: 400;
-}
-
-.service-title-text { min-width: 0; }
-
-.service-tags {
-  top: 7px;
-  right: 7px;
-}
-
-.service-container-stats {
-  min-width: 24px;
-  min-height: 24px;
-}
-
-.service-card .service-block {
-  background: #0c0d0b;
-  border: 1px solid #26271f;
-  border-radius: 8px;
-  padding: 5px 3px;
-  margin: 5px 3px 1px;
-}
-
-.service-block> :first-child {
-  color: var(--kalinka-gold);
-  font-size: 18px;
-  line-height: 1.3;
-  font-weight: 400;
-  font-variant-numeric: tabular-nums;
-}
-
-.service-block> :last-child {
-  margin-top: 2px;
-  color: var(--kalinka-muted);
-  font-size: 9px;
-  letter-spacing: .03em;
-  font-weight: 500;
-}
-
-[data-kalinka-section="Infrastructure"] .service-block> :first-child { font-size: 16px; }
-
-[data-kalinka-section="Infrastructure"] .service-description:empty { min-height: 1.4em; }
-
-.bookmark-group {
-  display: grid;
-  grid-template-columns: 104px minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
-}
-
-.bookmark-group ul { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; }
-
-.bookmark>a {
-  width: 100%;
-  height: 44px;
-  margin: 0;
-  padding: 8px;
-}
-
-.bookmark-icon { width: 100%; }
-
-.bookmark-icon>div {
-  width: 25px;
-  height: 25px;
-}
-
-.bookmark-icon img { object-fit: contain; }
-
-/* Footer */
-#footer {
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-  padding: 10px var(--kalinka-gutter);
-}
-
-#footer #style {
-  flex: 1;
-  gap: 10px;
-  color: var(--kalinka-muted);
-}
-
-#footer #version:empty { display: none; }
-
-#footer #version {
-  width: auto;
-  margin: 0;
-}
-
-/* Responsive layout */
-@media (min-width: 1024px) {
-  [data-kalinka-section="Infrastructure"] ul { grid-auto-rows: 1fr; }
-}
-
-@media (max-width: 1023px) {
-  #kalinka-masthead { grid-template-columns: 46px minmax(0, 1fr); }
-
-  .kalinka-subtitle {
-    grid-column: 1 / -1;
-    justify-self: start;
-    max-width: none;
-    margin: 0 0 4px;
-    padding-left: 12px;
-    border-left: 2px solid var(--kalinka-gold);
-    text-align: left;
-  }
-
-  .kalinka-forecast-day {
-    grid-template-columns: 26px minmax(0, 1fr);
-    gap: 3px 8px;
-    padding: 0 8px;
-  }
-
-  .kalinka-forecast-day svg { width: 26px; }
-
-  #information-widgets-right { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-  .information-widget-search { grid-column: 1 / -1; }
-}
-
-@media (min-width: 641px) and (max-width: 767px) {
-  .services-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 640px) {
-  :root { --kalinka-gutter: 14px; }
-
-  #kalinka-masthead {
-    grid-template-columns: 38px minmax(0, 1fr);
-    padding-block: 10px;
-    gap: 10px;
-  }
-
-  .kalinka-emblem {
-    width: 38px;
-    height: 38px;
-  }
-
-  #kalinka-masthead h1 {
-    font-size: clamp(21px, 5.7vw, 28px);
-    letter-spacing: .06em;
-  }
-
-  .kalinka-quote-text { font-size: 17px; }
-
-  #kalinka-forecast {
-    margin-bottom: 10px;
-    padding: 10px 11px;
-  }
-
-  .kalinka-forecast-heading {
-    font-size: 8px;
-    letter-spacing: .09em;
-  }
-
-  .kalinka-forecast-days {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px 8px;
-  }
-
-  .kalinka-forecast-day:nth-child(odd) {
-    border-left: 0;
-    padding-left: 0;
-  }
-
-  .kalinka-forecast-day:nth-child(n + 3) {
-    padding-top: 10px;
-    border-top: 1px solid var(--kalinka-line);
-  }
-
-  #information-widgets { margin-bottom: 6px; }
-
-  #information-widgets-right { gap: 8px; }
-
-  #information-widgets-right>* { padding: 9px 11px; }
-
-  .information-widget-openmeteo .widget-inner-icon svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  .information-widget-openmeteo .widget-inner-text { margin-left: 8px; }
-
-  .information-widget-openmeteo .widget-inner-text> :first-child { font-size: 24px; }
-
-  .information-widget-openmeteo-location-button .widget-inner-icon { display: none; }
-
-  .information-widget-openmeteo-location-button .widget-inner-text { margin: 0; }
-
-  .information-widget-datetime span { font-size: 13px; }
-
-  #layout-groups {
-    margin: 0 10px;
-    gap: 4px 0;
-  }
-
-  .services-group ul { gap: 8px; }
-
-  .bookmark-group { display: block; }
-
-  .bookmark-group ul { gap: 6px; }
-
-  .bookmark>a { padding: 8px 4px; }
-
-  .bookmark-icon>div {
-    width: 23px;
-    height: 23px;
-  }
-}
-
-@media (max-width: 360px) {
-  .bookmark-group ul { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
-}
-
-@media (min-width: 1024px) and (max-height: 850px) {
-  .service-description { display: none; }
-
-  .service-name {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
+  text-decoration: underline;
 }

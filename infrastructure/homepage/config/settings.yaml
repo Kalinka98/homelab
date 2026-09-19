@@ -20,9 +20,6 @@ favicon: /images/kalinka_emblem_icon.png
 
 quicklaunch:
   searchDescriptions: true
-  provider: google
-  showSearchSuggestions: true
-  hideVisitURL: false
   mobileButtonPosition: bottom-right
 
 layout:
@@ -36,4 +33,4 @@ layout:
 
   Infrastructure:
     style: row
-    columns: 3
+    columns: 6

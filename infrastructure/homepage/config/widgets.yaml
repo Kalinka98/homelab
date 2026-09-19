@@ -1,3 +1,10 @@
+- logo:
+    icon: /images/kalinka_emblem_icon.png
+
+- greeting:
+    text: Kalinka Homelab
+    text_size: 3xl
+
 - openmeteo:
     units: metric
     cache: 10
@@ -10,7 +17,7 @@
     target: _blank
 
 - datetime:
-    text_size: 2xl
+    text_size: md
     locale: en-GB
     format:
       weekday: short

@@ -94,34 +94,20 @@
   }
 
   function weatherCondition(code) {
-    if (code === 0) return ["Clear sky", "sun"];
-    if (code === 1) return ["Mostly clear", "sun"];
-    if (code === 2) return ["Partly cloudy", "cloud"];
-    if (code === 3) return ["Overcast", "cloud"];
-    if ([45, 48].includes(code)) return ["Fog", "fog"];
-    if ([51, 53, 55].includes(code)) return ["Drizzle", "rain"];
-    if ([56, 57].includes(code)) return ["Freezing drizzle", "rain"];
-    if ([61, 63, 65].includes(code)) return ["Rain", "rain"];
-    if ([66, 67].includes(code)) return ["Freezing rain", "rain"];
-    if ([71, 73, 75, 77].includes(code)) return ["Snow", "snow"];
-    if ([80, 81, 82].includes(code)) return ["Rain showers", "rain"];
-    if ([85, 86].includes(code)) return ["Snow showers", "snow"];
-    if ([95, 96, 99].includes(code)) return ["Thunderstorms", "storm"];
-    return ["Conditions unavailable", "unknown"];
-  }
-
-  function weatherIcon(name) {
-    const cloud = "M6 16a4 4 0 0 1-.4-8A6 6 0 0 1 17 7a4.5 4.5 0 1 1 .5 9H6";
-    const paths = {
-      sun: "M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5",
-      cloud,
-      fog: `${cloud}M4 20h16M8 23h8`,
-      rain: `${cloud}M8 19l-1 3m6-3-1 3m6-3-1 3`,
-      snow: `${cloud}M8 19v4m-2-2h4m6-2v4m-2-2h4`,
-      storm: `${cloud}M13 17l-3 4h4l-2 3`,
-      unknown: "M8 8a4 4 0 1 1 6 3.5c-2 1-2 2-2 3.5m0 4v.1",
-    };
-    return `<svg viewBox="0 0 24 26"><path d="${paths[name]}"></path></svg>`;
+    if (code === 0) return "Clear sky";
+    if (code === 1) return "Mostly clear";
+    if (code === 2) return "Partly cloudy";
+    if (code === 3) return "Overcast";
+    if ([45, 48].includes(code)) return "Fog";
+    if ([51, 53, 55].includes(code)) return "Drizzle";
+    if ([56, 57].includes(code)) return "Freezing drizzle";
+    if ([61, 63, 65].includes(code)) return "Rain";
+    if ([66, 67].includes(code)) return "Freezing rain";
+    if ([71, 73, 75, 77].includes(code)) return "Snow";
+    if ([80, 81, 82].includes(code)) return "Rain showers";
+    if ([85, 86].includes(code)) return "Snow showers";
+    if ([95, 96, 99].includes(code)) return "Thunderstorms";
+    return "Conditions unavailable";
   }
 
   function renderForecast() {
@@ -139,17 +125,15 @@
         const index = start + offset;
         const label = offset === 0 ? "Today" : offset === 1 ? "Tomorrow" :
           new Date(`${forecast.daily.time[index]}T12:00:00`).toLocaleDateString("en-GB", { weekday: "short" });
-        const [condition, icon] = weatherCondition(forecast.daily.weather_code[index]);
+        const condition = weatherCondition(forecast.daily.weather_code[index]);
         const chance = forecast.daily.precipitation_probability_max[index];
         return `<li class="kalinka-forecast-day">
           <span class="kalinka-forecast-date">${label}</span>
-          ${weatherIcon(icon)}
           <div class="kalinka-forecast-temperatures">
             <span class="kalinka-forecast-high">${temperature(forecast.daily.temperature_2m_max[index])}</span>
             <span class="kalinka-forecast-low">${temperature(forecast.daily.temperature_2m_min[index])}</span>
           </div>
-          <span class="kalinka-forecast-condition">${condition}</span>
-          <span class="kalinka-forecast-rain">${Number.isFinite(chance) ? `${Math.round(chance)}% precip.` : "Precip. unavailable"}</span>
+          <p class="kalinka-forecast-condition">${condition} · ${Number.isFinite(chance) ? `${Math.round(chance)}% precip.` : "Precip. unavailable"}</p>
         </li>`;
       });
       section.insertAdjacentHTML("beforeend", `<ol class="kalinka-forecast-days">${days.join("")}</ol>`);
@@ -240,57 +224,27 @@
   const weatherObserver = new PerformanceObserver((list) => list.getEntries().forEach(observeWeatherRequest));
   weatherObserver.observe({ type: "resource", buffered: true });
 
-  function decorate() {
+  function mountDailyContent() {
     const widgets = document.getElementById("information-widgets");
     if (!widgets) return;
-
-    if (!document.getElementById("kalinka-masthead")) {
-      const masthead = element("header");
-      masthead.id = "kalinka-masthead";
-      masthead.innerHTML = `
-        <div class="kalinka-emblem"></div>
-        <h1>Kalinka Homelab</h1>
-        <div class="kalinka-subtitle">
-          <span class="kalinka-quote-label">Daily inspiration</span>
+    observer.disconnect();
+    const daily = element("div");
+    daily.id = "kalinka-daily";
+    daily.innerHTML = `
+        <div id="kalinka-quote">
           <blockquote class="kalinka-quote-text"></blockquote>
           <p class="kalinka-quote-author"></p>
           <p class="kalinka-quote-status"></p>
-        </div>`;
-      widgets.before(masthead);
-      updateQuote();
-    }
-
-    if (!document.getElementById("kalinka-forecast")) {
-      const section = element("section");
-      section.id = "kalinka-forecast";
-      widgets.after(section);
-      renderForecast();
-    }
-
-    document.querySelectorAll(".services-group, .bookmark-group").forEach((group) => {
-      const name = group.querySelector("h2")?.textContent.trim();
-      if (name && group.dataset.kalinkaSection !== name) {
-        group.dataset.kalinkaSection = name;
-      }
-    });
-
-    const search = widgets.querySelector('input[type="text"]');
-    if (search && search.placeholder !== "Search the web…") {
-      search.placeholder = "Search the web…";
-    }
+        </div>
+        <section id="kalinka-forecast"></section>`;
+    widgets.after(daily);
+    updateQuote();
+    renderForecast();
   }
 
-  let pending = false;
-  const observer = new MutationObserver(() => {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => {
-      pending = false;
-      decorate();
-    });
-  });
-  decorate();
+  const observer = new MutationObserver(mountDailyContent);
   observer.observe(document.body, { childList: true, subtree: true });
+  mountDailyContent();
   function refreshDailyContent() {
     if (document.hidden) return;
     updateQuote();
