@@ -152,3 +152,10 @@
         description: Notification Services
         server: local
         container: ntfy
+
+    - Vaultwarden:
+        id: vaultwarden
+        icon: mdi-shield-key-outline
+        href: https://vault.kalinka.dev
+        server: local
+        container: vaultwarden

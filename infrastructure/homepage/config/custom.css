@@ -1,3 +1,4 @@
+/* Theme */
 :root {
   --kalinka-ink: #0b0c0b;
   --kalinka-panel: #141513;
@@ -6,6 +7,7 @@
   --kalinka-muted: #aaa699;
   --kalinka-line: #343127;
   --kalinka-radius: 10px;
+  --kalinka-gutter: 28px;
 }
 
 html,
@@ -13,7 +15,7 @@ body,
 #__next,
 #page_wrapper,
 #inner_wrapper {
-  background-color: var(--kalinka-ink) !important;
+  background-color: var(--kalinka-ink);
   color: var(--kalinka-cream);
   color-scheme: dark;
 }
@@ -33,23 +35,27 @@ body {
   scrollbar-width: thin;
 }
 
-#inner_wrapper {
-  background-image: radial-gradient(ellipse at 50% 0%, #d7b57708, transparent 55%);
+#inner_wrapper { background-image: radial-gradient(ellipse at 50% 0%, #d7b57708, transparent 55%); }
+
+#inner_wrapper>div { max-width: 1600px; }
+
+#kalinka-forecast,
+#information-widgets-right>*,
+.service-card,
+.bookmark>a {
+  border: 1px solid var(--kalinka-line);
+  border-radius: var(--kalinka-radius);
 }
 
-#inner_wrapper>div {
-  max-width: 1600px;
-}
-
+/* Masthead */
 #kalinka-masthead {
-  position: relative;
   isolation: isolate;
   background-color: var(--kalinka-ink);
   display: grid;
   grid-template-columns: 46px auto minmax(0, 1fr);
   align-items: center;
   gap: 12px;
-  padding: 12px 28px 10px;
+  padding: 12px var(--kalinka-gutter) 10px;
 }
 
 .kalinka-emblem {
@@ -63,17 +69,15 @@ body {
   color: var(--kalinka-gold);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 32px;
-  font-weight: 400;
   letter-spacing: .12em;
   line-height: 1.2;
-  margin: 0;
 }
 
 .kalinka-subtitle {
   justify-self: end;
   max-width: 620px;
   min-width: 0;
-  margin: 0 0 0 28px;
+  margin-left: 28px;
   text-align: right;
 }
 
@@ -88,44 +92,34 @@ body {
 }
 
 .kalinka-quote-text {
-  margin: 0;
-  color: var(--kalinka-cream);
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(17px, 1.4vw, 21px);
   font-style: italic;
-  font-weight: 400;
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
 
 .kalinka-quote-author {
-  margin: 6px 0 0;
+  margin-top: 6px;
   color: var(--kalinka-gold);
   font-size: 12px;
   overflow-wrap: anywhere;
 }
 
 .kalinka-quote-status {
-  margin: 5px 0 0;
+  margin-top: 5px;
   color: var(--kalinka-muted);
   font-size: 10px;
   line-height: 1.5;
 }
 
 .kalinka-quote-author:empty,
-.kalinka-quote-status:empty {
-  display: none;
-}
+.kalinka-quote-status:empty { display: none; }
 
-#information-widgets {
-  margin: 0 28px 8px;
-}
-
+/* Forecast */
 #kalinka-forecast {
-  margin: 0 28px 12px;
+  margin: 0 var(--kalinka-gutter) 12px;
   padding: 11px 14px 12px;
-  border: 1px solid var(--kalinka-line);
-  border-radius: var(--kalinka-radius);
   background: var(--kalinka-panel);
 }
 
@@ -142,9 +136,6 @@ body {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .kalinka-forecast-day {
@@ -165,7 +156,6 @@ body {
 .kalinka-forecast-date {
   grid-column: 1 / -1;
   margin-bottom: 3px;
-  color: var(--kalinka-cream);
   font-size: 12px;
   font-weight: 600;
 }
@@ -192,7 +182,6 @@ body {
 }
 
 .kalinka-forecast-high {
-  color: var(--kalinka-cream);
   font-size: 21px;
   line-height: 1.25;
 }
@@ -211,7 +200,7 @@ body {
 }
 
 .kalinka-forecast-status {
-  margin: 8px 0 0;
+  margin-top: 8px;
   color: var(--kalinka-muted);
   font-size: 12px;
   line-height: 1.5;
@@ -223,7 +212,6 @@ body {
   border: 1px solid var(--kalinka-line);
   border-radius: 5px;
   color: var(--kalinka-gold);
-  font: inherit;
   cursor: pointer;
 }
 
@@ -232,9 +220,10 @@ body {
   cursor: wait;
 }
 
-#widgets-wrap {
-  display: block;
-}
+/* Information widgets */
+#information-widgets { margin: 0 var(--kalinka-gutter) 8px; }
+
+#widgets-wrap { display: block; }
 
 #information-widgets-right {
   display: grid;
@@ -249,28 +238,17 @@ body {
   min-width: 0;
   margin: 0;
   padding: 10px 14px;
-  border: 1px solid var(--kalinka-line);
-  border-radius: var(--kalinka-radius);
   background: var(--kalinka-panel);
   box-shadow: 0 8px 26px #00000016;
 }
 
-.information-widget-search {
-  order: 0;
-}
-
 .information-widget-openmeteo,
-.information-widget-openmeteo-location-button {
-  order: 1;
-}
+.information-widget-openmeteo-location-button { order: 1; }
 
-.information-widget-datetime {
-  order: 2;
-}
+.information-widget-datetime { order: 2; }
 
 .information-widget-search::before,
-.information-widget-openmeteo::before,
-.information-widget-openmeteo-location-button::before,
+:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button)::before,
 .information-widget-datetime::before {
   display: block;
   margin-bottom: 6px;
@@ -281,18 +259,11 @@ body {
   line-height: 1.2;
 }
 
-.information-widget-search::before {
-  content: "SEARCH & DISCOVER";
-}
+.information-widget-search::before { content: "SEARCH & DISCOVER"; }
 
-.information-widget-openmeteo::before,
-.information-widget-openmeteo-location-button::before {
-  content: "CURRENT WEATHER";
-}
+:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button)::before { content: "CURRENT WEATHER"; }
 
-.information-widget-datetime::before {
-  content: "LOCAL TIME";
-}
+.information-widget-datetime::before { content: "LOCAL TIME"; }
 
 .information-widget-search>div {
   height: 34px;
@@ -305,16 +276,13 @@ body {
   padding: 0 50px 0 14px;
   border: 1px solid #49412e;
   border-radius: 7px;
-  background: #0d0e0c !important;
-  color: var(--kalinka-cream) !important;
+  background: #0d0e0c;
+  color: var(--kalinka-cream);
   font-size: 13px;
   box-shadow: none;
 }
 
-.information-widget-search input::placeholder {
-  color: var(--kalinka-muted);
-  opacity: 1;
-}
+.information-widget-search input::placeholder { color: var(--kalinka-muted); }
 
 .information-widget-search button {
   height: 28px;
@@ -332,10 +300,7 @@ body {
   font-size: 13px;
 }
 
-.information-widget-openmeteo .widget-inner,
-.information-widget-openmeteo-location-button .widget-inner {
-  justify-content: flex-start;
-}
+:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button) .widget-inner { justify-content: flex-start; }
 
 .information-widget-openmeteo .widget-inner-icon svg {
   width: 34px;
@@ -345,13 +310,11 @@ body {
 
 .information-widget-openmeteo .widget-inner-text> :first-child {
   font-size: 23px;
-  font-weight: 400;
   line-height: 1.1;
   color: var(--kalinka-cream);
 }
 
-.information-widget-openmeteo .widget-inner-text> :last-child,
-.information-widget-openmeteo-location-button .widget-inner-text> :last-child {
+:is(.information-widget-openmeteo, .information-widget-openmeteo-location-button) .widget-inner-text> :last-child {
   color: var(--kalinka-muted);
   font-size: 12px;
 }
@@ -375,9 +338,9 @@ body {
   color: var(--kalinka-cream);
   font-size: 14px;
   line-height: 1.6;
-  font-weight: 400;
 }
 
+/* Services and bookmarks */
 #layout-groups {
   margin: 0 24px;
   gap: 4px 0;
@@ -393,30 +356,23 @@ body {
 .bookmark-group>button {
   gap: 12px;
   padding: 3px 0 4px;
-  cursor: default;
 }
 
 .service-group-name,
 .bookmark-group-name {
   flex-shrink: 0;
-  color: var(--kalinka-cream) !important;
+  color: var(--kalinka-cream);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 18px;
   font-weight: 400;
   letter-spacing: .015em;
 }
 
-.services-group>button::after,
-.bookmark-group>button::after {
+.services-group>button::after {
   content: "";
   height: 1px;
   flex: 1;
   background: var(--kalinka-line);
-}
-
-.services-group>button>svg,
-.bookmark-group>button>svg {
-  display: none;
 }
 
 .services-group ul,
@@ -429,11 +385,9 @@ body {
 
 .service-card,
 .bookmark>a {
-  border: 1px solid var(--kalinka-line);
-  border-radius: var(--kalinka-radius);
-  background: var(--kalinka-panel) !important;
+  background: var(--kalinka-panel);
   box-shadow: 0 5px 18px #00000012;
-  color: var(--kalinka-cream) !important;
+  color: var(--kalinka-cream);
   transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -446,7 +400,7 @@ body {
 .service-card:hover,
 .bookmark>a:hover {
   border-color: #8c7148;
-  background: #1c1c17 !important;
+  background: #1c1c17;
   box-shadow: 0 6px 22px #00000030;
 }
 
@@ -458,30 +412,27 @@ body {
 .service-icon svg {
   width: 23px;
   height: 23px;
-  color: var(--kalinka-gold) !important;
+  color: var(--kalinka-gold);
 }
 
 .service-name {
   font-size: 13px;
-  font-weight: 500;
   padding: 3px 6px;
 }
 
 .service-description {
   margin-top: 2px;
-  color: var(--kalinka-muted) !important;
+  color: var(--kalinka-muted);
   font-size: 11px;
   line-height: 1.4;
   font-weight: 400;
 }
 
-.service-title-text {
-  min-width: 0;
-}
+.service-title-text { min-width: 0; }
 
 .service-tags {
-  top: 7px !important;
-  right: 7px !important;
+  top: 7px;
+  right: 7px;
 }
 
 .service-container-stats {
@@ -513,9 +464,9 @@ body {
   font-weight: 500;
 }
 
-[data-kalinka-section="Infrastructure"] .service-block> :first-child {
-  font-size: 16px;
-}
+[data-kalinka-section="Infrastructure"] .service-block> :first-child { font-size: 16px; }
+
+[data-kalinka-section="Infrastructure"] .service-description:empty { min-height: 1.4em; }
 
 .bookmark-group {
   display: grid;
@@ -524,13 +475,7 @@ body {
   gap: 12px;
 }
 
-.bookmark-group>button::after {
-  display: none;
-}
-
-.bookmark-group ul {
-  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
-}
+.bookmark-group ul { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; }
 
 .bookmark>a {
   width: 100%;
@@ -539,26 +484,21 @@ body {
   padding: 8px;
 }
 
-.bookmark-icon {
-  width: 100%;
-  background: transparent !important;
-}
+.bookmark-icon { width: 100%; }
 
 .bookmark-icon>div {
   width: 25px;
   height: 25px;
 }
 
-.bookmark-icon img {
-  object-fit: contain;
-  filter: none;
-}
+.bookmark-icon img { object-fit: contain; }
 
+/* Footer */
 #footer {
   flex-direction: row;
   align-items: center;
   gap: 16px;
-  padding: 10px 28px;
+  padding: 10px var(--kalinka-gutter);
 }
 
 #footer #style {
@@ -567,35 +507,20 @@ body {
   color: var(--kalinka-muted);
 }
 
-#footer #version:empty {
-  display: none;
-}
+#footer #version:empty { display: none; }
 
 #footer #version {
   width: auto;
   margin: 0;
 }
 
+/* Responsive layout */
 @media (min-width: 1024px) {
-  .services-group ul {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  [data-kalinka-section="Media"] ul {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1280px) {
-  [data-kalinka-section="Infrastructure"] ul {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
+  [data-kalinka-section="Infrastructure"] ul { grid-auto-rows: 1fr; }
 }
 
 @media (max-width: 1023px) {
-  #kalinka-masthead {
-    grid-template-columns: 46px minmax(0, 1fr);
-  }
+  #kalinka-masthead { grid-template-columns: 46px minmax(0, 1fr); }
 
   .kalinka-subtitle {
     grid-column: 1 / -1;
@@ -613,27 +538,23 @@ body {
     padding: 0 8px;
   }
 
-  .kalinka-forecast-day svg {
-    width: 26px;
-  }
+  .kalinka-forecast-day svg { width: 26px; }
 
-  #information-widgets-right {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  #information-widgets-right { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-  .information-widget-search {
-    grid-column: 1 / -1;
-  }
+  .information-widget-search { grid-column: 1 / -1; }
+}
 
-  .services-group ul {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+@media (min-width: 641px) and (max-width: 767px) {
+  .services-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 640px) {
+  :root { --kalinka-gutter: 14px; }
+
   #kalinka-masthead {
     grid-template-columns: 38px minmax(0, 1fr);
-    padding: 10px 14px;
+    padding-block: 10px;
     gap: 10px;
   }
 
@@ -647,12 +568,10 @@ body {
     letter-spacing: .06em;
   }
 
-  .kalinka-quote-text {
-    font-size: 17px;
-  }
+  .kalinka-quote-text { font-size: 17px; }
 
   #kalinka-forecast {
-    margin: 0 14px 10px;
+    margin-bottom: 10px;
     padding: 10px 11px;
   }
 
@@ -676,85 +595,52 @@ body {
     border-top: 1px solid var(--kalinka-line);
   }
 
-  #information-widgets {
-    margin: 0 14px 6px;
-  }
+  #information-widgets { margin-bottom: 6px; }
 
-  #information-widgets-right {
-    gap: 8px;
-  }
+  #information-widgets-right { gap: 8px; }
 
-  #information-widgets-right>* {
-    padding: 9px 11px;
-  }
+  #information-widgets-right>* { padding: 9px 11px; }
 
   .information-widget-openmeteo .widget-inner-icon svg {
     width: 30px;
     height: 30px;
   }
 
-  .information-widget-openmeteo .widget-inner-text {
-    margin-left: 8px;
-  }
+  .information-widget-openmeteo .widget-inner-text { margin-left: 8px; }
 
-  .information-widget-openmeteo .widget-inner-text> :first-child {
-    font-size: 24px;
-  }
+  .information-widget-openmeteo .widget-inner-text> :first-child { font-size: 24px; }
 
-  .information-widget-openmeteo-location-button .widget-inner-icon {
-    display: none;
-  }
+  .information-widget-openmeteo-location-button .widget-inner-icon { display: none; }
 
-  .information-widget-openmeteo-location-button .widget-inner-text {
-    margin: 0;
-  }
+  .information-widget-openmeteo-location-button .widget-inner-text { margin: 0; }
 
-  .information-widget-datetime span {
-    font-size: 13px;
-  }
+  .information-widget-datetime span { font-size: 13px; }
 
   #layout-groups {
     margin: 0 10px;
     gap: 4px 0;
   }
 
-  .services-group ul {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 8px;
-  }
+  .services-group ul { gap: 8px; }
 
-  .bookmark-group {
-    display: block;
-  }
+  .bookmark-group { display: block; }
 
-  .bookmark-group ul {
-    gap: 6px;
-  }
+  .bookmark-group ul { gap: 6px; }
 
-  .bookmark>a {
-    padding: 8px 4px;
-  }
+  .bookmark>a { padding: 8px 4px; }
 
   .bookmark-icon>div {
     width: 23px;
     height: 23px;
   }
-
-  #footer {
-    padding: 10px 14px;
-  }
 }
 
 @media (max-width: 360px) {
-  .bookmark-group ul {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  }
+  .bookmark-group ul { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
 }
 
 @media (min-width: 1024px) and (max-height: 850px) {
-  .service-description {
-    display: none;
-  }
+  .service-description { display: none; }
 
   .service-name {
     padding-top: 5px;
