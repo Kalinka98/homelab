@@ -120,7 +120,7 @@ def homepage():
 
             background: transparent;
 
-            color: #f0eadc;
+            color: #f2eadb;
 
             font-family:
                 Georgia,
@@ -136,7 +136,7 @@ def homepage():
         .label {{
             margin-bottom: 8px;
 
-            color: #d6ad60;
+            color: #d7b577;
 
             font-family:
                 system-ui,
@@ -165,7 +165,7 @@ def homepage():
         .author {{
             margin-top: 10px;
 
-            color: #d6ad60;
+            color: #d7b577;
 
             font-size: 12px;
 
@@ -173,7 +173,7 @@ def homepage():
         }}
 
         .mark {{
-            color: #d6ad60;
+            color: #d7b577;
         }}
     </style>
 </head>

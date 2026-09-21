@@ -1,17 +1,37 @@
-/* Charcoal and brass theme; Homepage handles the layout. */
 :root {
   --kalinka-ink: #0b0c0b;
   --kalinka-panel: #141513;
+  --kalinka-inset: #10110f;
+  --kalinka-hover: #1c1c17;
   --kalinka-gold: #d7b577;
   --kalinka-cream: #f2eadb;
   --kalinka-muted: #aaa699;
   --kalinka-line: #343127;
+  --kalinka-line-hover: #8c7148;
+  --kalinka-focus: rgb(215 181 119 / 20%);
 }
 
-body,
+html.theme-stone {
+  --color-100: 242 234 219;
+  --color-200: 242 234 219;
+  --color-300: 170 166 153;
+  --color-400: 170 166 153;
+  --color-500: 140 113 72;
+  --color-600: 67 60 45;
+  --color-700: 52 49 39;
+  --color-800: 20 21 19;
+  --color-900: 11 12 11;
+}
+
+html.theme-stone,
+html body,
 #inner_wrapper {
   background: var(--kalinka-ink);
   color: var(--kalinka-cream);
+}
+
+#information-widgets {
+  border-color: var(--kalinka-line);
 }
 
 .information-widget-greeting span,
@@ -25,14 +45,26 @@ body,
 .service-card,
 .bookmark>a {
   background: var(--kalinka-panel);
+  color: var(--kalinka-cream);
   border: 1px solid var(--kalinka-line);
   border-radius: 10px;
 }
 
 .service-card:hover,
 .bookmark>a:hover {
-  background: #1c1c17;
-  border-color: #8c7148;
+  background: var(--kalinka-hover);
+  border-color: var(--kalinka-line-hover);
+  color: var(--kalinka-cream);
+}
+
+.service-description,
+.widget-inner-text .secondary-text,
+.service-block:not([data-highlight-level])> :last-child:not(:first-child) {
+  color: var(--kalinka-muted);
+}
+
+.service-block:not([data-highlight-level]) {
+  background: var(--kalinka-inset);
 }
 
 .service-icon,
@@ -42,6 +74,93 @@ body,
 
 .service-icon svg,
 .information-widget-openmeteo svg,
-.service-block> :first-child {
+.service-block:not([data-highlight-level])> :first-child {
   color: var(--kalinka-gold);
+}
+
+.information-widget-search input,
+#inner_wrapper dialog input {
+  background: var(--kalinka-panel);
+  border-color: var(--kalinka-line);
+  color: var(--kalinka-cream);
+  caret-color: var(--kalinka-gold);
+}
+
+.information-widget-search input::placeholder,
+#inner_wrapper dialog input::placeholder {
+  color: var(--kalinka-muted);
+  opacity: 1;
+}
+
+.information-widget-search input:hover {
+  border-color: var(--kalinka-line-hover);
+}
+
+.information-widget-search input:focus,
+#inner_wrapper dialog input:focus {
+  border-color: var(--kalinka-gold);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--kalinka-focus);
+}
+
+.information-widget-search button {
+  background: var(--kalinka-hover);
+  color: var(--kalinka-gold);
+}
+
+.information-widget-search button svg {
+  color: inherit;
+}
+
+.information-widget-search [role="listbox"],
+#inner_wrapper dialog {
+  background: var(--kalinka-panel);
+  border: 1px solid var(--kalinka-line);
+  color: var(--kalinka-cream);
+}
+
+.information-widget-search [role="listbox"]>div {
+  background: transparent;
+  color: var(--kalinka-cream);
+}
+
+.information-widget-search [role="option"]:is([data-focus], [aria-selected="true"])>div,
+.information-widget-search [role="option"]:is([data-focus], [aria-selected="true"]) {
+  background: var(--kalinka-hover);
+  color: var(--kalinka-gold);
+}
+
+.information-widget-search [role="option"] .opacity-50,
+#inner_wrapper dialog .opacity-50,
+#inner_wrapper dialog .text-theme-600 {
+  color: var(--kalinka-muted);
+  opacity: 1;
+}
+
+#inner_wrapper [role="dialog"]>.fixed.inset-0 {
+  background: var(--kalinka-ink);
+  opacity: .75;
+}
+
+#inner_wrapper dialog {
+  --color-300: 215 181 119;
+}
+
+#inner_wrapper dialog button[data-index][class~="dark:bg-theme-700/50"] {
+  background: var(--kalinka-hover);
+  color: var(--kalinka-gold);
+}
+
+#footer svg {
+  color: var(--kalinka-muted);
+}
+
+#footer svg:hover,
+#footer button:focus-visible svg {
+  color: var(--kalinka-gold);
+}
+
+#inner_wrapper :is(a, button):focus-visible {
+  outline: 2px solid var(--kalinka-gold);
+  outline-offset: 3px;
 }
