@@ -76,3 +76,17 @@ services:
 
     networks:
       - edge
+
+  quotes-service:
+    build:
+      context: ./quotes-service
+
+    container_name: quotes-service
+
+    restart: unless-stopped
+
+    volumes:
+      - ./quotes-service/quotes.json:/app/quotes.json:ro
+
+    networks:
+      - edge

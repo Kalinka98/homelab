@@ -59,7 +59,6 @@ def get_daily_quote():
 
     today = datetime.now(TIMEZONE).date().isoformat()
 
-    # Deterministic but pseudo-random-looking selection.
     digest = sha256(today.encode()).hexdigest()
 
     index = int(digest[:8], 16) % len(quotes)
@@ -182,10 +181,6 @@ def homepage():
 <body>
     <div class="container">
 
-        <div class="label">
-            Daily Inspiration
-        </div>
-
         <div class="quote">
             <span class="mark">“</span>{quote_text}<span class="mark">”</span>
         </div>
@@ -197,8 +192,6 @@ def homepage():
     </div>
 
     <script>
-        // Reload shortly after the next local midnight
-        // so a permanently open Homepage changes quote.
 
         function reloadAtMidnight() {{
             const now = new Date();

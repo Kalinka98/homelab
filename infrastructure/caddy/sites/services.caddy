@@ -6,7 +6,19 @@ budget.{$BASE_DOMAIN} {
 home.{$BASE_DOMAIN} {
     import common_headers
 
-    reverse_proxy homepage:3000
+    handle_path /quotes/* {
+        header {
+            -X-Frame-Options
+            -Content-Security-Policy
+            Content-Security-Policy "frame-ancestors 'self'"
+        }
+
+        reverse_proxy quotes-service:8000
+    }
+
+    handle {
+        reverse_proxy homepage:3000
+    }
 }
 
 vault.{$BASE_DOMAIN} {
