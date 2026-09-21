@@ -1,3 +1,24 @@
+- Inspiration:
+    - Daily Inspiration:
+        icon: mdi-format-quote-open
+        classes: daily-inspiration
+        widget:
+          type: customapi
+          url: https://zenquotes.io/api/today
+          refreshInterval: 3600000
+          display: list
+          mappings:
+            - field: 0.q
+              label: " "
+              format: text
+              prefix: "“"
+              suffix: "”"
+
+            - field: 0.a
+              label: " "
+              format: text
+              prefix: "— "
+
 - Media:
     - Jellyfin:
         id: jellyfin
@@ -16,7 +37,7 @@
           expandOneStreamToTwoRows: false
           showEpisodeNumber: false
           fields: [movies, series, episodes]
-          
+
 - Media Automation:
     - Sonarr:
         id: sonarr

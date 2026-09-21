@@ -1,0 +1,124 @@
+/* Charcoal and brass theme; Homepage handles the layout. */
+:root {
+  --kalinka-ink: #0b0c0b;
+  --kalinka-panel: #141513;
+  --kalinka-gold: #d7b577;
+  --kalinka-cream: #f2eadb;
+  --kalinka-muted: #aaa699;
+  --kalinka-line: #343127;
+}
+
+body,
+#inner_wrapper {
+  background: var(--kalinka-ink);
+  color: var(--kalinka-cream);
+}
+
+.information-widget-greeting span,
+.service-group-name,
+.bookmark-group-name {
+  color: var(--kalinka-gold);
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: .06em;
+}
+
+.service-card,
+.bookmark>a {
+  background: var(--kalinka-panel);
+  border: 1px solid var(--kalinka-line);
+  border-radius: 10px;
+}
+
+.service-card:hover,
+.bookmark>a:hover {
+  background: #1c1c17;
+  border-color: #8c7148;
+}
+
+.service-icon,
+.information-widget-openmeteo {
+  --color-300: 215 181 119;
+}
+
+.service-icon svg,
+.information-widget-openmeteo svg,
+.service-block> :first-child {
+  color: var(--kalinka-gold);
+}
+
+
+/* ============================================================
+   DAILY INSPIRATION
+   ============================================================ */
+
+.daily-inspiration {
+  position: relative;
+
+  background:
+    linear-gradient(135deg,
+      rgba(214, 173, 96, 0.05),
+      transparent 45%),
+    var(--kalinka-card) !important;
+
+  border: 1px solid rgba(214, 173, 96, 0.22) !important;
+  border-radius: 10px !important;
+
+  min-height: 115px;
+}
+
+
+/* Service title */
+
+.daily-inspiration .service-name {
+  color: var(--kalinka-gold) !important;
+
+  font-family: sans-serif;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+
+/* Hide the normal description */
+
+.daily-inspiration .service-description {
+  display: none;
+}
+
+
+/* Make the widget consume the available width */
+
+.daily-inspiration .service-container {
+  width: 100%;
+}
+
+
+/* Quote */
+
+.daily-inspiration .service-container>div:nth-child(1) {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+
+  font-size: 19px;
+  line-height: 1.45;
+
+  color: var(--kalinka-text);
+
+  text-align: center;
+}
+
+
+/* Author */
+
+.daily-inspiration .service-container>div:nth-child(2) {
+  margin-top: 8px;
+
+  color: var(--kalinka-gold);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+
+  text-align: right;
+}

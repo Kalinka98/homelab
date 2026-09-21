@@ -3,49 +3,15 @@ budget.{$BASE_DOMAIN} {
     reverse_proxy actual-budget:5006
 }
 
+home.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy homepage:3000
+}
+
 vault.{$BASE_DOMAIN} {
     import common_headers
 
     reverse_proxy vaultwarden:80
 }
 
-status.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy uptime-kuma:3001
-}
-
-logs.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy dozzle:8080
-}
-
-notify.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy ntfy:80
-}
-
-home.{$BASE_DOMAIN} {
-    import common_headers
-
-    @daily_quote {
-        path /api/daily-quote
-        method GET
-    }
-    handle @daily_quote {
-        rewrite * /api/today
-        reverse_proxy https://zenquotes.io {
-            header_up -Cookie
-            header_up -Authorization
-            header_down -Set-Cookie
-        }
-    }
-
-    handle {
-        reverse_proxy homepage:3000
-    }
-}
-
-adguard.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy adguard:3000
-}

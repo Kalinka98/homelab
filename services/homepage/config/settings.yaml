@@ -23,6 +23,11 @@ quicklaunch:
   mobileButtonPosition: bottom-right
 
 layout:
+  Inspiration:
+    style: row
+    columns: 4
+    header: false
+
   Everyday:
     style: row
     iconsOnly: true
