@@ -3,6 +3,11 @@ status.{$BASE_DOMAIN} {
     reverse_proxy uptime-kuma:3001
 }
 
+speedtest.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy speedtest-tracker:80
+}
+
 logs.{$BASE_DOMAIN} {
     import common_headers
     reverse_proxy dozzle:8080

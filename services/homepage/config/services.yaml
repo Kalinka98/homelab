@@ -138,6 +138,18 @@
           slug: homelab
           fields: [up, down]
 
+    - Speedtest Tracker:
+        id: speedtest-tracker
+        icon: mdi-speedometer
+        href: https://speedtest.kalinka.dev
+        server: local
+        container: speedtest-tracker
+        widget:
+          type: speedtest
+          url: https://speedtest.kalinka.dev
+          version: 2
+          key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
+
     - Caddy:
         id: caddy
         icon: mdi-lock-outline

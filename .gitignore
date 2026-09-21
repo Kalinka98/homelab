@@ -30,6 +30,9 @@ infrastructure/adguard/conf
 # Uptime Kuma
 infrastructure/uptime-kuma/data
 
+# Speedtest Tracker
+infrastructure/speedtest-tracker/config/
+
 # Dozzle
 infrastructure/dozzle/data
 
