@@ -1,4 +1,4 @@
-- Inspiration:
+- Daily:
     - Daily Inspiration:
         icon: mdi-format-quote-open
         widget:
@@ -7,6 +7,33 @@
           src: https://home.kalinka.dev/quotes/
           classes: h-28
           allowScrolling: no
+    - Calendar:
+        widget:
+          type: calendar
+          view: agenda
+          showTime: true
+          maxEvents: 5
+          integrations:
+            - type: ical
+              url: "{{HOMEPAGE_VAR_PERSONAL_CALENDAR_URL}}"
+              name: My Events
+              color: indigo
+            - type: ical
+              url: "{{HOMEPAGE_VAR_WORK_CALENDAR_URL}}"
+              name: Work Events
+              color: violet
+            - type: ical
+              url: "{{HOMEPAGE_VAR_BG_HOLIDAYS_CALENDAR_URL}}"
+              name: Bulgaria Holidays
+              color: emerald
+            - type: ical
+              url: "{{HOMEPAGE_VAR_BIRTHDAYS_CALENDAR_URL}}"
+              name: Birthdays
+              color: amber
+            - type: ical
+              url: "{{HOMEPAGE_VAR_MEDICAL_CALENDAR_URL}}"
+              name: Medical
+              color: green
 
 - Media:
     - Jellyfin:

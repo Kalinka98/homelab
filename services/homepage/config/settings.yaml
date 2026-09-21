@@ -23,9 +23,9 @@ quicklaunch:
   mobileButtonPosition: bottom-right
 
 layout:
-  Inspiration:
+  Daily:
     style: row
-    columns: 4
+    columns: 6
     header: false
 
   Everyday:
