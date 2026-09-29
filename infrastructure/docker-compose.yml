@@ -25,10 +25,10 @@ services:
       - "443:443/udp"
 
     volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./caddy/sites:/etc/caddy/sites:ro
-      - ./caddy/data:/data
-      - ./caddy/config:/config
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro,Z
+      - ./caddy/sites:/etc/caddy/sites:ro,Z
+      - ./caddy/data:/data:Z
+      - ./caddy/config:/config:Z
 
     networks:
       - edge
@@ -40,14 +40,14 @@ services:
     logging: *default-logging
 
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
+      - "${SERVER_IP_ADDRESS}:53:53/tcp"
+      - "${SERVER_IP_ADDRESS}:53:53/udp"
 
-      - "3000:3000/tcp"
+      - "${SERVER_IP_ADDRESS}:3000:3000/tcp"
 
     volumes:
-      - ./adguard/work:/opt/adguardhome/work
-      - ./adguard/conf:/opt/adguardhome/conf
+      - ./adguard/work:/opt/adguardhome/work:Z
+      - ./adguard/conf:/opt/adguardhome/conf:Z
 
     networks:
       - edge
@@ -59,7 +59,7 @@ services:
     logging: *default-logging
 
     volumes:
-      - ./uptime-kuma/data:/app/data
+      - ./uptime-kuma/data:/app/data:Z
 
     expose:
       - "3001"
@@ -79,7 +79,7 @@ services:
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./dozzle/data:/data
+      - ./dozzle/data:/data:Z
 
     expose:
       - "8080"
@@ -116,7 +116,7 @@ services:
       PUBLIC_DASHBOARD: "false"
 
     volumes:
-      - ./speedtest-tracker/config:/config
+      - ./speedtest-tracker/config:/config:Z
 
     networks:
       - edge
@@ -146,7 +146,7 @@ services:
       NTFY_UPSTREAM_BASE_URL: https://ntfy.sh
 
     volumes:
-      - ./ntfy/data:/var/lib/ntfy
+      - ./ntfy/data:/var/lib/ntfy:Z
 
     expose:
       - "80"

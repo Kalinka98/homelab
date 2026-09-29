@@ -17,7 +17,7 @@ services:
     logging: *default-logging
 
     volumes:
-      - ./actual/data:/data
+      - ./actual/data:/data:Z
 
     expose:
       - "5006"
@@ -35,7 +35,7 @@ services:
       SIGNUPS_ALLOWED: "false"
 
     volumes:
-      - ./vaultwarden/data:/data
+      - ./vaultwarden/data:/data:Z
 
     networks:
       - edge
@@ -74,8 +74,8 @@ services:
       HOMEPAGE_VAR_QBITTORRENT_PASSWORD: ${QBITTORRENT_PASSWORD}
 
     volumes:
-      - ./homepage/config:/app/config
-      - ./homepage/images:/app/public/images:ro
+      - ./homepage/config:/app/config:Z
+      - ./homepage/images:/app/public/images:ro,Z
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
     expose:
@@ -93,7 +93,7 @@ services:
     restart: unless-stopped
 
     volumes:
-      - ./quotes-service/quotes.json:/app/quotes.json:ro
+      - ./quotes-service/quotes.json:/app/quotes.json:ro,Z
 
     networks:
       - edge
