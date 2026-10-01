@@ -25,10 +25,10 @@ services:
       - TZ=${TZ}
 
     volumes:
-      - ./radarr/config:/config
+      - ./radarr/config:/config:Z
       - ${MOVIES_PATH}:/movies
       - ${TVSHOWS_PATH}:/tvshows
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${DOWNLOADS_PATH}:/downloads:z
 
     expose:
       - "7878"
@@ -49,10 +49,10 @@ services:
       - TZ=${TZ}
 
     volumes:
-      - ./sonarr/config:/config
+      - ./sonarr/config:/config:Z
       - ${MOVIES_PATH}:/movies
       - ${TVSHOWS_PATH}:/tvshows
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${DOWNLOADS_PATH}:/downloads:z
 
     expose:
       - "8989"
@@ -74,8 +74,8 @@ services:
       - WEBUI_PORT=8080
 
     volumes:
-      - ./qbittorrent/config:/config
-      - ${DOWNLOADS_PATH}:/downloads
+      - ./qbittorrent/config:/config:Z
+      - ${DOWNLOADS_PATH}:/downloads:z
 
     expose:
       - "8080"
@@ -96,7 +96,7 @@ services:
       - TZ=${TZ}
 
     volumes:
-      - ./prowlarr/config:/config
+      - ./prowlarr/config:/config:Z
 
     expose:
       - "9696"
@@ -133,7 +133,7 @@ services:
       - TZ=${TZ}
 
     volumes:
-      - ./bazarr/config:/config
+      - ./bazarr/config:/config:Z
       - ${MOVIES_PATH}:/movies
       - ${TVSHOWS_PATH}:/tvshows
 
@@ -176,8 +176,8 @@ services:
       SUBTITLE_SUFFIX: ${SUBTITLE_SUFFIX}
 
     volumes:
-      - ./simplesubgen/data:/data
-      - ./simplesubgen/models:/models
+      - ./simplesubgen/data:/data:Z
+      - ./simplesubgen/models:/models:Z
       - ${MOVIES_PATH}:/movies
       - ${TVSHOWS_PATH}:/tvshows
 
