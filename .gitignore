@@ -39,6 +39,10 @@ infrastructure/dozzle/data
 # ntfy
 infrastructure/ntfy/data/
 
+# Jellyfin
+media/jellyfin/config
+media/jellyfin/cache
+
 # qBittorrent
 media/qbittorrent/config/
 

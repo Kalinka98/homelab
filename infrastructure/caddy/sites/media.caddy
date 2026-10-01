@@ -25,5 +25,5 @@ bazarr.{$BASE_DOMAIN} {
 
 jellyfin.{$BASE_DOMAIN} {
     import common_headers
-    reverse_proxy host.docker.internal:8096
+    reverse_proxy jellyfin:8096
 }
