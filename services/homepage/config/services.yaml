@@ -174,6 +174,22 @@
             - field: pending_devices
               label: Pending
 
+    - Beszel:
+        id: beszel
+        icon: mdi-chart-line
+        href: https://monitor.kalinka.dev
+        description: Hardware & container monitoring
+        server: local
+        container: beszel
+        widget:
+          type: beszel
+          url: http://beszel:8090
+          username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
+          systemId: "Kalinka Server"
+          version: 2
+          fields: [cpu, memory, disk, network]
+
     - Caddy:
         id: caddy
         icon: mdi-lock-outline

@@ -42,6 +42,9 @@ infrastructure/ntfy/data/
 # Homelable
 infrastructure/homelable/data/
 
+# Beszel
+infrastructure/beszel/data/
+
 # Jellyfin
 media/jellyfin/config
 media/jellyfin/cache
