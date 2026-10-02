@@ -97,3 +97,58 @@ services:
 
     networks:
       - edge
+  
+  ovumcy:
+    image: ghcr.io/ovumcy/ovumcy-web:v1.9.2
+    container_name: ovumcy
+    restart: unless-stopped
+    init: true
+    logging: *default-logging
+
+    environment:
+      TZ: ${TZ}
+      DEFAULT_LANGUAGE: en
+
+      REGISTRATION_MODE: "closed"
+
+      SECRET_KEY: ${OVUMCY_SECRET_KEY}
+
+      PORT: "8080"
+
+      DB_DRIVER: sqlite
+      DB_PATH: /app/data/ovumcy.db
+
+      CALENDAR_FEED_FENCE_PATH: /app/fence/calendar-feed.fence
+
+      COOKIE_SECURE: "true"
+      TRUST_PROXY_ENABLED: "true"
+      PROXY_HEADER: X-Real-IP
+      TRUSTED_PROXIES: ${OVUMCY_TRUSTED_PROXIES}
+
+    volumes:
+      - ./ovumcy/data:/app/data:Z
+      - ./ovumcy/fence:/app/fence:Z
+
+    expose:
+      - "8080"
+
+    networks:
+      - edge
+
+    security_opt:
+      - no-new-privileges:true
+
+    cap_drop:
+      - ALL
+
+    read_only: true
+
+    tmpfs:
+      - /tmp
+
+    healthcheck:
+      test: ["CMD", "/app/ovumcy", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

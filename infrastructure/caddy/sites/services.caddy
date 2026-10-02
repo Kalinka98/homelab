@@ -27,3 +27,9 @@ vault.{$BASE_DOMAIN} {
     reverse_proxy vaultwarden:80
 }
 
+cycle.{$BASE_DOMAIN} {
+    reverse_proxy ovumcy:8080 {
+        header_up X-Real-IP {remote_host}
+    }
+}
+

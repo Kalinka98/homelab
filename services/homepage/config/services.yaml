@@ -41,11 +41,12 @@
         icon: mdi-play-circle-outline
         href: https://jellyfin.kalinka.dev
         description: Who needs Netflix anyway?
-        siteMonitor: http://host.docker.internal:8096/health
+        siteMonitor: https://jellyfin.kalinka.dev/health
         widget:
           type: jellyfin
-          url: http://host.docker.internal:8096
+          url: https://jellyfin.kalinka.dev
           key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+          version: 2
           enableBlocks: true
           enableNowPlaying: false
           enableUser: false
@@ -179,3 +180,11 @@
         href: https://vault.kalinka.dev
         server: local
         container: vaultwarden
+
+- Personal:
+    - Ovumcy:
+        icon: mdi-calendar-heart
+        href: https://ovumcy.kalinka.dev
+        description: Cycle tracking
+        container: ovumcy
+        server: local
