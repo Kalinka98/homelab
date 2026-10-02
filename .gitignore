@@ -68,5 +68,8 @@ services/actual/data
 # VaultWarden
 services/vaultwarden/data
 
+# Free Games Claimer
+services/free-games-claimer/data/
+
 # vscode
 .vscode

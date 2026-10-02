@@ -152,3 +152,46 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
+
+  free-games-claimer:
+    image: ghcr.io/p-adamiec/free-games-claimer-remaster:latest
+    container_name: fgc-remaster
+    restart: unless-stopped
+    logging: *default-logging
+
+    tty: true
+    stdin_open: true
+
+    environment:
+      TZ: ${TZ}
+
+      STORES: "steam"
+
+      VNC_PASSWORD: ${FGC_VNC_PASSWORD}
+      VNC_LOGIN_TIMEOUT: "600"
+
+      SCHEDULER_TIMEZONE: ${TZ}
+
+      NOTIFY: ${FGC_NOTIFY_URL}
+      NOTIFY_TEST: "false"
+      NOTIFY_SUMMARY: "true"
+      NOTIFY_ERRORS: "true"
+      NOTIFY_CLAIM_FAILS: "true"
+      NOTIFY_ALREADY_CLAIMED: "false"
+      NOTIFY_UPDATES: "true"
+      NOTIFY_LOGIN_REQUEST: "true"
+
+    ports:
+      - "7080:7080"
+
+    networks:
+      - edge
+
+    volumes:
+      - ./free-games-claimer/data:/fgc/data:Z
+
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep python3 && curl --fail http://localhost:7080 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
