@@ -150,6 +150,29 @@
           url: https://speedtest.kalinka.dev
           version: 2
           key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
+    
+    - Homelable:
+        id: homelable
+        icon: mdi-lan
+        href: https://homelable.kalinka.dev
+        description: Homelab map and discovery
+        server: local
+        container: homelable
+        widget:
+          type: customapi
+          url: http://homelable/api/v1/stats/summary
+          method: GET
+          headers:
+            X-API-Key: "{{HOMEPAGE_VAR_HOMELABLE_KEY}}"
+          mappings:
+            - field: nodes
+              label: Nodes
+            - field: online
+              label: Online
+            - field: offline
+              label: Offline
+            - field: pending_devices
+              label: Pending
 
     - Caddy:
         id: caddy

@@ -153,3 +153,56 @@ services:
 
     networks:
       - edge
+
+  homelable-backend:
+    image: ghcr.io/pouzor/homelable-backend:latest
+    container_name: homelable-backend
+    restart: unless-stopped
+    logging: *default-logging
+
+    network_mode: host
+
+    cap_add:
+      - NET_RAW
+
+    environment:
+      SECRET_KEY: ${HOMELABLE_SECRET_KEY}
+
+      SQLITE_PATH: /app/data/homelab.db
+
+      CORS_ORIGINS: "[\"https://homelable.${BASE_DOMAIN}\"]"
+
+      AUTH_MODE: local
+      AUTH_USERNAME: ${HOMELABLE_AUTH_USERNAME}
+      AUTH_PASSWORD_HASH: ${HOMELABLE_AUTH_PASSWORD_HASH}
+
+      SCANNER_RANGES: "[\"192.168.0.0/24\"]"
+
+      STATUS_CHECKER_INTERVAL: "60"
+
+      HOMEPAGE_API_KEY: ${HOMELABLE_HOMEPAGE_API_KEY}
+
+    volumes:
+      - ./homelable/data:/app/data:Z
+
+
+  homelable:
+    image: ghcr.io/pouzor/homelable-frontend:latest
+    container_name: homelable
+    restart: unless-stopped
+    logging: *default-logging
+
+    environment:
+      BACKEND_UPSTREAM: "host.docker.internal:8000"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    depends_on:
+      - homelable-backend
+
+    expose:
+      - "80"
+
+    networks:
+      - edge

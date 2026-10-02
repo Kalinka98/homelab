@@ -39,6 +39,9 @@ infrastructure/dozzle/data
 # ntfy
 infrastructure/ntfy/data/
 
+# Homelable
+infrastructure/homelable/data/
+
 # Jellyfin
 media/jellyfin/config
 media/jellyfin/cache

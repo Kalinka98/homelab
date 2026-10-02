@@ -22,3 +22,8 @@ adguard.{$BASE_DOMAIN} {
     import common_headers
     reverse_proxy adguard:3000
 }
+
+homelable.{$BASE_DOMAIN} {
+    import common_headers
+    reverse_proxy homelable:80
+}
