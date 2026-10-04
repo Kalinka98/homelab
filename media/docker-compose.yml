@@ -42,7 +42,7 @@ services:
       - ${MOVIES_PATH}:/movies
       - ${TVSHOWS_PATH}:/tvshows
 
-    ports:
+    expose:
       - "8096"
 
     networks:

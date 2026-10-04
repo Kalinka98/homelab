@@ -29,6 +29,7 @@ services:
     image: vaultwarden/server:1.37.3
     container_name: vaultwarden
     restart: unless-stopped
+    logging: *default-logging
 
     environment:
       DOMAIN: "https://vault.${BASE_DOMAIN}"
@@ -90,10 +91,9 @@ services:
   quotes-service:
     build:
       context: ./quotes-service
-
     container_name: quotes-service
-
     restart: unless-stopped
+    logging: *default-logging
 
     volumes:
       - ./quotes-service/quotes.json:/app/quotes.json:ro,Z

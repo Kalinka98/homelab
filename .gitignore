@@ -7,7 +7,6 @@
 # Runtime logs can contain API request headers and credentials.
 *.log
 *.log.*
-infrastructure/homepage/config/logs/
 
 # Local credentials, certificates, and database exports.
 *.key
@@ -23,7 +22,7 @@ infrastructure/homepage/config/logs/
 infrastructure/caddy/data
 infrastructure/caddy/config
 
-#AdGuard
+# AdGuard
 infrastructure/adguard/work
 infrastructure/adguard/conf
 
@@ -73,9 +72,6 @@ services/actual/data
 
 # VaultWarden
 services/vaultwarden/data
-
-# Free Games Claimer
-services/free-games-claimer/data/
 
 # vscode
 .vscode
