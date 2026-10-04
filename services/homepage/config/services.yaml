@@ -227,9 +227,3 @@
         description: Cycle tracking
         container: ovumcy
         server: local
-    - Free Games Claimer:
-        icon: mdi-steam
-        href: http://localhost:7080
-        description: Automatically claims free Steam games
-        container: fgc-remaster
-        server: local
