@@ -34,6 +34,56 @@
               url: "{{HOMEPAGE_VAR_MEDICAL_CALENDAR_URL}}"
               name: Medical
               color: green
+- Monitoring:
+
+    - CPU:
+        widget:
+          type: glances
+          url: http://glances:61208
+          version: 4
+          metric: cpu
+          chart: true
+
+    - CPU Temperature:
+        widget:
+          type: glances
+          url: http://glances:61208
+          version: 4
+          metric: sensor:Tctl
+          chart: true
+
+    - Memory:
+        widget:
+          type: glances
+          url: http://glances:61208
+          version: 4
+          metric: memory
+          chart: true
+
+    - GPU:
+        widget:
+          type: glances
+          url: http://glances:61208
+          version: 4
+          metric: gpu:nvidia0
+          chart: true
+
+
+    - Movies:
+        widget:
+          type: glances
+          url: http://glances:61208
+          version: 4
+          metric: fs:/srv/media/movies
+          chart: false
+
+    - TV Shows:
+        widget:
+          type: glances
+          url: http://glances:61208
+          version: 4
+          metric: fs:/srv/media/tvshows
+          chart: false
 
 - Media:
     - Jellyfin:

@@ -27,6 +27,10 @@ layout:
     style: row
     columns: 6
     header: false
+  
+  Monitoring:
+    style: row
+    columns: 6
 
   Everyday:
     style: row

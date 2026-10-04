@@ -230,3 +230,38 @@ services:
       interval: 120s
       timeout: 5s
       start_period: 10s
+
+  glances:
+    image: nicolargo/glances:ubuntu-latest-full
+    container_name: glances
+    restart: unless-stopped
+    logging: *default-logging
+
+    pid: host
+
+    environment:
+      GLANCES_OPT: "-w"
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/os-release:/etc/os-release:ro
+      - /:/rootfs:ro
+      - /srv/media/movies:/srv/media/movies:ro
+      - /srv/media/tvshows:/srv/media/tvshows:ro
+      - /srv/shared:/srv/shared:ro
+
+    ports:
+      - "127.0.0.1:61208:61208"
+
+    networks:
+      - edge
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
