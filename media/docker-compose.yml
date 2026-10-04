@@ -14,7 +14,7 @@ networks:
 
 services:
   jellyfin:
-    image: jellyfin/jellyfin:12.0
+    image: jellyfin/jellyfin:12.1
     container_name: jellyfin
     restart: unless-stopped
     logging: *default-logging
@@ -50,7 +50,7 @@ services:
       - media
 
   radarr:
-    image: lscr.io/linuxserver/radarr:latest
+    image: lscr.io/linuxserver/radarr:6.4.4.10685-ls318
     container_name: radarr
     restart: unless-stopped
     logging: *default-logging
@@ -74,7 +74,7 @@ services:
       - media
 
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: lscr.io/linuxserver/sonarr:4.0.20.3014-ls326
     container_name: sonarr
     restart: unless-stopped
     logging: *default-logging
@@ -98,7 +98,7 @@ services:
       - media
 
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
+    image: lscr.io/linuxserver/qbittorrent:5.2.4_v2.0.15-ls479
     container_name: qbittorrent
     restart: unless-stopped
     logging: *default-logging
@@ -121,7 +121,7 @@ services:
       - media
 
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
+    image: lscr.io/linuxserver/prowlarr:2.6.5.5623-ls162
     container_name: prowlarr
     restart: unless-stopped
     logging: *default-logging
@@ -142,7 +142,7 @@ services:
       - media
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
     container_name: flaresolverr
     restart: unless-stopped
     logging: *default-logging
@@ -158,7 +158,7 @@ services:
       - media
 
   bazarr:
-    image: lscr.io/linuxserver/bazarr:latest
+    image: lscr.io/linuxserver/bazarr:v1.6.2-ls366
     container_name: bazarr
     restart: unless-stopped
     logging: *default-logging
@@ -181,7 +181,7 @@ services:
       - media
 
   simplesubgen:
-    image: kalinkadev/simplesubgen:latest
+    image: kalinkadev/simplesubgen:v1.0.1
     container_name: simplesubgen
     restart: unless-stopped
     logging: *default-logging

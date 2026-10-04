@@ -11,7 +11,8 @@ networks:
 
 services:
   caddy:
-    image: caddy:2-alpine
+    # Wait for the 2.11.7 image; 2.11.6 has known proxy regressions.
+    image: caddy:2.11.4-alpine
     container_name: caddy
     restart: unless-stopped
     logging: *default-logging
@@ -34,7 +35,7 @@ services:
       - edge
 
   adguard:
-    image: adguard/adguardhome:latest
+    image: adguard/adguardhome:v0.107.79
     container_name: adguard
     restart: unless-stopped
     logging: *default-logging
@@ -53,7 +54,7 @@ services:
       - edge
 
   uptime-kuma:
-    image: louislam/uptime-kuma:2
+    image: louislam/uptime-kuma:2.5.5
     container_name: uptime-kuma
     restart: unless-stopped
     logging: *default-logging
@@ -68,7 +69,7 @@ services:
       - edge
 
   dozzle:
-    image: amir20/dozzle:v10.7.5
+    image: amir20/dozzle:v11.2.0
     container_name: dozzle
     restart: unless-stopped
     logging: *default-logging
@@ -88,7 +89,7 @@ services:
       - edge
 
   speedtest-tracker:
-    image: lscr.io/linuxserver/speedtest-tracker:latest
+    image: lscr.io/linuxserver/speedtest-tracker:v1.15.0-ls174
     container_name: speedtest-tracker
     restart: unless-stopped
     logging: *default-logging
@@ -155,7 +156,7 @@ services:
       - edge
 
   homelable-backend:
-    image: ghcr.io/pouzor/homelable-backend:latest
+    image: ghcr.io/pouzor/homelable-backend:3.5.1
     container_name: homelable-backend
     restart: unless-stopped
     logging: *default-logging
@@ -187,7 +188,7 @@ services:
 
 
   homelable:
-    image: ghcr.io/pouzor/homelable-frontend:latest
+    image: ghcr.io/pouzor/homelable-frontend:3.5.1
     container_name: homelable
     restart: unless-stopped
     logging: *default-logging
@@ -232,7 +233,7 @@ services:
       start_period: 10s
 
   glances:
-    image: nicolargo/glances:ubuntu-latest-full
+    image: nicolargo/glances:ubuntu-4.5.7-full
     container_name: glances
     restart: unless-stopped
     logging: *default-logging

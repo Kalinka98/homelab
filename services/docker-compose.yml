@@ -11,7 +11,7 @@ networks:
 
 services:
   actual:
-    image: actualbudget/actual-server:latest
+    image: actualbudget/actual-server:26.10.0
     container_name: actual-budget
     restart: unless-stopped
     logging: *default-logging
@@ -26,7 +26,7 @@ services:
       - edge
 
   vaultwarden:
-    image: vaultwarden/server:latest
+    image: vaultwarden/server:1.37.3
     container_name: vaultwarden
     restart: unless-stopped
 
@@ -41,7 +41,7 @@ services:
       - edge
 
   homepage:
-    image: ghcr.io/gethomepage/homepage:v2.3.0
+    image: ghcr.io/gethomepage/homepage:v2.4.0
     container_name: homepage
     restart: unless-stopped
     logging: *default-logging
