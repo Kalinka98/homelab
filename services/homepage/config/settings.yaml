@@ -23,27 +23,25 @@ quicklaunch:
   mobileButtonPosition: bottom-right
 
 layout:
-  Daily:
+  Header:
     style: row
-    columns: 6
+    columns: 2
     header: false
-  
-  Monitoring:
-    style: row
-    columns: 6
+    Daily: 
+      style: row
+      columns: 3
+      header: false
 
-  Everyday:
+    Monitoring:
+      style: row
+      columns: 3
+      header: false
+
+  FavSites:
     style: row
     iconsOnly: true
-
-  Media:
+    header: false
+  Section:
     style: row
-    columns: 4
-
-  Media Automation:
-    style: row
-    columns: 4
-
-  Infrastructure:
-    style: row
-    columns: 6
+    columns: 3
+    header: false

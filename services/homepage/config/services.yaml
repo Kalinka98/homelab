@@ -1,279 +1,133 @@
-- Daily:
-    - Daily Inspiration:
-        icon: mdi-format-quote-open
-        widget:
-          type: iframe
-          name: daily-inspiration
-          src: https://home.kalinka.dev/quotes/
-          classes: h-28
-          allowScrolling: no
-    - Calendar:
-        widget:
-          type: calendar
-          view: agenda
-          showTime: true
-          maxEvents: 5
-          integrations:
-            - type: ical
-              url: "{{HOMEPAGE_VAR_PERSONAL_CALENDAR_URL}}"
-              name: My Events
-              color: indigo
-            - type: ical
-              url: "{{HOMEPAGE_VAR_WORK_CALENDAR_URL}}"
-              name: Work Events
-              color: violet
-            - type: ical
-              url: "{{HOMEPAGE_VAR_BG_HOLIDAYS_CALENDAR_URL}}"
-              name: Bulgaria Holidays
-              color: emerald
-            - type: ical
-              url: "{{HOMEPAGE_VAR_BIRTHDAYS_CALENDAR_URL}}"
-              name: Birthdays
-              color: amber
-            - type: ical
-              url: "{{HOMEPAGE_VAR_MEDICAL_CALENDAR_URL}}"
-              name: Medical
-              color: green
-- Monitoring:
 
-    - CPU:
-        widget:
-          type: glances
-          url: http://glances:61208
-          version: 4
-          metric: cpu
-          chart: true
+- Header:
+    - Daily:
+        - Daily Inspiration:
+            icon: mdi-format-quote-open
+            widget:
+              type: iframe
+              name: daily-inspiration
+              src: https://home.kalinka.dev/quotes/
+              classes: h-45
+              allowScrolling: no
 
-    - CPU Temperature:
-        widget:
-          type: glances
-          url: http://glances:61208
-          version: 4
-          metric: sensor:Tctl
-          chart: true
+        - Agenda:
+            icon: mdi-calendar
+            widget:
+              type: calendar
+              view: agenda
+              showTime: true
+              maxEvents: 7
+              integrations:
+                - type: ical
+                  url: "{{HOMEPAGE_VAR_PERSONAL_CALENDAR_URL}}"
+                  name: My Events
+                  color: indigo
+                - type: ical
+                  url: "{{HOMEPAGE_VAR_WORK_CALENDAR_URL}}"
+                  name: Work Events
+                  color: violet
+                - type: ical
+                  url: "{{HOMEPAGE_VAR_BG_HOLIDAYS_CALENDAR_URL}}"
+                  name: Bulgaria Holidays
+                  color: emerald
+                - type: ical
+                  url: "{{HOMEPAGE_VAR_BIRTHDAYS_CALENDAR_URL}}"
+                  name: Birthdays
+                  color: amber
+                - type: ical
+                  url: "{{HOMEPAGE_VAR_MEDICAL_CALENDAR_URL}}"
+                  name: Medical
+                  color: green
 
-    - Memory:
-        widget:
-          type: glances
-          url: http://glances:61208
-          version: 4
-          metric: memory
-          chart: true
+        - Jellyfin:
+            id: jellyfin
+            icon: mdi-play-circle-outline
+            href: https://jellyfin.kalinka.dev
+            description: Who needs Netflix anyway?
+            widget:
+              type: jellyfin
+              url: https://jellyfin.kalinka.dev
+              key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
+              version: 2
+              enableBlocks: true
+              enableNowPlaying: true
+              enableUser: true
+              enableMediaControl: false
+              expandOneStreamToTwoRows: false
+              showEpisodeNumber: true
+              fields: [movies, series, episodes]
+    - Monitoring:
+        - Services Status:
+            icon: mdi-check
+            widget:
+              type: uptimekuma
+              url: http://uptime-kuma:3001
+              slug: homelab
+              fields: [up, down]
 
-    - GPU:
-        widget:
-          type: glances
-          url: http://glances:61208
-          version: 4
-          metric: gpu:nvidia0
-          chart: true
+        - CPU:
+            widget:
+              type: glances
+              url: http://glances:61208
+              version: 4
+              metric: cpu
+              chart: true
 
+        - CPU Temperature:
+            widget:
+              type: glances
+              url: http://glances:61208
+              version: 4
+              metric: sensor:Tctl
+              chart: true
+        - Network Speed:
+            icon: mdi-speedometer
+            href: https://speedtest.kalinka.dev
+            widget:
+              type: speedtest
+              url: https://speedtest.kalinka.dev
+              version: 2
+              key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
 
-    - Movies:
-        widget:
-          type: glances
-          url: http://glances:61208
-          version: 4
-          metric: fs:/srv/media/movies
-          chart: false
+        - Memory:
+            widget:
+              type: glances
+              url: http://glances:61208
+              version: 4
+              metric: memory
+              chart: true
 
-    - TV Shows:
-        widget:
-          type: glances
-          url: http://glances:61208
-          version: 4
-          metric: fs:/srv/media/tvshows
-          chart: false
-
-- Media:
-    - Jellyfin:
-        id: jellyfin
-        icon: mdi-play-circle-outline
-        href: https://jellyfin.kalinka.dev
-        description: Who needs Netflix anyway?
-        siteMonitor: https://jellyfin.kalinka.dev/health
-        widget:
-          type: jellyfin
-          url: https://jellyfin.kalinka.dev
-          key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
-          version: 2
-          enableBlocks: true
-          enableNowPlaying: false
-          enableUser: false
-          enableMediaControl: false
-          expandOneStreamToTwoRows: false
-          showEpisodeNumber: false
-          fields: [movies, series, episodes]
-
-- Media Automation:
-    - Sonarr:
-        id: sonarr
-        icon: mdi-television-classic
-        href: https://sonarr.kalinka.dev
-        description: Сериалчетата
-        server: local
-        container: sonarr
-
-    - Radarr:
-        id: radarr
-        icon: mdi-filmstrip
-        href: https://radarr.kalinka.dev
-        description: Филмчита
-        server: local
-        container: radarr
-
+        - GPU:
+            widget:
+              type: glances
+              url: http://glances:61208
+              version: 4
+              metric: gpu:nvidia0
+              chart: true
+-  Section:
     - qBittorrent:
         id: qbittorrent
         icon: mdi-download-network-outline
         href: https://qbittorrent.kalinka.dev
         description: Torrenting (not pirating)
-        server: local
-        container: qbittorrent
+        widget:
+          type: qbittorrent
+          url: https://qbittorrent.kalinka.dev
+          username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+          enableLeechProgress: true
+          enableLeechSize: true
 
-    - Prowlarr:
-        id: prowlarr
-        icon: mdi-magnify
-        href: https://prowlarr.kalinka.dev
-        description: Indexers Manager
-        server: local
-        container: prowlarr
-        
-    - Bazarr:
-        id: bazarr
-        icon: mdi-subtitles-outline
-        href: https://bazarr.kalinka.dev
-        description: Subtitle manager
-        server: local
-        container: bazarr
-
-    - SimpleSubGen:
-        id: simplesubgen
-        icon: mdi-auto-fix
-        description: AI subtitle generation
-        server: local
-        container: simplesubgen
-
-    - FlareSolverr:
-        id: flaresolverr
-        icon: mdi-puzzle-outline
-        description: Indexer challenge resolver
-        server: local
-        container: flaresolverr
-
-
-- Infrastructure:
     - AdGuard Home:
         id: adguard
         icon: mdi-shield-check-outline
         href: https://adguard.kalinka.dev
         description: Say not to ads!
-        server: local
-        container: adguard
         widget:
           type: adguard
           url: http://adguard:3000
           username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
           password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
           fields: [queries, blocked, latency]
-
-    - Uptime Kuma:
-        id: uptime-kuma
-        icon: mdi-heart-pulse
-        href: https://status.kalinka.dev
-        description: Service Status
-        server: local
-        container: uptime-kuma
-        widget:
-          type: uptimekuma
-          url: http://uptime-kuma:3001
-          slug: homelab
-          fields: [up, down]
-
-    - Speedtest Tracker:
-        id: speedtest-tracker
-        icon: mdi-speedometer
-        href: https://speedtest.kalinka.dev
-        server: local
-        container: speedtest-tracker
-        widget:
-          type: speedtest
-          url: https://speedtest.kalinka.dev
-          version: 2
-          key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
-    
-    - Homelable:
-        id: homelable
-        icon: mdi-lan
-        href: https://homelable.kalinka.dev
-        description: Homelab map and discovery
-        server: local
-        container: homelable
-        widget:
-          type: customapi
-          url: http://homelable/api/v1/stats/summary
-          method: GET
-          headers:
-            X-API-Key: "{{HOMEPAGE_VAR_HOMELABLE_KEY}}"
-          mappings:
-            - field: nodes
-              label: Nodes
-            - field: online
-              label: Online
-            - field: offline
-              label: Offline
-            - field: pending_devices
-              label: Pending
-
-    - Beszel:
-        id: beszel
-        icon: mdi-chart-line
-        href: https://monitor.kalinka.dev
-        description: Hardware & container monitoring
-        server: local
-        container: beszel
-        widget:
-          type: beszel
-          url: http://beszel:8090
-          username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
-          systemId: "Kalinka Server"
-          version: 2
-          fields: [cpu, memory, disk, network]
-
-    - Caddy:
-        id: caddy
-        icon: mdi-lock-outline
-        description: Reverse Proxy
-        server: local
-        container: caddy
-
-    - Dozzle:
-        id: dozzle
-        icon: mdi-console-line
-        href: https://logs.kalinka.dev
-        description: Docker Logs
-        server: local
-        container: dozzle
-
-    - ntfy:
-        id: ntfy
-        icon: mdi-bell-outline
-        href: https://notify.kalinka.dev
-        description: Notification Services
-        server: local
-        container: ntfy
-
-    - Vaultwarden:
-        id: vaultwarden
-        icon: mdi-shield-key-outline
-        href: https://vault.kalinka.dev
-        server: local
-        container: vaultwarden
-
-- Personal:
-    - Ovumcy:
-        icon: mdi-calendar-heart
-        href: https://cycle.kalinka.dev
-        description: Cycle tracking
-        container: ovumcy
-        server: local
+ 
+        

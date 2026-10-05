@@ -11,6 +11,21 @@
     format:
       maximumFractionDigits: 0
 
+- glances:
+    version: 4
+    url: http://glances:61208
+    cpu: false
+    mem: false
+    disk: /srv/media/movies
+    label: Movies
+- glances:
+    version: 4
+    url: http://glances:61208
+    cpu: false
+    mem: false
+    disk: /srv/media/tvshows
+    label: TV Shows
+
 - search:
     provider: google
     showSearchSuggestions: true

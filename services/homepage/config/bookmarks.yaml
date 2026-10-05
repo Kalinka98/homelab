@@ -1,4 +1,4 @@
-- Everyday:
+- FavSites:
     - YouTube:
         - id: shortcut-youtube
           icon: youtube.svg
@@ -27,3 +27,44 @@
         - id: shortcut-actual-budget
           icon: actual-budget.svg
           href: https://budget.kalinka.dev
+    - Dozzle:
+        - id: dozzle
+          icon: dozzle.svg
+          href: https://logs.kalinka.dev
+    - Vaultwarden:
+        - id: vaultwarden
+          icon: vaultwarden-light.svg
+          href: https://vault.kalinka.dev
+    - Radarr:
+        - id: radarr
+          icon: radarr.svg
+          href: https://radarr.kalinka.dev
+    - Sonarr:
+        - id: sonarr
+          icon: sonarr.svg
+          href: https://sonarr.kalinka.dev
+    - Prowlarr:
+        - id: prowlarr
+          icon: prowlarr.svg
+          href: https://prowlarr.kalinka.dev
+    - Bazarr:
+        - id: bazarr
+          icon: bazarr.svg
+          href: https://bazarr.kalinka.dev
+    - Beszel:
+        - id: beszel
+          icon: beszel.svg
+          href: https://monitor.kalinka.dev
+    - ntfy:
+        - id: ntfy
+          icon: ntfy.svg
+          href: https://notify.kalinka.dev
+    - Homelable:
+        - id: homelable
+          icon: homelable.svg
+          href: https://homelable.kalinka.dev
+    - Ovumcy:
+        - id: ovumcy
+          icon: sh-ovumcy.svg
+          href: https://cycle.kalinka.dev
+          
