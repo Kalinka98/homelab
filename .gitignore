@@ -73,5 +73,8 @@ services/actual/data
 # VaultWarden
 services/vaultwarden/data
 
+# YourSpotify
+services/your-spotify/data/
+
 # vscode
 .vscode

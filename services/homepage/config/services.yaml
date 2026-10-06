@@ -104,30 +104,42 @@
               version: 4
               metric: gpu:nvidia0
               chart: true
--  Section:
-    - qBittorrent:
-        id: qbittorrent
-        icon: mdi-download-network-outline
-        href: https://qbittorrent.kalinka.dev
-        description: Torrenting (not pirating)
-        widget:
-          type: qbittorrent
-          url: https://qbittorrent.kalinka.dev
-          username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
-          enableLeechProgress: true
-          enableLeechSize: true
-
-    - AdGuard Home:
-        id: adguard
-        icon: mdi-shield-check-outline
-        href: https://adguard.kalinka.dev
-        description: Say not to ads!
-        widget:
-          type: adguard
-          url: http://adguard:3000
-          username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
-          password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
-          fields: [queries, blocked, latency]
- 
+- Footer: 
+    -  Section:
+        - qBittorrent:
+            id: qbittorrent
+            icon: mdi-download-network-outline
+            href: https://qbittorrent.kalinka.dev
+            description: Torrenting (not pirating)
+            widget:
+              type: qbittorrent
+              url: https://qbittorrent.kalinka.dev
+              username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+              enableLeechProgress: true
+              enableLeechSize: true
+    - Section2:
+        - AdGuard Home:
+            id: adguard
+            icon: mdi-shield-check-outline
+            href: https://adguard.kalinka.dev
+            description: Say not to ads!
+            widget:
+              type: adguard
+              url: http://adguard:3000
+              username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+              fields: [queries, blocked, latency]
+    - Section3:    
+        - Your Spotify:
+            id: yourspotify
+            icon: mdi-spotify
+            href: https://spotify.kalinka.dev
+            description: Listening statistics
+            widget:
+              type: yourspotify
+              url: http://your-spotify/api
+              key: "{{HOMEPAGE_VAR_YOURSPOTIFY_KEY}}"
+              interval: year
+              fields: [songs, artists, time]
         

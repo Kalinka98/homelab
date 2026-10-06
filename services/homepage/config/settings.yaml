@@ -41,7 +41,16 @@ layout:
     style: row
     iconsOnly: true
     header: false
-  Section:
+  Footer:
     style: row
     columns: 3
     header: false
+    Section:
+      style: row
+      header: false
+    Section2:
+      style: row
+      header: false
+    Section3:
+      style: row
+      header: false

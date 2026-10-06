@@ -164,3 +164,23 @@ html body,
   outline: 2px solid var(--kalinka-gold);
   outline-offset: 3px;
 }
+
+.information-widget-glances .resource-icon {
+  color: var(--kalinka-gold);
+}
+
+.information-widget-glances .information-widget-resource > div > div:not(.resource-usage) {
+  color: var(--kalinka-cream);
+}
+
+.information-widget-glances .information-widget-label {
+  color: var(--kalinka-muted);
+}
+
+.information-widget-glances .resource-usage {
+  background: var(--kalinka-line);
+}
+
+.information-widget-glances .resource-usage > div {
+  background: var(--kalinka-gold);
+}
