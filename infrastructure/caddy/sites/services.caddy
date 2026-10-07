@@ -42,6 +42,16 @@ spotify.{$BASE_DOMAIN} {
 zimi.{$BASE_DOMAIN} {
     import common_headers
 
+    header {
+        -X-Frame-Options
+        X-Frame-Options SAMEORIGIN
+    }
+
     reverse_proxy zimi:8899
 }
 
+immich.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy immich-server:2283
+}

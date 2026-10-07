@@ -67,4 +67,7 @@
         - id: ovumcy
           icon: sh-ovumcy.svg
           href: https://cycle.kalinka.dev
-          
+    - Zimi:
+        - id: zimi
+          icon: sh-ziit-light.svg
+          href: https://zimi.kalinka.dev          

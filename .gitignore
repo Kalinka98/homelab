@@ -78,5 +78,9 @@ services/your-spotify/data/
 # Zimi
 services/zimi/config
 
+# Immich
+immich/postgres/
+
 # vscode
 .vscode
+
