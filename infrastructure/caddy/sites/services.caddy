@@ -39,3 +39,9 @@ spotify.{$BASE_DOMAIN} {
     reverse_proxy your-spotify:80
 }
 
+zimi.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy zimi:8899
+}
+

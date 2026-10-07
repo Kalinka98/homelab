@@ -16,15 +16,22 @@
     url: http://glances:61208
     cpu: false
     mem: false
-    disk: /srv/media/movies
+    disk: "{{HOMEPAGE_VAR_MOVIES_PATH}}"
     label: Movies
 - glances:
     version: 4
     url: http://glances:61208
     cpu: false
     mem: false
-    disk: /srv/media/tvshows
+    disk: "{{HOMEPAGE_VAR_TVSHOWS_PATH}}"
     label: TV Shows
+- glances:
+    version: 4
+    url: http://glances:61208
+    cpu: false
+    mem: false
+    disk: "{{HOMEPAGE_VAR_DATA_PATH}}"
+    label: Data
 
 - search:
     provider: google

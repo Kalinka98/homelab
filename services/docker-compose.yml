@@ -81,6 +81,9 @@ services:
 
       HOMEPAGE_VAR_QBITTORRENT_USERNAME: ${QBITTORRENT_USERNAME}
       HOMEPAGE_VAR_QBITTORRENT_PASSWORD: ${QBITTORRENT_PASSWORD}
+      HOMEPAGE_VAR_DATA_PATH: ${DATA_PATH}
+      HOMEPAGE_VAR_MOVIES_PATH: ${MOVIES_PATH}
+      HOMEPAGE_VAR_TVSHOWS_PATH: ${TVSHOWS_PATH}
 
     volumes:
       - ./homepage/config:/app/config:Z
@@ -217,3 +220,45 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+
+  zimi:
+    image: epheterson/zimi:1.13.0
+    container_name: zimi
+    restart: unless-stopped
+    init: true
+    logging: *default-logging
+
+    environment:
+      ZIM_DIR: /zims
+      ZIMI_DATA_DIR: /config
+
+      ZIMI_MANAGE: "1"
+      ZIMI_MANAGE_USER: ${ZIMI_MANAGE_USER}
+      ZIMI_MANAGE_PASSWORD: ${ZIMI_MANAGE_PASSWORD}
+
+      ZIMI_PUBLIC_ACCESS: private
+
+      ZIMI_CREATE_ROOT: /zims/sources
+
+    volumes:
+      - ${ZIMS_PATH}:/zims:Z
+      - ./zimi/config:/config:Z
+
+    expose:
+      - "8899"
+
+    networks:
+      - edge
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python3",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8899/health', timeout=3)"
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

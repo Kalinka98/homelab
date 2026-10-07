@@ -75,6 +75,8 @@ services/vaultwarden/data
 
 # YourSpotify
 services/your-spotify/data/
+# Zimi
+services/zimi/config
 
 # vscode
 .vscode
