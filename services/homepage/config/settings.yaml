@@ -29,12 +29,12 @@ layout:
     header: false
     Daily: 
       style: row
-      columns: 3
+      columns: 4
       header: false
 
     Monitoring:
       style: row
-      columns: 3
+      columns: 2
       header: false
 
   FavSites:
@@ -53,4 +53,5 @@ layout:
       header: false
     Section3:
       style: row
+      columns: 2
       header: false

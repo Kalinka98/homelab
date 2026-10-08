@@ -56,7 +56,7 @@
               expandOneStreamToTwoRows: false
               showEpisodeNumber: true
               fields: [movies, series, episodes]
-    - Monitoring:
+              
         - Services Status:
             href: https://status.kalinka.dev
             icon: mdi-check
@@ -65,7 +65,7 @@
               url: http://uptime-kuma:3001
               slug: homelab
               fields: [up, down]
-
+    - Monitoring:
         - CPU:
             widget:
               type: glances
@@ -81,14 +81,6 @@
               version: 4
               metric: sensor:Tctl
               chart: true
-        - Network Speed:
-            icon: mdi-speedometer
-            href: https://speedtest.kalinka.dev
-            widget:
-              type: speedtest
-              url: https://speedtest.kalinka.dev
-              version: 2
-              key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
 
         - Memory:
             widget:
@@ -154,4 +146,13 @@
               key: "{{HOMEPAGE_VAR_YOURSPOTIFY_KEY}}"
               interval: year
               fields: [songs, artists, time]
+
+        - Network Speed:
+            icon: mdi-speedometer
+            href: https://speedtest.kalinka.dev
+            widget:
+              type: speedtest
+              url: https://speedtest.kalinka.dev
+              version: 2
+              key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
         
