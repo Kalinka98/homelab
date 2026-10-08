@@ -29,7 +29,7 @@ services:
       --appendonly no
 
     volumes:
-      - dawarich_shared:/data
+      - ./data/shared:/data:z
 
     networks:
       - dawarich
@@ -57,8 +57,8 @@ services:
       POSTGRES_DB: dawarich
 
     volumes:
-      - dawarich_db_data:/var/lib/postgresql/data
-      - dawarich_shared:/var/shared
+      - ./data/postgres:/var/lib/postgresql/data:z
+      - ./data/shared:/var/shared:z
 
     networks:
       - dawarich
@@ -110,10 +110,10 @@ services:
       BACKGROUND_PROCESSING_CONCURRENCY: "3"
 
     volumes:
-      - dawarich_public:/var/app/public
-      - dawarich_watched:/var/app/tmp/imports/watched
-      - dawarich_storage:/var/app/storage
-      - dawarich_db_data:/dawarich_db_data
+      - ./data/public:/var/app/public:z
+      - ./data/watched:/var/app/tmp/imports/watched:z
+      - ./data/storage:/var/app/storage:z
+      - ./data/postgres:/dawarich_db_data:z
 
     expose:
       - "3000"
@@ -154,9 +154,9 @@ services:
       <<: *dawarich-environment
 
     volumes:
-      - dawarich_public:/var/app/public
-      - dawarich_watched:/var/app/tmp/imports/watched
-      - dawarich_storage:/var/app/storage
+      - ./data/public:/var/app/public:z
+      - ./data/watched:/var/app/tmp/imports/watched:z
+      - ./data/storage:/var/app/storage:z
 
     networks:
       - dawarich

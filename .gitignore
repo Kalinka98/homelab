@@ -82,6 +82,9 @@ services/zimi/config
 # Immich
 immich/postgres/
 
+# Dawarich
+dawarich/data/
+
 # vscode
 .vscode
 
