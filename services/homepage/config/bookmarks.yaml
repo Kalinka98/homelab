@@ -70,4 +70,8 @@
     - Zimi:
         - id: zimi
           icon: sh-ziit-light.svg
-          href: https://zimi.kalinka.dev          
+          href: https://zimi.kalinka.dev  
+    - Dawarich:
+        - id: dawarich
+          icon: dawarich.svg
+          href: https://dawarich.kalinka.dev            

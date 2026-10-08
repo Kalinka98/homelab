@@ -1,6 +1,6 @@
 COMPOSE = docker compose
 
-STACKS = infrastructure media services immich
+STACKS = infrastructure media services immich dawarich
 
 .PHONY: help validate ps up down restart pull build update
 

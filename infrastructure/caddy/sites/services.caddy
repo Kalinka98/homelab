@@ -55,3 +55,9 @@ immich.{$BASE_DOMAIN} {
 
     reverse_proxy immich-server:2283
 }
+
+dawarich.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy dawarich_app:3000
+}
