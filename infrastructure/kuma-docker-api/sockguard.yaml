@@ -1,0 +1,33 @@
+listen:
+  address: ":2375"
+
+rules:
+  - match:
+      method: GET
+      path: "/_ping"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/version"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/containers/json"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/containers/*/json"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/info"
+    action: allow
+    
+  - match:
+      method: "*"
+      path: "/**"
+    action: deny

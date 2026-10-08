@@ -28,6 +28,7 @@ infrastructure/adguard/conf
 
 # Uptime Kuma
 infrastructure/uptime-kuma/data
+infrastructure/autokuma/data
 
 # Speedtest Tracker
 infrastructure/speedtest-tracker/config/

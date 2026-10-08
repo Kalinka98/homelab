@@ -18,6 +18,8 @@ services:
     container_name: jellyfin
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     user: "${PUID}:${PGID}"
 
@@ -54,6 +56,8 @@ services:
     container_name: radarr
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - PUID=${PUID}
@@ -78,6 +82,8 @@ services:
     container_name: sonarr
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - PUID=${PUID}
@@ -102,6 +108,8 @@ services:
     container_name: qbittorrent
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - PUID=${PUID}
@@ -125,6 +133,8 @@ services:
     container_name: prowlarr
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - PUID=${PUID}
@@ -146,6 +156,8 @@ services:
     container_name: flaresolverr
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - LOG_LEVEL=info
@@ -162,6 +174,8 @@ services:
     container_name: bazarr
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - PUID=${PUID}
@@ -185,6 +199,8 @@ services:
     container_name: simplesubgen
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     deploy:
       resources:

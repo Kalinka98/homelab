@@ -29,7 +29,7 @@ ps:
 up:
 	@for stack in $(STACKS); do \
 		echo "==> Starting $$stack"; \
-		$(COMPOSE) -f $$stack/docker-compose.yml up -d; \
+		$(COMPOSE) -f $$stack/docker-compose.yml up -d --remove-orphans; \
 	done
 
 down:

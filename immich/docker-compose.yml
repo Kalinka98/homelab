@@ -18,6 +18,8 @@ services:
     container_name: immich-server
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       TZ: ${TZ}
@@ -68,6 +70,8 @@ services:
     container_name: immich-machine-learning
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       TZ: ${TZ}
@@ -96,6 +100,8 @@ services:
     container_name: immich-valkey
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     networks:
       - immich
@@ -112,6 +118,8 @@ services:
     container_name: immich-postgres
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       POSTGRES_PASSWORD: ${IMMICH_DB_PASSWORD}

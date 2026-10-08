@@ -58,6 +58,7 @@
               fields: [movies, series, episodes]
     - Monitoring:
         - Services Status:
+            href: https://status.kalinka.dev
             icon: mdi-check
             widget:
               type: uptimekuma

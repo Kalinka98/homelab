@@ -8,6 +8,11 @@ networks:
   edge:
     external: true
     name: homelab-edge
+  
+  docker_monitor:
+    name: homelab-docker-monitor
+    driver: bridge
+    internal: true
 
 services:
   caddy:
@@ -16,6 +21,8 @@ services:
     container_name: caddy
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       BASE_DOMAIN: ${BASE_DOMAIN}
@@ -39,6 +46,8 @@ services:
     container_name: adguard
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     ports:
       - "${SERVER_IP_ADDRESS}:53:53/tcp"
@@ -58,6 +67,8 @@ services:
     container_name: uptime-kuma
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     volumes:
       - ./uptime-kuma/data:/app/data:Z
@@ -67,12 +78,96 @@ services:
 
     networks:
       - edge
+      - docker_monitor
+
+  kuma-docker-api:
+    image: codeswhat/sockguard:2.2.6
+    container_name: kuma-docker-api
+    restart: unless-stopped
+    command:
+      - serve
+      - --config
+      - /etc/sockguard/config.yaml
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    read_only: true
+
+    cap_drop:
+      - ALL
+
+    security_opt:
+      - no-new-privileges:true
+
+    group_add:
+      - "${DOCKER_SOCK_GID:?Set DOCKER_SOCK_GID in .env}"
+
+    environment:
+      SOCKGUARD_LISTEN_INSECURE_ALLOW_PLAIN_TCP: "true"
+      SOCKGUARD_LISTEN_INSECURE_ALLOW_UNAUTHENTICATED_CLIENTS: "true"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./kuma-docker-api/sockguard.yaml:/etc/sockguard/config.yaml:ro,Z
+
+    networks:
+      - docker_monitor
+  
+  autokuma:
+    image: ghcr.io/bigboot/autokuma:2.0.0
+    container_name: autokuma
+    restart: unless-stopped
+    logging: *default-logging
+
+    depends_on:
+      uptime-kuma:
+        condition: service_healthy
+      kuma-docker-api:
+        condition: service_started
+
+    environment:
+      AUTOKUMA__KUMA__URL: http://uptime-kuma:3001
+      AUTOKUMA__KUMA__USERNAME: ${AUTOKUMA_KUMA_USERNAME:?Required}
+      AUTOKUMA__KUMA__PASSWORD: ${AUTOKUMA_KUMA_PASSWORD:?Required}
+
+      AUTOKUMA__DOCKER__HOSTS: tcp://kuma-docker-api:2375
+
+      AUTOKUMA__DOCKER__EXCLUDE_CONTAINER_PATTERNS: "^[a-f0-9]{12}_.*_"
+
+      AUTOKUMA__ON_DELETE: keep
+
+      AUTOKUMA__DEFAULT_SETTINGS: |-
+        *.notification_id_list: {"1":true}
+
+      AUTOKUMA__SNIPPETS__CONTAINER: |-
+        {{ container_name }}.docker.name: {{ container_name }} · Container
+        {{ container_name }}.docker.docker_container: {{ container_name }}
+        {{ container_name }}.docker.docker_host_name: fedora
+        {{ container_name }}.docker.interval: 60
+        {{ container_name }}.docker.max_retries: 2
+
+    volumes:
+      - ./autokuma/data:/data:Z
+
+    labels:
+      kuma.fedora.docker_host.name: "Fedora Docker (AutoKuma)"
+      kuma.fedora.docker_host.connection_type: "tcp"
+      kuma.fedora.docker_host.host: "http://kuma-docker-api:2375"
+
+      kuma.__container: "true"
+
+    networks:
+      - edge
+      - docker_monitor
 
   dozzle:
     image: amir20/dozzle:v11.2.0
     container_name: dozzle
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       DOZZLE_AUTH_PROVIDER: simple
@@ -93,6 +188,8 @@ services:
     container_name: speedtest-tracker
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       PUID: ${PUID}
@@ -128,6 +225,8 @@ services:
     restart: unless-stopped
     init: true
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     command:
       - serve
@@ -160,6 +259,8 @@ services:
     container_name: homelable-backend
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     network_mode: host
 
@@ -192,6 +293,8 @@ services:
     container_name: homelable
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       BACKEND_UPSTREAM: "host.docker.internal:8000"
@@ -213,6 +316,8 @@ services:
     container_name: beszel
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       APP_URL: https://monitor.${BASE_DOMAIN}
@@ -237,6 +342,8 @@ services:
     container_name: glances
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     pid: host
 

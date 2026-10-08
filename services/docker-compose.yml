@@ -19,6 +19,8 @@ services:
     container_name: actual-budget
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     volumes:
       - ./actual/data:/data:Z
@@ -34,6 +36,8 @@ services:
     container_name: vaultwarden
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       DOMAIN: "https://vault.${BASE_DOMAIN}"
@@ -50,6 +54,8 @@ services:
     container_name: homepage
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       HOMEPAGE_ALLOWED_HOSTS: home.${BASE_DOMAIN}
@@ -103,6 +109,8 @@ services:
     container_name: quotes-service
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     volumes:
       - ./quotes-service/quotes.json:/app/quotes.json:ro,Z
@@ -116,6 +124,8 @@ services:
     restart: unless-stopped
     init: true
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       TZ: ${TZ}
@@ -170,6 +180,8 @@ services:
     container_name: your-spotify
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       - PUID=${PUID}
@@ -201,6 +213,8 @@ services:
     container_name: your-spotify-mongo
     restart: unless-stopped
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     volumes:
       - ./your-spotify/data:/data/db:Z
@@ -228,6 +242,8 @@ services:
     restart: unless-stopped
     init: true
     logging: *default-logging
+    labels:
+      kuma.__container: "true"
 
     environment:
       ZIM_DIR: /zims
