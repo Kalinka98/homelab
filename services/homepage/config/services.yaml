@@ -135,18 +135,6 @@
               version: 2
               fields: [photos, videos]
     - Section3:    
-        - Your Spotify:
-            id: yourspotify
-            icon: mdi-spotify
-            href: https://spotify.kalinka.dev
-            description: Listening statistics
-            widget:
-              type: yourspotify
-              url: http://your-spotify/api
-              key: "{{HOMEPAGE_VAR_YOURSPOTIFY_KEY}}"
-              interval: year
-              fields: [songs, artists, time]
-
         - Network Speed:
             icon: mdi-speedometer
             href: https://speedtest.kalinka.dev
@@ -155,4 +143,3 @@
               url: https://speedtest.kalinka.dev
               version: 2
               key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
-        

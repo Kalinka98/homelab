@@ -74,8 +74,6 @@ services/actual/data
 # VaultWarden
 services/vaultwarden/data
 
-# YourSpotify
-services/your-spotify/data/
 # Zimi
 services/zimi/config
 
@@ -87,4 +85,3 @@ dawarich/data/
 
 # vscode
 .vscode
-

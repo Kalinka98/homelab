@@ -33,12 +33,6 @@ cycle.{$BASE_DOMAIN} {
     }
 }
 
-spotify.{$BASE_DOMAIN} {
-    import common_headers
-
-    reverse_proxy your-spotify:80
-}
-
 zimi.{$BASE_DOMAIN} {
     import common_headers
 

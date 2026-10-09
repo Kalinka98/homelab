@@ -9,10 +9,6 @@ networks:
     external: true
     name: homelab-edge
 
-  spotify:
-    driver: bridge
-    internal: true
-
 services:
   actual:
     image: actualbudget/actual-server:26.10.0
@@ -77,7 +73,6 @@ services:
       HOMEPAGE_VAR_SPEEDTEST_APP_KEY: ${SPEEDTEST_API_KEY}
       HOMEPAGE_VAR_BESZEL_USERNAME: ${BESZEL_USERNAME}
       HOMEPAGE_VAR_BESZEL_PASSWORD: ${BESZEL_PASSWORD}
-      HOMEPAGE_VAR_YOURSPOTIFY_KEY: ${YOURSPOTIFY_API_KEY}
       HOMEPAGE_VAR_IMMICH_KEY: ${IMMICH_API_KEY}
 
       HOMEPAGE_VAR_NTFY_USERNAME: ${NTFY_USERNAME}
@@ -177,67 +172,6 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
-
-  your-spotify:
-    image: lscr.io/linuxserver/your_spotify:1.20.0-ls162
-    container_name: your-spotify
-    restart: unless-stopped
-    logging: *default-logging
-    labels:
-      kuma.__container: "true"
-
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-
-      - APP_URL=https://spotify.${BASE_DOMAIN}
-      - SPOTIFY_PUBLIC=${YOUR_SPOTIFY_CLIENT_ID}
-      - SPOTIFY_SECRET=${YOUR_SPOTIFY_CLIENT_SECRET}
-
-      - SPOTIFY_API_DELAY_MS=2000
-      - CORS=https://spotify.${BASE_DOMAIN}
-
-      - MONGO_ENDPOINT=mongodb://your-spotify-mongo:27017/your_spotify
-
-    expose:
-      - "80"
-
-    depends_on:
-      your-spotify-mongo:
-        condition: service_healthy
-
-    networks:
-      - edge
-      - spotify
-
-  your-spotify-mongo:
-    image: mongo:8.0.32
-    container_name: your-spotify-mongo
-    restart: unless-stopped
-    logging: *default-logging
-    labels:
-      kuma.__container: "true"
-
-    volumes:
-      - ./your-spotify/data:/data/db:Z
-
-    networks:
-      - spotify
-
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "mongosh",
-          "--quiet",
-          "--eval",
-          "db.adminCommand('ping').ok"
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
 
   zimi:
     image: epheterson/zimi:1.13.0
