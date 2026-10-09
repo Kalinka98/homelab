@@ -74,4 +74,9 @@
     - Dawarich:
         - id: dawarich
           icon: dawarich.svg
-          href: https://dawarich.kalinka.dev            
+          href: https://dawarich.kalinka.dev        
+    - Mealie:
+        - id: mealie
+          icon: mealie.svg
+          href: https://mealie.kalinka.dev
+    

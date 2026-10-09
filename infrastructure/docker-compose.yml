@@ -14,6 +14,12 @@ networks:
     driver: bridge
     internal: true
 
+
+  ai:
+    external: true
+    name: homelab-ai
+
+
 services:
   caddy:
     # Wait for the 2.11.7 image; 2.11.6 has known proxy regressions.
@@ -373,3 +379,50 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+
+
+  ollama:
+    image: ollama/ollama:0.40.2
+    container_name: ollama
+    restart: unless-stopped
+    init: true
+    logging: *default-logging
+
+    labels:
+      kuma.__container: "true"
+
+    environment:
+      TZ: ${TZ}
+
+      OLLAMA_HOST: "0.0.0.0:11434"
+      OLLAMA_NO_CLOUD: "1"
+
+      OLLAMA_CONTEXT_LENGTH: "8192"
+      OLLAMA_KEEP_ALIVE: "3m"
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+
+    volumes:
+      - ./ollama/data:/root/.ollama:Z
+
+    expose:
+      - "11434"
+
+    networks:
+      - ai
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+

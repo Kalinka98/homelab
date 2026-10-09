@@ -8,6 +8,11 @@ networks:
   edge:
     external: true
     name: homelab-edge
+  
+  ai:
+    external: true
+    name: homelab-ai
+
 
 services:
   actual:
@@ -216,3 +221,37 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+
+
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v3.28.0
+    container_name: mealie
+    restart: unless-stopped
+    init: true
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
+
+      BASE_URL: https://mealie.${BASE_DOMAIN}
+      ALLOW_SIGNUP: "false"
+
+      DB_ENGINE: sqlite
+      DEFAULT_GROUP: Home
+      DEFAULT_HOUSEHOLD: Family
+
+    volumes:
+      - ./mealie/data:/app/data:Z
+
+    expose:
+      - "9000"
+
+    networks:
+      - edge
+      - ai
+
+    mem_limit: 1g

@@ -55,3 +55,11 @@ dawarich.{$BASE_DOMAIN} {
 
     reverse_proxy dawarich_app:3000
 }
+
+
+mealie.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy mealie:9000
+}
+

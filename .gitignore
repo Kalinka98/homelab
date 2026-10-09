@@ -83,5 +83,11 @@ immich/postgres/
 # Dawarich
 dawarich/data/
 
+# Mealie
+services/mealie/data/
+
+# Ollama
+infrastructure/ollama/data/
+
 # vscode
 .vscode
