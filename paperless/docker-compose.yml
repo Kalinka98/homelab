@@ -13,6 +13,10 @@ networks:
   paperless:
     driver: bridge
     internal: true
+  
+  ai:
+    external: true
+    name: homelab-ai
 
 services:
   paperless-db:
@@ -76,6 +80,10 @@ services:
         condition: service_healthy
       paperless-valkey:
         condition: service_healthy
+      paperless-gotenberg:
+        condition: service_started
+      paperless-tika:
+        condition: service_started
 
     environment:
       TZ: ${TZ}
@@ -102,6 +110,22 @@ services:
       PAPERLESS_TASK_WORKERS: "1"
       PAPERLESS_THREADS_PER_WORKER: "2"
 
+      PAPERLESS_TIKA_ENABLED: "true"
+      PAPERLESS_TIKA_ENDPOINT: http://paperless-tika:9998
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-gotenberg:3000
+
+      PAPERLESS_AI_ENABLED: "true"
+      PAPERLESS_AI_LLM_BACKEND: ollama
+      PAPERLESS_AI_LLM_ENDPOINT: http://ollama:11434
+      PAPERLESS_AI_LLM_MODEL: qwen3-vl:8b-instruct
+
+      PAPERLESS_AI_LLM_EMBEDDING_BACKEND: ollama
+      PAPERLESS_AI_LLM_EMBEDDING_MODEL: embeddinggemma
+
+      PAPERLESS_AI_LLM_CONTEXT_SIZE: "8192"
+      PAPERLESS_AI_LLM_REQUEST_TIMEOUT: "240"
+      PAPERLESS_AI_LLM_EMBEDDING_CHUNK_SIZE: "1024"
+
     volumes:
       - ./data/app:/usr/src/paperless/data:Z
       - ${DATA_PATH:?Required}/paperless/media:/usr/src/paperless/media:Z
@@ -114,3 +138,39 @@ services:
     networks:
       - edge
       - paperless
+      - ai
+
+
+  paperless-gotenberg:
+    image: gotenberg/gotenberg:8.37.0
+    container_name: paperless-gotenberg
+    restart: unless-stopped
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+    expose:
+      - "3000"
+
+    networks:
+      - paperless
+
+  paperless-tika:
+    image: apache/tika:3.3.1.0
+    container_name: paperless-tika
+    restart: unless-stopped
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    expose:
+      - "9998"
+
+    networks:
+      - paperless
+
