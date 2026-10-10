@@ -63,3 +63,10 @@ mealie.{$BASE_DOMAIN} {
     reverse_proxy mealie:9000
 }
 
+
+paperless.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy paperless:8000
+}
+

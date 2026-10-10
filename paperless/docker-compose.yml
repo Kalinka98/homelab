@@ -1,0 +1,116 @@
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "3"
+
+networks:
+  edge:
+    external: true
+    name: homelab-edge
+
+  paperless:
+    driver: bridge
+    internal: true
+
+services:
+  paperless-db:
+    image: postgres:18-alpine
+    container_name: paperless-db
+    restart: unless-stopped
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD:?Required}
+
+    volumes:
+      - ./data/postgres:/var/lib/postgresql:Z
+
+    shm_size: 128mb
+
+    networks:
+      - paperless
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paperless -d paperless"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  paperless-valkey:
+    image: valkey/valkey:9-alpine
+    container_name: paperless-valkey
+    restart: unless-stopped
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    volumes:
+      - ./data/valkey:/data:Z
+
+    networks:
+      - paperless
+
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.3.0
+    container_name: paperless
+    restart: unless-stopped
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    depends_on:
+      paperless-db:
+        condition: service_healthy
+      paperless-valkey:
+        condition: service_healthy
+
+    environment:
+      TZ: ${TZ}
+
+      PAPERLESS_URL: https://paperless.${BASE_DOMAIN}
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY:?Required}
+      PAPERLESS_TIME_ZONE: ${TZ}
+
+      USERMAP_UID: ${PUID}
+      USERMAP_GID: ${PGID}
+
+      PAPERLESS_DBENGINE: postgresql
+      PAPERLESS_DBHOST: paperless-db
+      PAPERLESS_DBNAME: paperless
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: ${PAPERLESS_DB_PASSWORD:?Required}
+
+      PAPERLESS_REDIS: redis://paperless-valkey:6379
+
+      PAPERLESS_OCR_LANGUAGES: "bul"
+      PAPERLESS_OCR_LANGUAGE: "bul+eng"
+      PAPERLESS_OCR_MODE: auto
+
+      PAPERLESS_TASK_WORKERS: "1"
+      PAPERLESS_THREADS_PER_WORKER: "2"
+
+    volumes:
+      - ./data/app:/usr/src/paperless/data:Z
+      - ${DATA_PATH:?Required}/paperless/media:/usr/src/paperless/media:Z
+      - ./data/consume:/usr/src/paperless/consume:Z
+      - ./data/export:/usr/src/paperless/export:Z
+
+    expose:
+      - "8000"
+
+    networks:
+      - edge
+      - paperless

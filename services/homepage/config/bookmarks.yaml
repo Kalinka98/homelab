@@ -80,3 +80,9 @@
           icon: mealie.svg
           href: https://mealie.kalinka.dev
     
+    - Paperless:
+        - id: paperless
+          icon: paperless-ngx.svg
+          href: https://paperless.kalinka.dev
+
+    
