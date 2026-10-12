@@ -13,6 +13,10 @@ networks:
     external: true
     name: homelab-ai
 
+  dvinyl_db:
+    driver: bridge
+    internal: true
+
 
 services:
   actual:
@@ -255,3 +259,79 @@ services:
       - ai
 
     mem_limit: 1g
+
+  dvinyl-mongo:
+    image: mongo:8.0.32-noble
+    container_name: dvinyl-mongo
+    restart: unless-stopped
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dvinyl
+      MONGO_INITDB_ROOT_PASSWORD: ${DVINYL_DB_PASSWORD:?Required}
+
+    command:
+      - --wiredTigerCacheSizeGB
+      - "0.25"
+
+    volumes:
+      - ./dvinyl/data/mongo:/data/db:Z
+
+    networks:
+      - dvinyl_db
+
+    mem_limit: 1g
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          mongosh --quiet
+          --username "$${MONGO_INITDB_ROOT_USERNAME}"
+          --password "$${MONGO_INITDB_ROOT_PASSWORD}"
+          --authenticationDatabase admin
+          --eval 'db.adminCommand({ ping: 1 }).ok'
+          | grep -qx 1
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  dvinyl:
+    image: ghcr.io/kyonew/dvinyl:3.2.1
+    container_name: dvinyl
+    restart: unless-stopped
+    init: true
+    logging: *default-logging
+    labels:
+      kuma.__container: "true"
+
+    depends_on:
+      dvinyl-mongo:
+        condition: service_healthy
+
+    environment:
+      TZ: ${TZ}
+
+      VINYL_PORT: "3099"
+      PROD: "true"
+      BASE_URL: ""
+
+      MONGODB_URL: "mongodb://dvinyl:${DVINYL_DB_PASSWORD:?Required}@dvinyl-mongo:27017/dvinyl?authSource=admin"
+
+      PASSJWT: ${DVINYL_PASSJWT:?Required}
+      SESSION_SECRET: ${DVINYL_SESSION_SECRET:?Required}
+
+      DISCOGS_TOKEN: ${DVINYL_DISCOGS_TOKEN:?Required}
+
+    volumes:
+      - ./dvinyl/data/uploads:/app/public/uploads:Z
+
+    expose:
+      - "3099"
+
+    networks:
+      - edge
+      - dvinyl_db

@@ -70,3 +70,8 @@ paperless.{$BASE_DOMAIN} {
     reverse_proxy paperless:8000
 }
 
+vinyl.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy dvinyl:3099
+}

@@ -92,5 +92,8 @@ infrastructure/ollama/data/
 # Paperless-ngx
 paperless/data/
 
+# DVinyl
+services/dvinyl/data/
+
 # vscode
 .vscode
