@@ -93,7 +93,6 @@ services:
     volumes:
       - ./homepage/config:/app/config:Z
       - ./homepage/images:/app/public/images:ro,Z
-      - /var/run/docker.sock:/var/run/docker.sock:ro
 
     expose:
       - "3000"

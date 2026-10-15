@@ -1,0 +1,62 @@
+response:
+  redact_network_topology: false
+
+listen:
+  address: ":2375"
+
+rules:
+  # Connection and daemon information
+  - match:
+      method: GET
+      path: "/_ping"
+    action: allow
+    
+  - match:
+      method: HEAD
+      path: "/_ping"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/version"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/info"
+    action: allow
+
+  # Container discovery and metadata
+  - match:
+      method: GET
+      path: "/containers/json"
+    action: allow
+
+  - match:
+      method: GET
+      path: "/containers/*/json"
+    action: allow
+
+  # Log streaming
+  - match:
+      method: GET
+      path: "/containers/*/logs"
+    action: allow
+
+  # Container statistics
+  - match:
+      method: GET
+      path: "/containers/*/stats"
+    action: allow
+
+  # Container events
+  - match:
+      method: GET
+      path: "/events"
+    action: allow
+
+  # Deny everything else
+  - match:
+      method: "*"
+      path: "/**"
+    action: deny
