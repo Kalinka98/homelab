@@ -31,7 +31,7 @@ services:
       kuma.__container: "true"
 
     environment:
-      BASE_DOMAIN: ${BASE_DOMAIN}
+      BASE_DOMAIN: ${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
 
     ports:
       - "80:80"
@@ -56,10 +56,10 @@ services:
       kuma.__container: "true"
 
     ports:
-      - "${SERVER_IP_ADDRESS}:53:53/tcp"
-      - "${SERVER_IP_ADDRESS}:53:53/udp"
+      - "${SERVER_IP_ADDRESS:?Set SERVER_IP_ADDRESS in .env}:53:53/tcp"
+      - "${SERVER_IP_ADDRESS:?Set SERVER_IP_ADDRESS in .env}:53:53/udp"
 
-      - "${SERVER_IP_ADDRESS}:3000:3000/tcp"
+      - "${SERVER_IP_ADDRESS:?Set SERVER_IP_ADDRESS in .env}:3000:3000/tcp"
 
     volumes:
       - ./adguard/work:/opt/adguardhome/work:Z
@@ -134,8 +134,8 @@ services:
 
     environment:
       AUTOKUMA__KUMA__URL: http://uptime-kuma:3001
-      AUTOKUMA__KUMA__USERNAME: ${AUTOKUMA_KUMA_USERNAME:?Required}
-      AUTOKUMA__KUMA__PASSWORD: ${AUTOKUMA_KUMA_PASSWORD:?Required}
+      AUTOKUMA__KUMA__USERNAME: ${AUTOKUMA_KUMA_USERNAME:?Set AUTOKUMA_KUMA_USERNAME in .env}
+      AUTOKUMA__KUMA__PASSWORD: ${AUTOKUMA_KUMA_PASSWORD:?Set AUTOKUMA_KUMA_PASSWORD in .env}
 
       AUTOKUMA__DOCKER__HOSTS: tcp://kuma-docker-api:2375
 
@@ -198,21 +198,21 @@ services:
       kuma.__container: "true"
 
     environment:
-      PUID: ${PUID}
-      PGID: ${PGID}
+      PUID: ${PUID:?Set PUID in .env}
+      PGID: ${PGID:?Set PGID in .env}
       TZ: ${TZ}
 
       APP_TIMEZONE: ${TZ}
       DISPLAY_TIMEZONE: ${TZ}
 
-      APP_KEY: ${SPEEDTEST_APP_KEY}
-      APP_URL: https://speedtest.${BASE_DOMAIN}
-      ASSET_URL: https://speedtest.${BASE_DOMAIN}
+      APP_KEY: ${SPEEDTEST_APP_KEY:?Set SPEEDTEST_APP_KEY in .env}
+      APP_URL: https://speedtest.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
+      ASSET_URL: https://speedtest.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
 
       DB_CONNECTION: sqlite
 
-      ADMIN_EMAIL: ${SPEEDTEST_TRACKER_ADMIN_EMAIL}
-      ADMIN_PASSWORD: ${SPEEDTEST_TRACKER_ADMIN_PASSWORD}
+      ADMIN_EMAIL: ${SPEEDTEST_TRACKER_ADMIN_EMAIL:?Set SPEEDTEST_TRACKER_ADMIN_EMAIL in .env}
+      ADMIN_PASSWORD: ${SPEEDTEST_TRACKER_ADMIN_PASSWORD:?Set SPEEDTEST_TRACKER_ADMIN_PASSWORD in .env}
 
       SPEEDTEST_SCHEDULE: "17 */1 * * *"
       PRUNE_RESULTS_OLDER_THAN: 0
@@ -240,7 +240,7 @@ services:
     environment:
       TZ: ${TZ}
 
-      NTFY_BASE_URL: https://notify.${BASE_DOMAIN}
+      NTFY_BASE_URL: https://notify.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
       NTFY_BEHIND_PROXY: "true"
 
       NTFY_CACHE_FILE: /var/lib/ntfy/cache.db
@@ -274,15 +274,15 @@ services:
       - NET_RAW
 
     environment:
-      SECRET_KEY: ${HOMELABLE_SECRET_KEY}
+      SECRET_KEY: ${HOMELABLE_SECRET_KEY:?Set HOMELABLE_SECRET_KEY in .env}
 
       SQLITE_PATH: /app/data/homelab.db
 
-      CORS_ORIGINS: "[\"https://homelable.${BASE_DOMAIN}\"]"
+      CORS_ORIGINS: "[\"https://homelable.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}\"]"
 
       AUTH_MODE: local
-      AUTH_USERNAME: ${HOMELABLE_AUTH_USERNAME}
-      AUTH_PASSWORD_HASH: ${HOMELABLE_AUTH_PASSWORD_HASH}
+      AUTH_USERNAME: ${HOMELABLE_AUTH_USERNAME:?Set HOMELABLE_AUTH_USERNAME in .env}
+      AUTH_PASSWORD_HASH: ${HOMELABLE_AUTH_PASSWORD_HASH:?Set HOMELABLE_AUTH_PASSWORD_HASH in .env}
 
       SCANNER_RANGES: "[\"192.168.0.0/24\"]"
 
@@ -326,7 +326,7 @@ services:
       kuma.__container: "true"
 
     environment:
-      APP_URL: https://monitor.${BASE_DOMAIN}
+      APP_URL: https://monitor.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
 
     volumes:
       - ./beszel/data:/beszel_data:Z
@@ -362,9 +362,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/os-release:/etc/os-release:ro
       - /:/rootfs:ro
-      - ${MOVIES_PATH}:${MOVIES_PATH}:ro
-      - ${TVSHOWS_PATH}:${TVSHOWS_PATH}:ro
-      - ${DATA_PATH}:${DATA_PATH}:ro
+      - ${MOVIES_PATH:?Set MOVIES_PATH in .env}:${MOVIES_PATH:?Set MOVIES_PATH in .env}:ro
+      - ${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:ro
+      - ${DATA_PATH:?Set DATA_PATH in .env}:${DATA_PATH:?Set DATA_PATH in .env}:ro
 
     ports:
       - "127.0.0.1:61208:61208"

@@ -21,7 +21,7 @@ services:
     labels:
       kuma.__container: "true"
 
-    user: "${PUID}:${PGID}"
+    user: "${PUID:?Set PUID in .env}:${PGID:?Set PGID in .env}"
 
     runtime: nvidia
 
@@ -41,8 +41,8 @@ services:
       - ./jellyfin/config:/config:Z
       - ./jellyfin/cache:/cache:Z
 
-      - ${MOVIES_PATH}:/movies
-      - ${TVSHOWS_PATH}:/tvshows
+      - ${MOVIES_PATH:?Set MOVIES_PATH in .env}:/movies
+      - ${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:/tvshows
 
     expose:
       - "8096"
@@ -60,15 +60,15 @@ services:
       kuma.__container: "true"
 
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${PUID:?Set PUID in .env}
+      - PGID=${PGID:?Set PGID in .env}
       - TZ=${TZ}
 
     volumes:
       - ./radarr/config:/config:Z
-      - ${MOVIES_PATH}:/movies
-      - ${TVSHOWS_PATH}:/tvshows
-      - ${DOWNLOADS_PATH}:/downloads:z
+      - ${MOVIES_PATH:?Set MOVIES_PATH in .env}:/movies
+      - ${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:/tvshows
+      - ${DOWNLOADS_PATH:?Set DOWNLOADS_PATH in .env}:/downloads:z
 
     expose:
       - "7878"
@@ -86,15 +86,15 @@ services:
       kuma.__container: "true"
 
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${PUID:?Set PUID in .env}
+      - PGID=${PGID:?Set PGID in .env}
       - TZ=${TZ}
 
     volumes:
       - ./sonarr/config:/config:Z
-      - ${MOVIES_PATH}:/movies
-      - ${TVSHOWS_PATH}:/tvshows
-      - ${DOWNLOADS_PATH}:/downloads:z
+      - ${MOVIES_PATH:?Set MOVIES_PATH in .env}:/movies
+      - ${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:/tvshows
+      - ${DOWNLOADS_PATH:?Set DOWNLOADS_PATH in .env}:/downloads:z
 
     expose:
       - "8989"
@@ -112,14 +112,14 @@ services:
       kuma.__container: "true"
 
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${PUID:?Set PUID in .env}
+      - PGID=${PGID:?Set PGID in .env}
       - TZ=${TZ}
       - WEBUI_PORT=8080
 
     volumes:
       - ./qbittorrent/config:/config:Z
-      - ${DOWNLOADS_PATH}:/downloads:z
+      - ${DOWNLOADS_PATH:?Set DOWNLOADS_PATH in .env}:/downloads:z
 
     expose:
       - "8080"
@@ -137,8 +137,8 @@ services:
       kuma.__container: "true"
 
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${PUID:?Set PUID in .env}
+      - PGID=${PGID:?Set PGID in .env}
       - TZ=${TZ}
 
     volumes:
@@ -178,14 +178,14 @@ services:
       kuma.__container: "true"
 
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${PUID:?Set PUID in .env}
+      - PGID=${PGID:?Set PGID in .env}
       - TZ=${TZ}
 
     volumes:
       - ./bazarr/config:/config:Z
-      - ${MOVIES_PATH}:/movies
-      - ${TVSHOWS_PATH}:/tvshows
+      - ${MOVIES_PATH:?Set MOVIES_PATH in .env}:/movies
+      - ${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:/tvshows
 
     expose:
       - "6767"
@@ -223,15 +223,15 @@ services:
       TARGET_LANGUAGES: ${TARGET_LANGUAGES}
       PREFERRED_AUDIO_LANGUAGE: ${PREFERRED_AUDIO_LANGUAGE}
       WORKERS: ${WORKERS}
-      DATABASE_PATH: ${DATABASE_PATH}
+      DATABASE_PATH: ${DATABASE_PATH:?Set DATABASE_PATH in .env}
       SUBTITLE_FORMAT: ${SUBTITLE_FORMAT}
       SUBTITLE_SUFFIX: ${SUBTITLE_SUFFIX}
 
     volumes:
       - ./simplesubgen/data:/data:Z
       - ./simplesubgen/models:/models:Z
-      - ${MOVIES_PATH}:/movies
-      - ${TVSHOWS_PATH}:/tvshows
+      - ${MOVIES_PATH:?Set MOVIES_PATH in .env}:/movies
+      - ${TVSHOWS_PATH:?Set TVSHOWS_PATH in .env}:/tvshows
 
     networks:
       - media

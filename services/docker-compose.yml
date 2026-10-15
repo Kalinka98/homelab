@@ -45,7 +45,7 @@ services:
       kuma.__container: "true"
 
     environment:
-      DOMAIN: "https://vault.${BASE_DOMAIN}"
+      DOMAIN: "https://vault.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}"
       SIGNUPS_ALLOWED: "false"
 
     volumes:
@@ -63,12 +63,13 @@ services:
       kuma.__container: "true"
 
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: home.${BASE_DOMAIN}
+      HOMEPAGE_ALLOWED_HOSTS: home.${BASE_DOMAIN:?Required}
 
       HOMEPAGE_AUTH_ENABLED: "true"
-      HOMEPAGE_AUTH_SECRET: ${HOMEPAGE_AUTH_SECRET}
-      HOMEPAGE_AUTH_PASSWORD: ${HOMEPAGE_AUTH_PASSWORD}
-      HOMEPAGE_EXTERNAL_URL: https://home.${BASE_DOMAIN}
+      HOMEPAGE_AUTH_SECRET: ${HOMEPAGE_AUTH_SECRET:?Required}
+      HOMEPAGE_AUTH_PASSWORD: ${HOMEPAGE_AUTH_PASSWORD:?Required}
+      HOMEPAGE_EXTERNAL_URL: https://home.${BASE_DOMAIN:?Required}
+      HOMEPAGE_VAR_BASE_DOMAIN: ${BASE_DOMAIN:?Required}
 
       HOMEPAGE_VAR_ADGUARD_USERNAME: ${ADGUARD_USERNAME}
       HOMEPAGE_VAR_ADGUARD_PASSWORD: ${ADGUARD_PASSWORD}
@@ -140,7 +141,7 @@ services:
 
       REGISTRATION_MODE: "closed"
 
-      SECRET_KEY: ${OVUMCY_SECRET_KEY}
+      SECRET_KEY: ${OVUMCY_SECRET_KEY:?Set OVUMCY_SECRET_KEY in .env}
 
       PORT: "8080"
 
@@ -152,7 +153,7 @@ services:
       COOKIE_SECURE: "true"
       TRUST_PROXY_ENABLED: "true"
       PROXY_HEADER: X-Real-IP
-      TRUSTED_PROXIES: ${OVUMCY_TRUSTED_PROXIES}
+      TRUSTED_PROXIES: ${OVUMCY_TRUSTED_PROXIES:?Set OVUMCY_TRUSTED_PROXIES in .env}
 
     volumes:
       - ./ovumcy/data:/app/data:Z
@@ -196,15 +197,15 @@ services:
       ZIMI_DATA_DIR: /config
 
       ZIMI_MANAGE: "1"
-      ZIMI_MANAGE_USER: ${ZIMI_MANAGE_USER}
-      ZIMI_MANAGE_PASSWORD: ${ZIMI_MANAGE_PASSWORD}
+      ZIMI_MANAGE_USER: ${ZIMI_MANAGE_USER:?Set ZIMI_MANAGE_USER in .env}
+      ZIMI_MANAGE_PASSWORD: ${ZIMI_MANAGE_PASSWORD:?Set ZIMI_MANAGE_PASSWORD in .env}
 
       ZIMI_PUBLIC_ACCESS: private
 
       ZIMI_CREATE_ROOT: /zims/sources
 
     volumes:
-      - ${ZIMS_PATH}:/zims:Z
+      - ${ZIMS_PATH:?Set ZIMS_PATH in .env}:/zims:Z
       - ./zimi/config:/config:Z
 
     expose:
@@ -237,11 +238,11 @@ services:
       kuma.__container: "true"
 
     environment:
-      PUID: ${PUID}
-      PGID: ${PGID}
+      PUID: ${PUID:?Set PUID in .env}
+      PGID: ${PGID:?Set PGID in .env}
       TZ: ${TZ}
 
-      BASE_URL: https://mealie.${BASE_DOMAIN}
+      BASE_URL: https://mealie.${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
       ALLOW_SIGNUP: "false"
 
       DB_ENGINE: sqlite
@@ -270,7 +271,7 @@ services:
 
     environment:
       MONGO_INITDB_ROOT_USERNAME: dvinyl
-      MONGO_INITDB_ROOT_PASSWORD: ${DVINYL_DB_PASSWORD:?Required}
+      MONGO_INITDB_ROOT_PASSWORD: ${DVINYL_DB_PASSWORD:?Set DVINYL_DB_PASSWORD in .env}
 
     command:
       - --wiredTigerCacheSizeGB
@@ -319,12 +320,12 @@ services:
       PROD: "true"
       BASE_URL: ""
 
-      MONGODB_URL: "mongodb://dvinyl:${DVINYL_DB_PASSWORD:?Required}@dvinyl-mongo:27017/dvinyl?authSource=admin"
+      MONGODB_URL: "mongodb://dvinyl:${DVINYL_DB_PASSWORD:?Set DVINYL_DB_PASSWORD in .env}@dvinyl-mongo:27017/dvinyl?authSource=admin"
 
-      PASSJWT: ${DVINYL_PASSJWT:?Required}
-      SESSION_SECRET: ${DVINYL_SESSION_SECRET:?Required}
+      PASSJWT: ${DVINYL_PASSJWT:?Set DVINYL_PASSJWT in .env}
+      SESSION_SECRET: ${DVINYL_SESSION_SECRET:?Set DVINYL_SESSION_SECRET in .env}
 
-      DISCOGS_TOKEN: ${DVINYL_DISCOGS_TOKEN:?Required}
+      DISCOGS_TOKEN: ${DVINYL_DISCOGS_TOKEN:?Set DVINYL_DISCOGS_TOKEN in .env}
 
     volumes:
       - ./dvinyl/data/uploads:/app/public/uploads:Z

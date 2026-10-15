@@ -53,7 +53,7 @@ services:
 
     environment:
       POSTGRES_USER: dawarich
-      POSTGRES_PASSWORD: ${DAWARICH_DB_PASSWORD:?Required}
+      POSTGRES_PASSWORD: ${DAWARICH_DB_PASSWORD:?Set DAWARICH_DB_PASSWORD in .env}
       POSTGRES_DB: dawarich
 
     volumes:
@@ -88,15 +88,15 @@ services:
       SELF_HOSTED: "true"
 
       TIME_ZONE: ${TZ:-Europe/Sofia}
-      APPLICATION_HOSTS: dawarich.${BASE_DOMAIN},localhost,127.0.0.1
+      APPLICATION_HOSTS: dawarich.${BASE_DOMAIN:?Set BASE_DOMAIN in .env},localhost,127.0.0.1
       APPLICATION_PROTOCOL: http
 
-      SECRET_KEY_BASE: ${DAWARICH_SECRET_KEY_BASE:?Required}
+      SECRET_KEY_BASE: ${DAWARICH_SECRET_KEY_BASE:?Set DAWARICH_SECRET_KEY_BASE in .env}
 
       DATABASE_HOST: dawarich_db
       DATABASE_PORT: "5432"
       DATABASE_USERNAME: dawarich
-      DATABASE_PASSWORD: ${DAWARICH_DB_PASSWORD:?Required}
+      DATABASE_PASSWORD: ${DAWARICH_DB_PASSWORD:?Set DAWARICH_DB_PASSWORD in .env}
       DATABASE_NAME: dawarich
 
       REDIS_URL: redis://dawarich_redis:6379

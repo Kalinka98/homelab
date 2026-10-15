@@ -6,7 +6,7 @@
             widget:
               type: iframe
               name: daily-inspiration
-              src: https://home.kalinka.dev/quotes/
+              src: https://home.{{HOMEPAGE_VAR_BASE_DOMAIN}}/quotes/
               classes: h-45
               allowScrolling: no
 
@@ -42,11 +42,11 @@
         - Jellyfin:
             id: jellyfin
             icon: mdi-play-circle-outline
-            href: https://jellyfin.kalinka.dev
+            href: https://jellyfin.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             description: Who needs Netflix anyway?
             widget:
               type: jellyfin
-              url: https://jellyfin.kalinka.dev
+              url: https://jellyfin.{{HOMEPAGE_VAR_BASE_DOMAIN}}
               key: "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"
               version: 2
               enableBlocks: true
@@ -58,7 +58,7 @@
               fields: [movies, series, episodes]
               
         - Services Status:
-            href: https://status.kalinka.dev
+            href: https://status.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             icon: mdi-check
             widget:
               type: uptimekuma
@@ -102,11 +102,11 @@
         - qBittorrent:
             id: qbittorrent
             icon: mdi-download-network-outline
-            href: https://qbittorrent.kalinka.dev
+            href: https://qbittorrent.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             description: Torrenting (not pirating)
             widget:
               type: qbittorrent
-              url: https://qbittorrent.kalinka.dev
+              url: https://qbittorrent.{{HOMEPAGE_VAR_BASE_DOMAIN}}
               username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
               password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
               enableLeechProgress: true
@@ -115,7 +115,7 @@
         - AdGuard Home:
             id: adguard
             icon: mdi-shield-check-outline
-            href: https://adguard.kalinka.dev
+            href: https://adguard.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             description: Say not to ads!
             widget:
               type: adguard
@@ -126,7 +126,7 @@
         - Immich:
             id: immich
             icon: immich.svg
-            href: https://immich.kalinka.dev
+            href: https://immich.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             description: Photos & videos
             widget:
               type: immich
@@ -137,9 +137,9 @@
     - Section3:    
         - Network Speed:
             icon: mdi-speedometer
-            href: https://speedtest.kalinka.dev
+            href: https://speedtest.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             widget:
               type: speedtest
-              url: https://speedtest.kalinka.dev
+              url: https://speedtest.{{HOMEPAGE_VAR_BASE_DOMAIN}}
               version: 2
               key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"

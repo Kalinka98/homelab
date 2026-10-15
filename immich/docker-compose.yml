@@ -27,14 +27,14 @@ services:
       DB_HOSTNAME: immich-postgres
       DB_PORT: "5432"
       DB_USERNAME: immich
-      DB_PASSWORD: ${IMMICH_DB_PASSWORD}
+      DB_PASSWORD: ${IMMICH_DB_PASSWORD:?Set IMMICH_DB_PASSWORD in .env}
       DB_DATABASE_NAME: immich
 
       REDIS_HOSTNAME: immich-valkey
       REDIS_PORT: "6379"
 
     volumes:
-      - ${DATA_PATH}/immich:/data:Z
+      - ${DATA_PATH:?Set DATA_PATH in .env}/immich:/data:Z
       - /etc/localtime:/etc/localtime:ro
 
     expose:
@@ -123,7 +123,7 @@ services:
       kuma.__container: "true"
 
     environment:
-      POSTGRES_PASSWORD: ${IMMICH_DB_PASSWORD}
+      POSTGRES_PASSWORD: ${IMMICH_DB_PASSWORD:?Set IMMICH_DB_PASSWORD in .env}
       POSTGRES_USER: immich
       POSTGRES_DB: immich
       POSTGRES_INITDB_ARGS: "--data-checksums"
