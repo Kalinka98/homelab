@@ -23,11 +23,6 @@ adguard.{$BASE_DOMAIN} {
     reverse_proxy adguard:3000
 }
 
-homelable.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy homelable:80
-}
-
 monitor.{$BASE_DOMAIN} {
     import common_headers
     reverse_proxy beszel:8090

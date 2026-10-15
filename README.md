@@ -53,7 +53,7 @@ Applications with multiple containers share the same project link.
 
 | Stack | Projects |
 | --- | --- |
-| Infrastructure | [Caddy](https://github.com/caddyserver/caddy), [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome), [Uptime Kuma](https://github.com/louislam/uptime-kuma), [Sockguard](https://github.com/CodesWhat/sockguard), [AutoKuma](https://github.com/BigBoot/AutoKuma), [Dozzle](https://github.com/amir20/dozzle), [Speedtest Tracker](https://github.com/alexjustesen/speedtest-tracker), [ntfy](https://github.com/binwiederhier/ntfy), [Homelable](https://github.com/Pouzor/homelable), [Beszel](https://github.com/henrygd/beszel), [Glances](https://github.com/nicolargo/glances), [Ollama](https://github.com/ollama/ollama) |
+| Infrastructure | [Caddy](https://github.com/caddyserver/caddy), [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome), [Uptime Kuma](https://github.com/louislam/uptime-kuma), [Sockguard](https://github.com/CodesWhat/sockguard), [AutoKuma](https://github.com/BigBoot/AutoKuma), [Dozzle](https://github.com/amir20/dozzle), [Speedtest Tracker](https://github.com/alexjustesen/speedtest-tracker), [ntfy](https://github.com/binwiederhier/ntfy), [Beszel](https://github.com/henrygd/beszel), [Glances](https://github.com/nicolargo/glances), [Ollama](https://github.com/ollama/ollama) |
 | Media | [Jellyfin](https://github.com/jellyfin/jellyfin), [Radarr](https://github.com/Radarr/Radarr), [Sonarr](https://github.com/Sonarr/Sonarr), [qBittorrent](https://github.com/qbittorrent/qBittorrent), [Prowlarr](https://github.com/Prowlarr/Prowlarr), [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr), [Bazarr](https://github.com/morpheus65535/bazarr), [SimpleSubGen](https://github.com/Kalinka98/SimpleSubGen) |
 | Personal services | [Actual Budget](https://github.com/actualbudget/actual), [Vaultwarden](https://github.com/dani-garcia/vaultwarden), [Homepage](https://github.com/gethomepage/homepage), [local quotes service](services/quotes-service/), [Ovumcy](https://github.com/ovumcy/ovumcy-web), [Zimi](https://github.com/epheterson/Zimi), [Mealie](https://github.com/mealie-recipes/mealie), [DVinyl](https://github.com/Kyonew/DVinyl), [MongoDB](https://github.com/mongodb/mongo) |
 | Photos | [Immich](https://github.com/immich-app/immich), [PostgreSQL](https://github.com/postgres/postgres), [Valkey](https://github.com/valkey-io/valkey) |
@@ -160,7 +160,6 @@ The deployment uses bind mounts and some named volumes for persistent state. Imp
 - Internet-exposed management applications should use strong authentication and ideally an additional access control layer or VPN.
 - Several observability integrations need Docker API/host information. Access to `/var/run/docker.sock`, including read-only mounts, is highly privileged; Docker socket consumers should be reviewed and constrained.
 - AutoKuma uses a separately defined, allowlisted Docker API proxy for monitoring. Its HTTP access is restricted to its internal Docker network; it is not intended for internet exposure.
-- The networking scanner is host-networked, so the scanner range and host firewall need explicit review.
 - Host bind mount paths and hardcoded internal assumptions are tailored to this installation and may need adaptation on another machine.
 
 ## Validation

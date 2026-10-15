@@ -47,9 +47,6 @@ infrastructure/dozzle/data
 # ntfy
 infrastructure/ntfy/data/
 
-# Homelable
-infrastructure/homelable/data/
-
 # Beszel
 infrastructure/beszel/data/
 

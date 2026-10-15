@@ -16,11 +16,7 @@ Compose gives exported shell variables precedence over `.env` values. Check
 your shell when an edit seems to have no effect. Single-quote literal secrets
 containing `$`, including bcrypt hashes; unquoted and double-quoted values
 undergo interpolation. For example, replace the text inside these quotes with
-the complete hash, keeping its dollar signs:
-
-```dotenv
-HOMELABLE_AUTH_PASSWORD_HASH='paste-the-complete-bcrypt-hash-here'
-```
+the complete hash, keeping its dollar signs.
 
 Do not source these files as shell scripts. The formats are different, and a
 Compose environment file can contain values that are meaningful to a shell.
@@ -42,9 +38,6 @@ LAN interface. The example `192.0.2.10` is a documentation address. Set
 `DOCKER_SOCK_GID` to the numeric group returned by
 `stat -c '%g' /var/run/docker.sock`; it is independent of `PGID`.
 
-Homelable also has a host-networked scanner. Review its `SCANNER_RANGES` in
-`infrastructure/docker-compose.yml` against the network you intend to scan.
-
 ## Credentials and application keys
 
 Generate a different value for each independent secret. Keep existing keys
@@ -59,8 +52,6 @@ existing database user.
 | `HOMEPAGE_AUTH_PASSWORD` | Strong, unique plain password, rather than a password hash. See [Homepage authentication](https://github.com/gethomepage/homepage/blob/v2.4.0/docs/installation/index.md). |
 | `SPEEDTEST_APP_KEY` | Encryption key: literal `base64:` followed by Base64 encoding of 32 random bytes. Use the generator below and preserve the prefix. See [Speedtest encryption](https://docs.speedtest-tracker.dev/security/encryption). |
 | `SPEEDTEST_TRACKER_ADMIN_EMAIL` / `SPEEDTEST_TRACKER_ADMIN_PASSWORD` | Initial Speedtest administrator credentials. These are separate from its encryption key and API token. |
-| `HOMELABLE_SECRET_KEY` | Random secret; `openssl rand -hex 32` produces the format recommended upstream. |
-| `HOMELABLE_AUTH_PASSWORD_HASH` | Complete bcrypt hash, single-quoted in `.env`. Generate using [Homelable's installation guidance](https://github.com/Pouzor/homelable/blob/main/INSTALLATION.md); these upstream instructions track `main`, so verify them against the pinned image. |
 | `OVUMCY_SECRET_KEY` | At least 32 nonplaceholder characters; generate with `openssl rand -hex 32`. Preserve it on existing installations, including those using TOTP. See [Ovumcy's operations guide](https://github.com/ovumcy/ovumcy-web/blob/v1.9.2/docs/self-hosted.md). |
 | `OVUMCY_TRUSTED_PROXIES` | Comma-separated trusted proxy IPs/CIDRs matching Caddy's actual source address. See proxy setup below. |
 | `IMMICH_DB_PASSWORD` | Alphanumeric password. For a fresh database, `openssl rand -hex 32` meets the [pinned Immich example's requirements](https://github.com/immich-app/immich/blob/v3.3.1/docker/example.env). |
@@ -93,8 +84,7 @@ Homepage widgets use credentials issued by their applications:
 | `*_CALENDAR_URL` | Private iCalendar feed URLs from your calendar provider |
 
 Remove the corresponding Homepage widget/integration if you do not use it.
-`HOMELABLE_HOMEPAGE_API_KEY` is optional unless an external integration uses
-Homelable's API. AutoKuma needs an existing Uptime Kuma account; Zimi's management
+AutoKuma needs an existing Uptime Kuma account; Zimi's management
 variables are its own login credentials. `HF_TOKEN` can remain empty when the
 selected models do not require Hugging Face authentication.
 

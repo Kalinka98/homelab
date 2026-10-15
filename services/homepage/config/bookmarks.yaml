@@ -59,10 +59,6 @@
         - id: ntfy
           icon: ntfy.svg
           href: https://notify.{{HOMEPAGE_VAR_BASE_DOMAIN}}
-    - Homelable:
-        - id: homelable
-          icon: homelable.svg
-          href: https://homelable.{{HOMEPAGE_VAR_BASE_DOMAIN}}
     - Ovumcy:
         - id: ovumcy
           icon: sh-ovumcy.svg
