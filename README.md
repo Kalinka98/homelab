@@ -46,6 +46,51 @@ The public-facing reverse proxy uses the external Docker network `homelab-edge`.
 | `dawarich/` | Location-history service and dependencies |
 | `paperless/` | Paperless-ngx, PostgreSQL, Valkey, Tika, and Gotenberg |
 
+## Project links
+
+Upstream repositories for the services and direct dependencies configured here.
+Applications with multiple containers share the same project link.
+
+| Stack | Projects |
+| --- | --- |
+| Infrastructure | [Caddy](https://github.com/caddyserver/caddy), [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome), [Uptime Kuma](https://github.com/louislam/uptime-kuma), [Sockguard](https://github.com/CodesWhat/sockguard), [AutoKuma](https://github.com/BigBoot/AutoKuma), [Dozzle](https://github.com/amir20/dozzle), [Speedtest Tracker](https://github.com/alexjustesen/speedtest-tracker), [ntfy](https://github.com/binwiederhier/ntfy), [Homelable](https://github.com/Pouzor/homelable), [Beszel](https://github.com/henrygd/beszel), [Glances](https://github.com/nicolargo/glances), [Ollama](https://github.com/ollama/ollama) |
+| Media | [Jellyfin](https://github.com/jellyfin/jellyfin), [Radarr](https://github.com/Radarr/Radarr), [Sonarr](https://github.com/Sonarr/Sonarr), [qBittorrent](https://github.com/qbittorrent/qBittorrent), [Prowlarr](https://github.com/Prowlarr/Prowlarr), [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr), [Bazarr](https://github.com/morpheus65535/bazarr), [SimpleSubGen](https://github.com/Kalinka98/SimpleSubGen) |
+| Personal services | [Actual Budget](https://github.com/actualbudget/actual), [Vaultwarden](https://github.com/dani-garcia/vaultwarden), [Homepage](https://github.com/gethomepage/homepage), [local quotes service](services/quotes-service/), [Ovumcy](https://github.com/ovumcy/ovumcy-web), [Zimi](https://github.com/epheterson/Zimi), [Mealie](https://github.com/mealie-recipes/mealie), [DVinyl](https://github.com/Kyonew/DVinyl), [MongoDB](https://github.com/mongodb/mongo) |
+| Photos | [Immich](https://github.com/immich-app/immich), [PostgreSQL](https://github.com/postgres/postgres), [Valkey](https://github.com/valkey-io/valkey) |
+| Location history | [Dawarich](https://github.com/Freika/dawarich), [Redis](https://github.com/redis/redis), [PostGIS](https://github.com/postgis/postgis), [PostgreSQL](https://github.com/postgres/postgres) |
+| Documents | [Paperless-ngx](https://github.com/paperless-ngx/paperless-ngx), [PostgreSQL](https://github.com/postgres/postgres), [Valkey](https://github.com/valkey-io/valkey), [Gotenberg](https://github.com/gotenberg/gotenberg), [Apache Tika](https://github.com/apache/tika) |
+
+Supporting tools, dashboard resources, and models are linked below. Model and
+dataset pages point to their original publishers where they are hosted outside
+GitHub.
+
+| Component | Projects |
+| --- | --- |
+| Host and container runtime | [Fedora Linux](https://fedoraproject.org/), [Docker Engine / Moby](https://github.com/moby/moby), [Docker CLI](https://github.com/docker/cli), [Docker Compose](https://github.com/docker/compose), [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit) |
+| Automation | [Git](https://github.com/git/git), [GNU Make](https://www.gnu.org/software/make/), [GitHub Actions checkout](https://github.com/actions/checkout) |
+| Quotes service and exporter | [Python](https://github.com/python/cpython), [FastAPI](https://github.com/fastapi/fastapi), [Uvicorn](https://github.com/Kludex/uvicorn), [Hugging Face Datasets](https://github.com/huggingface/datasets) |
+| Dashboard resources | [Open-Meteo](https://github.com/open-meteo/open-meteo), [Dashboard Icons](https://github.com/homarr-labs/dashboard-icons), [Material Design Icons](https://github.com/Templarian/MaterialDesign) |
+| Speech recognition | [Whisper](https://github.com/openai/whisper), configured with `large-v3` |
+| Translation | [NLLB / fairseq](https://github.com/facebookresearch/fairseq), [NLLB-200 distilled 600M model](https://huggingface.co/facebook/nllb-200-distilled-600M) |
+| Document AI | [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL), configured as `qwen3-vl:8b-instruct`; [EmbeddingGemma](https://huggingface.co/google/embeddinggemma-300m) |
+| Quotes data | [Sanitized English Quotes](https://huggingface.co/datasets/tengomucho/english_quotes_sanitized), [original English Quotes](https://huggingface.co/datasets/Abirate/english_quotes); attribution in [third-party notices](THIRD_PARTY_NOTICES.md) |
+
+<details>
+<summary>Container image source repositories</summary>
+
+Some image definitions live separately from their application's source code.
+
+| Images | Source repositories |
+| --- | --- |
+| Caddy and Python base image | [Caddy Docker](https://github.com/caddyserver/caddy-docker), [Python official image](https://github.com/docker-library/python) |
+| LinuxServer media images | [Radarr](https://github.com/linuxserver/docker-radarr), [Sonarr](https://github.com/linuxserver/docker-sonarr), [qBittorrent](https://github.com/linuxserver/docker-qbittorrent), [Prowlarr](https://github.com/linuxserver/docker-prowlarr), [Bazarr](https://github.com/linuxserver/docker-bazarr) |
+| LinuxServer Speedtest Tracker | [Speedtest Tracker image](https://github.com/linuxserver/docker-speedtest-tracker) |
+| Database images | [PostgreSQL](https://github.com/docker-library/postgres), [MongoDB](https://github.com/docker-library/mongo), [Redis](https://github.com/redis/docker-library-redis), [Valkey](https://github.com/valkey-io/valkey-container), [PostGIS](https://github.com/postgis/docker-postgis) |
+| Immich PostgreSQL image and extensions | [Image definitions](https://github.com/immich-app/base-images/tree/main/postgres), [VectorChord](https://github.com/supervc-stack/VectorChord), [pgvector](https://github.com/pgvector/pgvector), [pgvecto.rs](https://github.com/tensorchord/pgvecto.rs) |
+| Apache Tika image | [Tika Docker](https://github.com/apache/tika-docker) |
+
+</details>
+
 ## Requirements
 
 - Fedora Linux or another Linux host with Docker Engine and the Docker Compose plugin.
@@ -134,6 +179,20 @@ Original code, configuration, and documentation are available under the
 bundled quotes dataset retain their separate terms. See
 [third-party notices](THIRD_PARTY_NOTICES.md) for dataset provenance,
 attribution, transformations, and the bundled export's checksum.
+
+## Acknowledgements
+
+Thank you to the maintainers and contributors behind the [projects listed above](#project-links).
+Their applications, tools, models, documentation, and continued maintenance make
+this homelab possible. Special thanks to [LinuxServer.io](https://github.com/linuxserver)
+for the container images used in the media stack and for Speedtest Tracker.
+
+Credit for the quotes data goes to
+[Abir ELTAIEF / Abirate](https://huggingface.co/datasets/Abirate/english_quotes)
+for the original dataset and
+[tengomucho](https://huggingface.co/datasets/tengomucho/english_quotes_sanitized)
+for the sanitized version. See the [third-party notices](THIRD_PARTY_NOTICES.md)
+for provenance, transformations, and licensing information.
 
 ## Project status
 
