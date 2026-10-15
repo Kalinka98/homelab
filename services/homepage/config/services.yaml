@@ -142,4 +142,4 @@
               type: speedtest
               url: https://speedtest.{{HOMEPAGE_VAR_BASE_DOMAIN}}
               version: 2
-              key: "{{HOMEPAGE_VAR_SPEEDTEST_APP_KEY}}"
+              key: "{{HOMEPAGE_VAR_SPEEDTEST_API_KEY}}"

@@ -69,12 +69,13 @@ These steps show how to inspect and adapt the configuration, **not** how to safe
 3. For each stack, copy its environment template and then replace *every* placeholder with real values appropriate for your system:
 
    ```bash
+   umask 077
    for stack in infrastructure media services immich dawarich paperless; do
      cp -n "$stack/.env.example" "$stack/.env"
    done
    ```
 
-4. Review all Compose settings, notably bind mounts, the Docker socket, ports, domain names, user/group IDs, and GPU reservations.
+4. Follow the [configuration guide](docs/CONFIGURATION.md) for credential formats, shared storage paths, ownership, and Fedora/SELinux setup. Review bind mounts, the Docker socket, ports, domain names, user/group IDs, and GPU reservations.
 5. Check interpolation without deploying containers:
 
    ```bash
@@ -88,7 +89,7 @@ These steps show how to inspect and adapt the configuration, **not** how to safe
    docker compose up -d
    ```
 
-7. Start other stacks individually from their own directories once configured. Running `make up` brings up **all** stacks and is intended only for a prepared machine.
+7. Start other stacks individually from their own directories once configured. Running `make up` validates all six local configurations before bringing up **all** stacks and is intended only for a prepared machine. Configuration validation does not guarantee that images, networks, hardware, or running applications are ready.
 
 For CI or to validate the **published example values** without local `.env` files, run `make validate-examples`.
 
@@ -101,6 +102,10 @@ values during Compose interpolation. This does not validate secret strength,
 formats, or placeholder values. Use the same `DATA_PATH`, `MOVIES_PATH`, and
 `TVSHOWS_PATH` across stacks where they refer to the same storage. Homepage
 service links follow the `BASE_DOMAIN` set in `services/.env`.
+
+The [configuration guide](docs/CONFIGURATION.md) explains which values are shared,
+which credentials come from applications, and how storage ownership and SELinux
+labels apply to the different containers.
 
 The deployment uses bind mounts and some named volumes for persistent state. Important data includes media libraries, passwords, private photographs, documents, databases, location history, and application configuration. It must **not** be pushed to Git. Backups, restore tests, and data retention policies must be arranged independently of the repository.
 

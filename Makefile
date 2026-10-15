@@ -9,7 +9,7 @@ help:
 	@echo "  make validate           Validate local configurations (.env per stack)"
 	@echo "  make validate-examples  Validate tracked .env.example configurations"
 	@echo "  make ps                 Show containers in all stacks"
-	@echo "  make up                 Start all stacks (live credentials required)"
+	@echo "  make up                 Validate and start all stacks (live credentials required)"
 	@echo "  make down               Stop and remove containers in all stacks"
 	@echo "  make restart            Restart all stacks"
 	@echo "  make pull               Pull images in all stacks"
@@ -33,7 +33,7 @@ ps:
 		(cd "$$stack" && $(COMPOSE) ps); \
 	done
 
-up:
+up: validate
 	@set -e; for stack in $(STACKS); do \
 		echo "==> Starting $$stack"; \
 		test -f "$$stack/.env" || { echo "Missing $$stack/.env"; exit 1; }; \
