@@ -14,9 +14,17 @@
 *.p12
 *.pfx
 *.sqlite
+*.sqlite-*
 *.sqlite3
+*.sqlite3-*
 *.db
 *.db-*
+
+# Python bytecode and local virtual environments.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
 
 # Caddy
 infrastructure/caddy/data
@@ -73,6 +81,10 @@ services/actual/data
 
 # VaultWarden
 services/vaultwarden/data
+
+# Ovumcy
+services/ovumcy/data/
+services/ovumcy/fence/
 
 # Zimi
 services/zimi/config

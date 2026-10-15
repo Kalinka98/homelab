@@ -6,7 +6,7 @@ A production-style, self-hosted homelab running on **Fedora Linux**, managed wit
 
 ## Highlights
 
-- **Infrastructure as code:** six logically separated Compose projects, pinned container versions, and shared networks.
+- **Infrastructure as code:** six logically separated Compose projects, explicit container version tags (some digest-pinned), and shared networks.
 - **Reverse proxy:** Caddy routes HTTPS traffic to explicitly configured services.
 - **Observability:** Uptime Kuma, AutoKuma, Glances, Beszel, Dozzle, and Speedtest Tracker.
 - **Media:** Jellyfin, Radarr, Sonarr, Prowlarr, qBittorrent, Bazarr, and the separately developed [SimpleSubGen](https://github.com/Kalinka98/SimpleSubGen).
@@ -96,6 +96,12 @@ For CI or to validate the **published example values** without local `.env` file
 
 All secrets, host-specific paths, authentication information, and private calendar feed URLs belong in ignored `.env` files or a dedicated secret manager. The tracked `*.env.example` files contain **nonworking placeholders**, never production credentials.
 
+Required paths, domains, IDs, and authentication settings reject unset or empty
+values during Compose interpolation. This does not validate secret strength,
+formats, or placeholder values. Use the same `DATA_PATH`, `MOVIES_PATH`, and
+`TVSHOWS_PATH` across stacks where they refer to the same storage. Homepage
+service links follow the `BASE_DOMAIN` set in `services/.env`.
+
 The deployment uses bind mounts and some named volumes for persistent state. Important data includes media libraries, passwords, private photographs, documents, databases, location history, and application configuration. It must **not** be pushed to Git. Backups, restore tests, and data retention policies must be arranged independently of the repository.
 
 ## Security model and tradeoffs
@@ -106,7 +112,6 @@ The deployment uses bind mounts and some named volumes for persistent state. Imp
 - AutoKuma uses a separately defined, allowlisted Docker API proxy for monitoring. Its HTTP access is restricted to its internal Docker network; it is not intended for internet exposure.
 - The networking scanner is host-networked, so the scanner range and host firewall need explicit review.
 - Host bind mount paths and hardcoded internal assumptions are tailored to this installation and may need adaptation on another machine.
-- The repository and previous Git commits must be scanned for credentials **before publication**.
 
 ## Validation
 
@@ -119,9 +124,11 @@ A GitHub Actions workflow validates all six Compose files against the example co
 
 ## Third-party software and data
 
-This repository **configures** third-party containers; it does not own their source code or licenses. The quotes service currently uses a dataset derived from [tengomucho/english_quotes_sanitized](https://huggingface.co/datasets/tengomucho/english_quotes_sanitized), itself derived from [Abirate/english_quotes](https://huggingface.co/datasets/Abirate/english_quotes), whose dataset card lists CC BY 4.0. Attribution does not independently establish rights to every underlying quotation.
-
-Licensing of this repository's original files is separate from third-party dependencies and data.
+Original code, configuration, and documentation are available under the
+[MIT license](LICENSE). Third-party applications, images, models, and the
+bundled quotes dataset retain their separate terms. See
+[third-party notices](THIRD_PARTY_NOTICES.md) for dataset provenance,
+attribution, transformations, and the bundled export's checksum.
 
 ## Project status
 
