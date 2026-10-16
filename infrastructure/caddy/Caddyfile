@@ -8,4 +8,21 @@
     }
 }
 
+# Match requests not coming from the home LAN
+# or the verified WireGuard client.
+(private_acl) {
+    @outside not remote_ip 192.168.0.0/24 10.5.5.2/32
+}
+
+# Reusable protected reverse proxy.
+(private_proxy) {
+    import common_headers
+    import private_acl
+
+    route {
+        respond @outside "VPN required" 403
+        reverse_proxy {args[0]}
+    }
+}
+
 import /etc/caddy/sites/*.caddy

@@ -1,28 +1,25 @@
+# Private media administration
 radarr.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy radarr:7878
+    import private_proxy radarr:7878
 }
 
 sonarr.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy sonarr:8989
+    import private_proxy sonarr:8989
 }
 
 qbittorrent.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy qbittorrent:8080
+    import private_proxy qbittorrent:8080
 }
 
 prowlarr.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy prowlarr:9696
+    import private_proxy prowlarr:9696
 }
 
 bazarr.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy bazarr:6767
+    import private_proxy bazarr:6767
 }
 
+# Public media streaming
 jellyfin.{$BASE_DOMAIN} {
     import common_headers
     reverse_proxy jellyfin:8096

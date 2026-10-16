@@ -1,29 +1,26 @@
 status.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy uptime-kuma:3001
+    import private_proxy uptime-kuma:3001
 }
 
 speedtest.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy speedtest-tracker:80
+    import private_proxy speedtest-tracker:80
 }
 
 logs.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy dozzle:8080
+    import private_proxy dozzle:8080
 }
 
-notify.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy ntfy:80
-}
 
 adguard.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy adguard:3000
+    import private_proxy adguard:3000
 }
 
 monitor.{$BASE_DOMAIN} {
+    import private_proxy beszel:8090
+}
+
+# Keep notifications working without VPN
+notify.{$BASE_DOMAIN} {
     import common_headers
-    reverse_proxy beszel:8090
+    reverse_proxy ntfy:80
 }

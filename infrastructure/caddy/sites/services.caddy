@@ -1,77 +1,69 @@
+# Private personal and administrative applications
 budget.{$BASE_DOMAIN} {
-    import common_headers
-    reverse_proxy actual-budget:5006
+    import private_proxy actual-budget:5006
 }
 
 home.{$BASE_DOMAIN} {
     import common_headers
+    import private_acl
 
-    handle_path /quotes/* {
-        header {
-            -X-Frame-Options
-            -Content-Security-Policy
-            Content-Security-Policy "frame-ancestors 'self'"
+    route {
+        respond @outside "VPN required" 403
+
+        handle_path /quotes/* {
+            header {
+                -X-Frame-Options
+                -Content-Security-Policy
+                Content-Security-Policy "frame-ancestors 'self'"
+            }
+
+            reverse_proxy quotes-service:8000
         }
 
-        reverse_proxy quotes-service:8000
-    }
-
-    handle {
-        reverse_proxy homepage:3000
+        handle {
+            reverse_proxy homepage:3000
+        }
     }
 }
 
 vault.{$BASE_DOMAIN} {
-    import common_headers
-
-    reverse_proxy vaultwarden:80
+    import private_proxy vaultwarden:80
 }
 
+zimi.{$BASE_DOMAIN} {
+    import private_proxy zimi:8899
+
+    header {
+        -X-Frame-Options
+        X-Frame-Options SAMEORIGIN
+    }
+}
+
+dawarich.{$BASE_DOMAIN} {
+    import private_proxy dawarich_app:3000
+}
+
+paperless.{$BASE_DOMAIN} {
+    import private_proxy paperless:8000
+}
+
+vinyl.{$BASE_DOMAIN} {
+    import private_proxy dvinyl:3099
+}
+
+# Public applications
 cycle.{$BASE_DOMAIN} {
     reverse_proxy ovumcy:8080 {
         header_up X-Real-IP {remote_host}
     }
 }
 
-zimi.{$BASE_DOMAIN} {
-    import common_headers
-
-    header {
-        -X-Frame-Options
-        X-Frame-Options SAMEORIGIN
-    }
-
-    reverse_proxy zimi:8899
-}
-
 immich.{$BASE_DOMAIN} {
     import common_headers
-
     reverse_proxy immich-server:2283
 }
 
-dawarich.{$BASE_DOMAIN} {
-    import common_headers
-
-    reverse_proxy dawarich_app:3000
-}
-
-
 mealie.{$BASE_DOMAIN} {
     import common_headers
-
     reverse_proxy mealie:9000
-}
-
-
-paperless.{$BASE_DOMAIN} {
-    import common_headers
-
-    reverse_proxy paperless:8000
-}
-
-vinyl.{$BASE_DOMAIN} {
-    import common_headers
-
-    reverse_proxy dvinyl:3099
 }
