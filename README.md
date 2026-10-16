@@ -21,6 +21,12 @@ This repository contains the configuration and tooling behind my personal homela
 
 It is a real deployment and a technical portfolio project—not a one-command installer. Host paths, credentials, DNS, networking, and hardware settings must be adapted before use.
 
+## Dashboard Preview
+
+![Homelab Dashboard](docs/images/homepage_screenshot.png)
+
+*Sanitized dashboard preview with anonymized data.*
+
 ## Engineering highlights
 
 | Area | Design and implementation |
