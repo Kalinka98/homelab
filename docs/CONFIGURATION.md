@@ -32,6 +32,17 @@ See Docker's [environment-file syntax and precedence](https://docs.docker.com/co
 | `DATA_PATH` | Absolute host directory, example `/srv/data` | Infrastructure, services, Immich, and Paperless |
 | `MOVIES_PATH` | Absolute host directory, example `/srv/media/movies` | Infrastructure, services, and media |
 | `TVSHOWS_PATH` | Absolute host directory, example `/srv/media/tvshows` | Infrastructure, services, and media |
+| `PRIVATE_ACCESS_CIDRS` | Space-separated CIDR ranges permitted to access Caddy's private routes; use only verified LAN/VPN ranges | Infrastructure Caddy service |
+
+### Private access configuration
+
+`PRIVATE_ACCESS_CIDRS` controls which direct client addresses Caddy accepts for administrative and sensitive service routes.
+
+This value belongs in `infrastructure/.env` and is passed to the Caddy container by Docker Compose. Changes require recreating Caddy so the new environment is applied.
+
+The tracked `.env.example` contains documentation-only networks, not functioning deployment defaults. Configure actual trusted LAN and WireGuard client networks before using the stack.
+
+See [Remote access](REMOTE_ACCESS.md) for VPN setup, split DNS, access verification, and certificate considerations.
 
 Set `SERVER_IP_ADDRESS` in infrastructure to an address assigned to the host's
 LAN interface. The example `192.0.2.10` is a documentation address. Set
@@ -148,11 +159,9 @@ containers retain `:z`. Paperless's Tika and Gotenberg exchange files over HTTP
 and do not share its bind directories. Docker applies relabeling when it creates
 the containers. See [Docker's SELinux mount options](https://docs.docker.com/engine/storage/bind-mounts/#configure-the-selinux-label).
 
-Glances's host `/`, `/etc/os-release`, Docker sockets, and broad `DATA_PATH`
-mounts deliberately have no relabel suffix. Relabeling a parent can overwrite
-private labels beneath it, even when the container mount is read-only. Apply
-labels only to the intended application directories and review host access
-policy separately.
+Glances mounts `/etc/os-release` and only the storage paths explicitly required for monitoring, using read-only bind mounts. It no longer mounts the host root filesystem or Docker socket. It continues to use the host PID namespace and NVIDIA GPU access.
+
+Host-level and broad shared-storage mounts deliberately avoid SELinux relabel suffixes. Relabeling a parent directory can overwrite private labels beneath it, even when a container mount is read-only. Apply labels only to intended application directories and review host access policy separately.
 
 When access fails, inspect ordinary ownership and SELinux context separately
 with `ls -ld` and `ls -Zd` on the affected directory, then inspect local AVC

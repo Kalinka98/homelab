@@ -7,33 +7,53 @@ A production-style, self-hosted homelab running on **Fedora Linux**, managed wit
 ## Highlights
 
 - **Infrastructure as code:** six logically separated Compose projects, explicit container version tags (some digest-pinned), and shared networks.
-- **Reverse proxy:** Caddy routes HTTPS traffic to explicitly configured services.
+- **Secure remote access:** Router-hosted WireGuard, AdGuard split DNS, and reusable Caddy source-IP access controls separate public applications from private administration.
 - **Observability:** Uptime Kuma, AutoKuma, Glances, Beszel, Dozzle, and Speedtest Tracker.
 - **Media:** Jellyfin, Radarr, Sonarr, Prowlarr, qBittorrent, Bazarr, and the separately developed [SimpleSubGen](https://github.com/Kalinka98/SimpleSubGen).
 - **Personal services:** Actual Budget, Vaultwarden, Homepage, Mealie, Zimi, and DVinyl.
 - **Data and location:** Immich, Paperless-ngx, and Dawarich.
 - **Local AI:** Ollama and NVIDIA GPU-enabled containers where appropriate.
 
+
 ## Architecture
+
+The deployment separates public applications from administrative services while preserving access to both from trusted devices.
 
 ```mermaid
 flowchart TD
-    Users[Clients] --> DNS[DNS / HTTPS]
-    DNS --> Caddy[Caddy reverse proxy]
-    Caddy --> Infra[Infrastructure services]
-    Caddy --> Media[Media services]
-    Caddy --> Apps[Personal services]
-    Caddy --> Photos[Immich]
-    Caddy --> Docs[Paperless-ngx]
-    Caddy --> Location[Dawarich]
-    AI[Ollama / GPU] -. private AI network .-> Apps
-    AI -. private AI network .-> Docs
-    Host[Local host storage] --- Media
-    Host --- Photos
-    Host --- Docs
+    Internet["Internet clients"] -->|HTTPS| Caddy["Caddy reverse proxy"]
+
+    Remote["Trusted remote devices"] -->|WireGuard| Router["Home router"]
+    Router -->|Private LAN route| DNS["AdGuard split DNS"]
+    LAN["Home LAN clients"] --> DNS
+    DNS -->|Local Caddy address| Caddy
+
+    Caddy --> Public["Public apps: Jellyfin, Immich, Mealie, Ovumcy, ntfy"]
+    Caddy --> ACL{"Source IP allowlist"}
+
+    ACL -->|LAN or authorized VPN| Private["Private apps: dashboards, media management, personal data"]
+    ACL -->|Untrusted address| Denied["HTTP 403"]
+
+    AutoKuma["AutoKuma"] --> KumaProxy["Restricted Sockguard"]
+    Dozzle["Dozzle"] --> LogProxy["Restricted Sockguard"]
+    KumaProxy --> Docker["Docker Engine"]
+    LogProxy --> Docker
+
+    Public -. application networks .-> Data["Isolated databases and storage"]
+    Private -. application networks .-> Data
+    AI["Ollama / NVIDIA GPU"] -. homelab-ai .-> Private
 ```
 
-The public-facing reverse proxy uses the external Docker network `homelab-edge`. Services requiring local language models use `homelab-ai`. Database and application-only networks are scoped to their relevant Compose projects where defined.
+### Network design
+
+- **Public HTTPS:** Jellyfin, Immich, Mealie, Ovumcy, and ntfy remain reachable without a VPN.
+- **Private HTTPS:** Administrative and sensitive applications require trusted LAN access or an authorized WireGuard connection.
+- **Split DNS:** AdGuard resolves homelab hostnames to the local server address for LAN and VPN clients.
+- **Container networking:** `homelab-edge` connects Caddy to application frontends; `homelab-ai` provides access to local AI workloads. Databases use application-specific networks.
+- **Docker API isolation:** Dozzle and AutoKuma use dedicated Sockguard proxies with API allowlists rather than unrestricted direct socket access.
+
+See [Remote access and security](docs/REMOTE_ACCESS.md) for the access model, configuration, testing, and limitations.
+
 
 ## Repository layout
 
@@ -154,13 +174,18 @@ labels apply to the different containers.
 
 The deployment uses bind mounts and some named volumes for persistent state. Important data includes media libraries, passwords, private photographs, documents, databases, location history, and application configuration. It must **not** be pushed to Git. Backups, restore tests, and data retention policies must be arranged independently of the repository.
 
+
 ## Security model and tradeoffs
 
-- Only explicitly routed services should be accessible through Caddy; a reverse proxy is **not** by itself an authentication mechanism.
-- Internet-exposed management applications should use strong authentication and ideally an additional access control layer or VPN.
-- Several observability integrations need Docker API/host information. Access to `/var/run/docker.sock`, including read-only mounts, is highly privileged; Docker socket consumers should be reviewed and constrained.
-- AutoKuma uses a separately defined, allowlisted Docker API proxy for monitoring. Its HTTP access is restricted to its internal Docker network; it is not intended for internet exposure.
-- Host bind mount paths and hardcoded internal assumptions are tailored to this installation and may need adaptation on another machine.
+- **Two-tier ingress:** Only selected applications are openly reachable over HTTPS. Administrative routes use Caddy source-IP restrictions for trusted LAN and verified WireGuard clients.
+- **Defense in depth:** VPN access does not replace application authentication or authorization. Public applications require independent security controls.
+- **Docker API isolation:** Dozzle and AutoKuma use dedicated Sockguard proxies with restricted API operations. Homepage and Glances have no direct Docker socket access.
+- **Least-privilege monitoring:** Glances retains host process visibility and selected read-only filesystem mounts for monitoring, without mounting the complete host filesystem.
+- **DNS and TLS:** Private-service DNS records are still publicly resolvable, but Caddy denies unauthorized HTTP access. TLS renewal depends on the configured certificate validation mechanism.
+- **Deployment assumptions:** Trusted network ranges, proxy behavior, host paths, GPU resources, and router configuration must be adapted and verified on each deployment.
+
+See [the remote access guide](docs/REMOTE_ACCESS.md) for implementation details and verification procedures.
+
 
 ## Validation
 
