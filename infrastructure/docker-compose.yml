@@ -36,6 +36,7 @@ services:
 
     environment:
       BASE_DOMAIN: ${BASE_DOMAIN:?Set BASE_DOMAIN in .env}
+      PRIVATE_ACCESS_CIDRS: ${PRIVATE_ACCESS_CIDRS:?Set private access CIDRs in .env}
 
     ports:
       - "80:80"

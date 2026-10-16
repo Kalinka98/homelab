@@ -11,7 +11,7 @@
 # Match requests not coming from the home LAN
 # or the verified WireGuard client.
 (private_acl) {
-    @outside not remote_ip 192.168.0.0/24 10.5.5.2/32
+    @outside not remote_ip {$PRIVATE_ACCESS_CIDRS}
 }
 
 # Reusable protected reverse proxy.
