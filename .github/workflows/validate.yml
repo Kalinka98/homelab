@@ -1,4 +1,5 @@
-name: Validate Docker Compose
+
+name: Validate Homelab Configuration
 
 on:
   push:
@@ -10,10 +11,35 @@ permissions:
 
 jobs:
   compose:
-    name: Validate six stacks
+    name: Validate six Compose stacks
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Docker Compose configuration validation
+
+      - name: Validate Docker Compose configurations
         run: make validate-examples
+
+  caddy:
+    name: Validate Caddy configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create external Docker networks
+        run: |
+          docker network create homelab-edge
+          docker network create homelab-ai
+
+      - name: Validate Caddyfile and imported sites
+        working-directory: infrastructure
+        run: |
+          docker compose --env-file .env.example \
+            run --rm --no-deps \
+            --entrypoint caddy \
+            caddy validate \
+            --config /etc/caddy/Caddyfile \
+            --adapter caddyfile
