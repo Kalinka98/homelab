@@ -43,3 +43,6 @@ jobs:
             caddy validate \
             --config /etc/caddy/Caddyfile \
             --adapter caddyfile
+
+      - name: Check public and private Caddy routes
+        run: python3 tests/check_caddy_policy.py
