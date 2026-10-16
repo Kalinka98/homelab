@@ -189,12 +189,14 @@ See [the remote access guide](docs/REMOTE_ACCESS.md) for implementation details 
 
 ## Validation
 
-```bash
-make validate-examples  # no real credentials required
-make validate           # validates configured, local .env files
-```
+GitHub Actions runs three configuration checks on pushes and pull requests:
 
-A GitHub Actions workflow validates all six Compose files against the example configurations on pushes and pull requests. This verifies Compose syntax/interpolation, **not** application startup or security posture.
+- **Docker Compose:** Validates all six Compose projects using the tracked `.env.example` files.
+- **Caddy:** Validates the reverse-proxy configuration and imported site definitions using the configured Caddy image.
+- **Access policy:** Checks the expected public/private Caddy route classification, including protection of Homepage's nested routes.
+
+These are static and configuration-level checks. They do not verify application startup, authentication, live network isolation, or the overall security posture.
+
 
 ## Third-party software and data
 
