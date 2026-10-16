@@ -106,7 +106,7 @@
             description: Torrenting (not pirating)
             widget:
               type: qbittorrent
-              url: https://qbittorrent.{{HOMEPAGE_VAR_BASE_DOMAIN}}
+              url: http://qbittorrent:8080
               username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
               password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
               enableLeechProgress: true
@@ -140,6 +140,6 @@
             href: https://speedtest.{{HOMEPAGE_VAR_BASE_DOMAIN}}
             widget:
               type: speedtest
-              url: https://speedtest.{{HOMEPAGE_VAR_BASE_DOMAIN}}
+              url: http://speedtest-tracker:80
               version: 2
               key: "{{HOMEPAGE_VAR_SPEEDTEST_API_KEY}}"
