@@ -1,0 +1,5 @@
+borismiladinov.{$BASE_DOMAIN} {
+    import common_headers
+
+    reverse_proxy portfolio-site:8080
+}
