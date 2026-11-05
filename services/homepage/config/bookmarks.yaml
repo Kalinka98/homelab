@@ -11,6 +11,10 @@
         - id: shortcut-facebook
           icon: facebook.svg
           href: https://www.facebook.com/
+    - LinkedIn:
+        - id: shortcut-linkedin
+          icon: linkedin.svg
+          href: https://www.linkedin.com/
     - ChatGPT:
         - id: shortcut-chatgpt
           icon: chatgpt.svg
