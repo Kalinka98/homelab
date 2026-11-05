@@ -23,6 +23,10 @@
         - id: shortcut-cloudflare
           icon: cloudflare.svg
           href: https://dash.cloudflare.com/
+    - Firebase:
+        - id: shortcut-firebase
+          icon: firebase.svg
+          href: https://console.firebase.google.com/u/0/?pli=1
     - Gmail:
         - id: shortcut-gmail
           icon: gmail.svg
@@ -31,6 +35,14 @@
         - id: shortcut-otp
           icon: otp.svg
           href: https://my.otpleasing.bg/dashboard
+    - iCloud:
+        - id: shortcut-icloud
+          icon: icloud.svg
+          href: https://icloud.com/
+    - Muted:
+        - id: shortcut-muted
+          icon: music.svg
+          href: https://muted.io/
     - Actual Budget:
         - id: shortcut-actual-budget
           icon: actual-budget.svg
