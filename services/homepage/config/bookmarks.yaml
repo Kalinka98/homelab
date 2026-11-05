@@ -27,6 +27,10 @@
         - id: shortcut-gmail
           icon: gmail.svg
           href: https://mail.google.com/
+    - OTP:
+        - id: shortcut-otp
+          icon: otp.svg
+          href: https://my.otpleasing.bg/dashboard
     - Actual Budget:
         - id: shortcut-actual-budget
           icon: actual-budget.svg
