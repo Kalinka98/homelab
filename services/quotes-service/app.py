@@ -15,7 +15,7 @@ QUOTES_FILE = Path("/app/quotes.json")
 TIMEZONE = ZoneInfo("Europe/Sofia")
 
 MIN_LENGTH = 0
-MAX_LENGTH = 240
+MAX_LENGTH = 190
 
 
 def load_quotes():
