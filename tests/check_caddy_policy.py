@@ -11,7 +11,7 @@ PRIVATE = {
     "paperless", "vinyl",
 }
 
-PUBLIC = {"jellyfin", "immich", "mealie", "cycle", "notify"}
+PUBLIC = {"jellyfin", "immich", "mealie", "cycle", "notify", "borismiladinov"}
 
 
 def require(condition, message):
